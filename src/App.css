@@ -2,17 +2,18 @@
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
+  color: #c084fc;
+  background: rgba(192, 132, 252, 0.15);
   border: 2px solid transparent;
   transition: border-color 0.3s;
   margin-bottom: 24px;
+  cursor: pointer;
 
   &:hover {
-    border-color: var(--accent-border);
+    border-color: rgba(192, 132, 252, 0.5);
   }
   &:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid #c084fc;
     outline-offset: 2px;
   }
 }
