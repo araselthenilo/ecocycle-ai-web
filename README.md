@@ -31,14 +31,14 @@ Sebelum memulai, pastikan laptop kamu sudah terinstall software berikut:
 #### **Langkah A: Ambil Kode dari GitHub (Jika baru pertama kali)**
 Jika kamu belum mendownload repository ini sama sekali:
 ```bash
-git clone https://github.com/araselthenilo/ecocyle-ai-web.git
-cd ecocyle-ai-web
+git clone https://github.com/araselthenilo/ecocycle-ai-web.git
+cd ecocycle-ai-web
 ```
 
 #### **Langkah B: Tarik Update Terbaru (Jika sudah pernah clone sebelumnya)**
 Buka folder proyek di terminal, pastikan kamu berada di branch yang tepat, lalu tarik perubahan terbaru:
 ```bash
-git pull origin arasel
+git pull origin [nama_kalian]
 # atau jika menggunakan branch main / branch masing-masing:
 # git pull
 ```
@@ -137,8 +137,8 @@ Make sure you have the following installed on your machine:
 
 #### **Step A: Clone the Repository (First-time setup)**
 ```bash
-git clone https://github.com/araselthenilo/ecocyle-ai-web.git
-cd ecocyle-ai-web
+git clone https://github.com/araselthenilo/ecocycle-ai-web.git
+cd ecocycle-ai-web
 ```
 
 #### **Step B: Pull Latest Changes (If already cloned)**
