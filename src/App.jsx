@@ -3,6 +3,14 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/ui/card"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -115,6 +123,9 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      <Card>
+        Tes
+      </Card>
     </>
   )
 }
