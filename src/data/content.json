@@ -1,0 +1,73 @@
+{
+  "navLinks": [
+    {
+      "label": "Tentang Kami",
+      "href": "#tentang"
+    },
+    {
+      "label": "Layanan",
+      "href": "#layanan"
+    },
+    {
+      "label": "Hubungi Kami",
+      "href": "#hubungi"
+    }
+  ],
+  "features": [
+    {
+      "id": "scanner",
+      "title": "AI Waste Scanner",
+      "description": "Kenali jenis sampah hanya dengan satu foto. Sistem AI kami membedakan material dengan presisi tinggi.",
+      "iconClass": "fa-solid fa-camera",
+      "imageKey": "scanner",
+      "imageAlt": "AI Waste Scanner preview scan demo"
+    },
+    {
+      "id": "map",
+      "title": "Recycling Map",
+      "description": "Temukan bank sampah terdekat dalam hitungan detik. Rencanakan rute sampah dengan mudah.",
+      "iconClass": "fa-solid fa-map-location-dot",
+      "imageKey": "map",
+      "imageAlt": "Recycling Map peta bank sampah"
+    },
+    {
+      "id": "impact",
+      "title": "Impact Tracking",
+      "description": "Pantau kontribusi lingkunganmu secara real- time. Lihat jejak karbon yang berhasil Anda kurangi.",
+      "iconClass": "fa-solid fa-chart-line",
+      "imageKey": "impact",
+      "imageAlt": "Impact Tracking grafik kontribusi positif"
+    }
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "title": "Scan",
+      "description": "Foto sampah Anda menggunakan kamera in-app kami yang cerdas."
+    },
+    {
+      "step": 2,
+      "title": "Manage",
+      "description": "Pisahkan sesuai instruksi AI dan bawa ke bank sampah terdekat."
+    },
+    {
+      "step": 3,
+      "title": "Earn Points",
+      "description": "Dapatkan reward poin untuk setiap aksi nyata pelestarian lingkungan."
+    }
+  ],
+  "statistics": [
+    {
+      "value": "50rb+",
+      "label": "Sampah Teridentifikasi"
+    },
+    {
+      "value": "10rb+",
+      "label": "Pengguna Aktif"
+    },
+    {
+      "value": "25 Ton",
+      "label": "Sampah Terdaur Ulang"
+    }
+  ]
+}
