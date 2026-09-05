@@ -1,30 +1,33 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./components/ui/card"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+import { useState } from "react"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/layout/app-sidebar"
+import { Navbar } from "@/components/layout/navbar"
+import { Footer } from "@/components/layout/footer"
+import Dashboard from "@/pages/Dashboard"
+import AIScanner from "@/pages/AIScanner"
+import "./App.css"
 
 function App() {
+  const [activePage, setActivePage] = useState("dashboard")
 
   return (
-    <>
     <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-      </main>
+      <AppSidebar
+      activePage={activePage}
+      onNavigate={setActivePage}
+      />
+
+      <SidebarInset className="dashboard-inset">
+        <Navbar />
+
+        <main className="dashboard-content">
+          {activePage === "dashboard" && <Dashboard />}
+          {activePage === "scanner" && <AIScanner />}
+        </main>
+
+        <Footer />
+      </SidebarInset>
     </SidebarProvider>
-    </>
   )
 }
 
