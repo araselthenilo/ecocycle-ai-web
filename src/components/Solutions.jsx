@@ -14,9 +14,9 @@ const { features } = content;
 
 export default function Solutions() {
   return (
-    <section id="layanan" className="w-full bg-section py-16 md:py-20 px-6 md:px-12 lg:px-20">
+    <section id="layanan" className="w-full bg-section p-12 md:p-16">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 items-center">
-        
+
         {/* Section Heading */}
         <div className="flex flex-col gap-4 items-center text-center max-w-2xl">
           <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-dark">
@@ -30,7 +30,7 @@ export default function Solutions() {
         {/* 3 Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           {features.map((feature) => (
-            <div 
+            <div
               key={feature.id}
               className="card-feature p-8 flex flex-col gap-4 justify-between"
             >
@@ -49,10 +49,10 @@ export default function Solutions() {
               </div>
 
               <div className="h-38 w-full rounded-lg overflow-hidden mt-2 shrink-0">
-                <img 
-                  src={featureImages[feature.imageKey || feature.id]} 
-                  alt={feature.imageAlt} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                <img
+                  src={featureImages[feature.imageKey || feature.id]}
+                  alt={feature.imageAlt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </div>

@@ -5,8 +5,8 @@ const { navLinks } = content;
 export default function Footer() {
   return (
     <footer id="hubungi" className="w-full bg-white-card footer-shadow">
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-9 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-        
+      <div className="w-full max-w-7xl mx-auto py-6 md:py-12 flex flex-col md:flex-row items-center justify-between">
+
         {/* Logo & Copyright */}
         <div className="flex items-center gap-5">
           <div className="badge-logo flex items-center justify-center size-12 shrink-0 shadow-xs">

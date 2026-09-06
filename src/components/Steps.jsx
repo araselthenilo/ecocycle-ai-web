@@ -4,9 +4,9 @@ const { steps } = content;
 
 export default function Steps() {
   return (
-    <section id="tentang" className="w-full bg-page py-16 md:py-20 px-6 md:px-12 lg:px-20">
+    <section id="tentang" className="w-full bg-page p-12 md:p-16">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-16 items-center">
-        
+
         {/* Section Heading */}
         <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-dark text-center">
           3 Langkah Mudah untuk Memulai
@@ -15,8 +15,8 @@ export default function Steps() {
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 lg:gap-8 w-full justify-items-center">
           {steps.map((item) => (
-            <div 
-              key={item.step} 
+            <div
+              key={item.step}
               className="flex flex-col gap-4 items-center text-center max-w-xs"
             >
               <div className="step-circle flex items-center justify-center size-16">
