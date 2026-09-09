@@ -3,36 +3,56 @@ import { Bell } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
-export function Navbar() {
+const pageGreetings = {
+  dashboard: {
+    title: "Selamat Datang, Budi",
+    description: "Sayangilah Bumi dengan cara kelola sampah-sampah ini.",
+  },
+  scanner: {
+    title: "AI Waste Scanner",
+    description: "Kenali sampahmu dan temukan cara terbaik untuk mengelolanya.",
+  },
+}
+
+export function Navbar({ activePage }) {
+  const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
   return (
     <header className="dashboard-header">
-      <div className="navbar-leading">
-        <SidebarTrigger />
+      <div className="navbar-top">
+        <SidebarTrigger
+          className="navbar-toggle"
+          aria-label="Buka navigasi"
+        />
 
-        <div>
-          <h1>Selamat Datang, Budi</h1>
-          <p>Sayangilah Bumi dengan cara kelola sampah-sampah ini.</p>
+        <div className="dashboard-profile">
+          <Button
+            variant="outline"
+            size="icon"
+            className="notification-button"
+            aria-label="Notifikasi"
+          >
+            <Bell />
+          </Button>
+
+          <Button
+            variant="outline"
+            className="profile-button"
+            aria-label="Profil Budi Santoso"
+            onMouseEnter={(event) => event.currentTarget.blur()}
+          >
+            <span className="profile-avatar">BS</span>
+
+            <span className="profile-text">
+              <strong>Budi Santoso</strong>
+              <small>ANGGOTA</small>
+            </span>
+          </Button>
         </div>
       </div>
 
-      <div className="dashboard-profile">
-        <Button
-          variant="outline"
-          size="icon"
-          className="notification-button"
-          aria-label="Notifikasi"
-        >
-          <Bell />
-        </Button>
-
-        <Button variant="outline" className="profile-button" onMouseEnter={(event) => event.currentTarget.blur()}>
-          <span className="profile-avatar">BS</span>
-
-          <span className="profile-text">
-            <strong>Budi Santoso</strong>
-            <small>ANGGOTA</small>
-          </span>
-        </Button>
+      <div className="navbar-greeting">
+        <h1>{greeting.title}</h1>
+        <p>{greeting.description}</p>
       </div>
     </header>
   )

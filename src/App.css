@@ -117,9 +117,12 @@ body {
 }
 
 .dashboard-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "greeting profile";
+  align-items: start;
+  gap: 24px;
+  min-width: 0;
   padding: 30px 60px 0;
 }
 
@@ -141,14 +144,17 @@ body {
 }
 
 .dashboard-profile {
+  grid-area: profile;
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 
 .notification-button {
   width: 44px;
   height: 44px;
+  flex: 0 0 44px;
   border-color: var(--eco-border);
   border-radius: 999px;
 }
@@ -191,6 +197,7 @@ body {
   display: grid;
   width: 32px;
   height: 32px;
+  flex: 0 0 32px;
   place-items: center;
   border-radius: 50%;
   background: #b6aa8e;
@@ -206,6 +213,7 @@ body {
 }
 
 .profile-text strong {
+  color: var(--eco-text);
   font-size: 11px;
   font-weight: 500;
 }
@@ -214,6 +222,32 @@ body {
   color: var(--eco-green);
   font-size: 8px;
   font-weight: 800;
+}
+
+.navbar-greeting {
+  grid-area: greeting;
+  min-width: 0;
+}
+
+.navbar-greeting h1 {
+  margin: 0 0 5px;
+  color: var(--eco-green);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.navbar-greeting p {
+  margin: 0;
+  color: var(--eco-muted);
+  font-size: 13px;
+}
+
+.navbar-top {
+  display: contents;
+}
+
+.navbar-toggle {
+  display: none;
 }
 
 /* Dashboard */
@@ -568,10 +602,26 @@ footer {
 }
 
 @media (max-width: 700px) {
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dashboard-inset {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
   .dashboard-header {
+    display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 24px 20px 0;
+    gap: 28px;
+    width: 100%;
+    padding: 26px 40px 0;
   }
 
   .dashboard-toolbar {
@@ -579,33 +629,240 @@ footer {
     padding: 14px 20px 0;
   }
 
+  .navbar-top {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-toggle {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .navbar-toggle svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 2.5;
+  }
+
+  .dashboard-profile {
+    gap: 18px;
+  }
+
+  .notification-button {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .notification-button:hover {
+    background: var(--eco-green-dark);
+    color: white;
+  }
+
+  .notification-button svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .profile-button {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .profile-button:hover,
+  .profile-button:focus,
+  .profile-button:focus-visible {
+    border: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  .profile-avatar {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .profile-text {
+    display: none;
+  }
+
+  .navbar-greeting {
+    width: 100%;
+  }
+
+  .navbar-greeting h1 {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .navbar-greeting p {
+    max-width: 290px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
   .dashboard-content {
-    padding: 24px 20px;
+    width: 100%;
+    min-width: 0;
+    padding: 30px 40px 24px;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dashboard-main,
+  .dashboard-side {
+    display: contents;
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    order: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    min-width: 0;
   }
 
   .dashboard-side {
     display: block;
   }
 
+  .scanner-card {
+    order: 2;
+    min-width: 0;
+  }
+
+  .weekly-card {
+    order: 3;
+    min-width: 0;
+    margin-top: 0;
+  }
+
   .activity-card {
     margin-top: 24px;
+  }
+
+  .stat-card {
+    min-width: 0;
+    min-height: 163px;
   }
 
   .navbar-leading > button {
     display: inline-flex;
   }
 
-  .dashboard-header {
-    padding: 20px;
+  .stat-label {
+    white-space: nowrap;
+  }
+
+  .weekly-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .weekly-header h2 {
+    max-width: 95px;
+    line-height: 1.45;
+  }
+
+  .progress-tabs {
+    flex: 0 0 auto;
+  }
+
+  .weekly-chart {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .scanner-card > div {
+    padding: 40px 35px;
+  }
+
+  .scanner-card h2 {
+    max-width: 230px;
+    font-size: 16px;
+  }
+
+  .scanner-card p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .scan-button {
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .activity-item {
+    min-width: 0;
+  }
+
+  .activity-item > div:first-child {
+    min-width: 0;
+  }
+
+  .activity-item strong,
+  .activity-item span {
+    font-size: 15px;
+  }
+
+  .activity-result {
+    flex: 0 0 auto;
   }
 
   .dashboard-footer {
-    padding: 25px 20px;
+    padding: 25px 40px 30px;
+    text-align: center;
+  }
+
+  .dashboard-header,
+  .dashboard-content {
+    width: 100%;
+    padding: 20px 40px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard-header,
+  .dashboard-content {
+    padding: 20px 24px !important;
+  }
+
+  .stats-grid {
+    gap: 16px;
+  }
+
+  .weekly-card,
+  .activity-card,
+  .scanner-card {
+    border-radius: 15px;
+  }
+
+  .weekly-card > div,
+  .activity-card > div {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .scanner-card > div {
+    padding-right: 28px;
+    padding-left: 28px;
   }
 }
 
@@ -816,4 +1073,39 @@ footer {
     align-items: center;
     gap: 10px;
   }
+}
+
+/* Mobile sidebar */
+[data-sidebar="sidebar"][data-mobile="true"] {
+  background: var(--eco-green) !important;
+  color: white !important;
+  border-color: var(--eco-green-dark) !important;
+}
+
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-button"] {
+  color: white;
+  background: transparent;
+}
+
+[data-sidebar="sidebar"][data-mobile="true"]
+  [data-sidebar="menu-button"]:hover {
+  background: var(--eco-green-dark);
+  color: white;
+}
+
+[data-sidebar="sidebar"][data-mobile="true"]
+  [data-sidebar="menu-button"][data-active="true"] {
+  background: white;
+  color: var(--eco-green-dark);
+}
+
+[data-sidebar="sidebar"][data-mobile="true"]
+  [data-sidebar="menu-button"][data-active="true"]:hover {
+  background: white;
+  color: var(--eco-green-dark);
+}
+
+/* Area gelap di belakang sidebar tetap transparan gelap */
+[data-slot="sheet-overlay"] {
+  background: rgb(0 0 0 / 45%);
 }

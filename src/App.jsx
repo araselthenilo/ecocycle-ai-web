@@ -18,7 +18,7 @@ function App() {
       />
 
       <SidebarInset className="dashboard-inset">
-        <Navbar />
+        <Navbar activePage={activePage} />
 
         <main className="dashboard-content">
           {activePage === "dashboard" && <Dashboard />}
