@@ -76,9 +76,9 @@ export default function Navbar() {
         }`}
     >
       <div
-        className={`w-full max-w-7xl xl:px-0 mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled
-          ? 'py-3.5 md:py-4'
-          : 'py-4 md:py-8'
+        className={`w-full max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled
+          ? 'py-3 md:py-4'
+          : 'py-3.5 md:py-4.5'
           }`}
       >
         {/* Brand Logo */}

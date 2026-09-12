@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const sectionVariants = cva(
-  "w-full scroll-mt-16 md:scroll-mt-24 transition-colors",
+  "w-full scroll-mt-16 md:scroll-mt-24 transition-colors flex flex-col justify-center lg:min-h-[calc(100vh-6rem)]",
   {
     variants: {
       variant: {
@@ -14,9 +14,9 @@ const sectionVariants = cva(
         transparent: "bg-transparent",
       },
       size: {
-        default: "py-12 px-6 md:px-8 md:py-14 lg:p-16",
-        compact: "py-8 px-6 md:px-8 md:py-10 lg:px-16 lg:py-12",
-        hero: "px-6 py-12 md:py-16",
+        default: "py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8",
+        compact: "py-4 md:py-8 lg:py-12 px-4 sm:px-6 lg:px-8",
+        hero: "py-4 md:py-6 lg:py-8 px-4 sm:px-6 lg:px-8",
         none: "p-0",
       },
     },

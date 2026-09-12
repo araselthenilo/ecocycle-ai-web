@@ -5,7 +5,7 @@ const { navLinks } = content;
 export default function Footer() {
   return (
     <footer id="hubungi" className="w-full bg-white-card footer-shadow scroll-mt-16 md:scroll-mt-24">
-      <div className="w-full max-w-7xl xl:px-0 mx-auto py-8 md:py-6 lg:py-10 px-6 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+      <div className="w-full max-w-7xl mx-auto py-8 md:py-6 lg:py-10 px-6 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
 
         {/* Logo & Copyright */}
         <div className="flex items-center gap-3.5 sm:gap-4">
