@@ -176,6 +176,7 @@
 
 .hero-image-shadow {
   box-shadow: var(--shadow-hero);
+}
 :root {
   --eco-green: #007a63;
   --eco-green-dark: #006b57;
