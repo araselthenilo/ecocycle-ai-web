@@ -1,14 +1,19 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import heroArm from '../assets/hero-arm.png';
 import userAvatar1 from '../assets/user-avatar-1.png';
 import userAvatar2 from '../assets/user-avatar-2.png';
 import userAvatar3 from '../assets/user-avatar-3.png';
 import { Button } from '@/components/ui/button';
+import Section from './Section';
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
-    <section className="w-full max-w-7xl mx-auto py-12 md:py-16">
-      <div className="flex flex-col lg:flex-row items-center justify-between">
+    <Section
+      size="hero"
+      variant="transparent"
+      containerClassName="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8"
+    >
 
         {/* Left Column: Hero Text */}
         <div className="w-full lg:max-w-xl flex flex-col justify-between shrink-0 gap-7 md:gap-8">
@@ -24,11 +29,11 @@ export default function Hero() {
           </p>
 
           {/* Button Group */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 w-full">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 sm:gap-5 w-full">
             <Button
-              href="#daftar"
+              onClick={() => navigate('/login')}
               variant="primary"
-              className="w-full sm:w-60 px-5 py-3.5 text-lg sm:text-xl leading-6"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 cursor-pointer"
             >
               Mulai Sekarang
             </Button>
@@ -36,7 +41,7 @@ export default function Hero() {
             <Button
               href="#layanan"
               variant="outline"
-              className="w-full sm:w-60 px-5 py-3.5 text-lg sm:text-xl leading-6"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6"
             >
               Pelajari Lebih Lanjut
             </Button>
@@ -79,15 +84,13 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Hero Image (Robotic Arm) */}
-        <div className="w-full lg:max-w-xl h-80 sm:h-96 rounded-3xl hero-image-shadow overflow-hidden shrink-0 group">
+        <div className="w-full md:max-w-xl h-80 sm:h-96 rounded-2xl hero-image-shadow overflow-hidden">
           <img
             src={heroArm}
             alt="Robot AI pemilah sampah di pusat daur ulang"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
-
-      </div>
-    </section>
+    </Section>
   );
 }
