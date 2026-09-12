@@ -73,6 +73,8 @@ Buka browser (Chrome, Edge, Firefox, dll) lalu kunjungi: **`http://localhost:517
 | Perintah | Fungsi |
 | :--- | :--- |
 | `npm run dev` | Menjalankan web di mode development (auto reload saat code diedit) |
+| `npm run dev:host` | Menjalankan web di mode network agar bisa diakses via IP/Tailscale |
+| `.\start-tailscale.ps1` | Menjalankan web + otomatis mendeteksi & menampilkan link Tailscale |
 | `npm run build` | Membuat bundle file produksi (hasil ada di folder `dist/`) |
 | `npm run preview` | Menjalankan preview dari hasil build produksi |
 | `npm run lint` | Mengecek error / standar penulisan kode dengan ESLint |
