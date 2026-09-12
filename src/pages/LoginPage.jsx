@@ -52,7 +52,7 @@ export default function LoginPage() {
           message: `Berhasil masuk dengan Google: ${userInfo.name}!`,
         });
         setTimeout(() => {
-          navigate('/');
+          navigate('/dashboard');
         }, 800);
       } catch (err) {
         console.error('Error fetching Google profile:', err);
@@ -99,7 +99,7 @@ export default function LoginPage() {
           message: `Selamat datang kembali, ${res.user.name}!`,
         });
         setTimeout(() => {
-          navigate('/');
+          navigate('/dashboard');
         }, 800);
       }
     } catch {
@@ -119,7 +119,7 @@ export default function LoginPage() {
           message: `Berhasil masuk dengan Google: ${res.user.name}!`,
         });
         setTimeout(() => {
-          navigate('/');
+          navigate('/dashboard');
         }, 800);
       }
     } catch {
