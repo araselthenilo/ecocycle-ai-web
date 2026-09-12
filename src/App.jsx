@@ -35,11 +35,11 @@ function ScrollToTop() {
 // Ensure only logged in users can see the dashboard
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return children;
 }
 
@@ -47,7 +47,7 @@ function ProtectedRoute({ children }) {
 function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const activePage = pathname.includes("scanner") ? "scanner" : "dashboard";
+  const activePage = pathname.replace(/^\//, '') || 'dashboard';
 
   return (
     <SidebarProvider>
@@ -60,10 +60,6 @@ function DashboardLayout({ children }) {
         <Navbar activePage={activePage} />
 
         <main className="dashboard-content">
-          {activePage === "dashboard" && <Dashboard />}
-          {activePage === "scanner" && <AIScanner />}
-          {activePage === "recyclemap" && <RecycleMap />}
-          {activePage === "leaderboard" && <Leaderboard />}
           {children}
         </main>
 
@@ -88,26 +84,48 @@ export default function App() {
             <Route path="/daftar" element={<LoginPage />} />
 
             {/* Protected Dashboard Routes */}
-            <Route 
-              path="/dashboard" 
+            <Route
+              path="/dashboard"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
                     <Dashboard />
                   </DashboardLayout>
                 </ProtectedRoute>
-              } 
+              }
             />
-            
-            <Route 
-              path="/scanner" 
+
+            <Route
+              path="/scanner"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
                     <AIScanner />
                   </DashboardLayout>
                 </ProtectedRoute>
-              } 
+              }
+            />
+
+            <Route
+              path="recyclemap"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <RecycleMap />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="leaderboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Leaderboard />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
             />
 
             {/* Catch-all fallback redirect to home */}
