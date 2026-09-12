@@ -1,10 +1,17 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './App.css';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/layout/app-sidebar"
+import { Navbar } from "@/components/layout/navbar"
+import { Footer } from "@/components/layout/footer"
+import Dashboard from "@/pages/Dashboard"
+import AIScanner from "@/pages/AIScanner"
 
 // Fallback client ID if .env is not yet populated
 const GOOGLE_CLIENT_ID =
@@ -22,6 +29,43 @@ function ScrollToTop() {
   return null;
 }
 
+// Ensure only logged in users can see the dashboard
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuth();
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+}
+
+// Layout wrapper for dashboard views
+function DashboardLayout({ children }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const activePage = pathname.includes("scanner") ? "scanner" : "dashboard";
+
+  return (
+    <SidebarProvider>
+      <AppSidebar
+        activePage={activePage}
+        onNavigate={(page) => navigate(`/${page}`)}
+      />
+
+      <SidebarInset className="dashboard-inset">
+        <Navbar activePage={activePage} />
+
+        <main className="dashboard-content">
+          {children}
+        </main>
+
+        <Footer />
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+
 export default function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
@@ -35,6 +79,29 @@ export default function App() {
             {/* Login / Auth Page: Matches Figma Frame 4:438 SAMA PERSIS */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/daftar" element={<LoginPage />} />
+
+            {/* Protected Dashboard Routes */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Dashboard />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path="/scanner" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <AIScanner />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
 
             {/* Catch-all fallback redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
