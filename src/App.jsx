@@ -12,6 +12,9 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import Dashboard from "@/pages/Dashboard"
 import AIScanner from "@/pages/AIScanner"
+import RecycleMap from "@/pages/RecycleMap"
+import Leaderboard from "@/pages/Leaderboard"
+import "./App.css"
 
 // Fallback client ID if .env is not yet populated
 const GOOGLE_CLIENT_ID =
@@ -57,6 +60,10 @@ function DashboardLayout({ children }) {
         <Navbar activePage={activePage} />
 
         <main className="dashboard-content">
+          {activePage === "dashboard" && <Dashboard />}
+          {activePage === "scanner" && <AIScanner />}
+          {activePage === "recyclemap" && <RecycleMap />}
+          {activePage === "leaderboard" && <Leaderboard />}
           {children}
         </main>
 

@@ -12,6 +12,14 @@ const pageGreetings = {
     title: "AI Waste Scanner",
     description: "Kenali sampahmu dan temukan cara terbaik untuk mengelolanya.",
   },
+  recyclemap: {
+    title: "Recycling Map",
+    description: "Temukan bank sampah dan lokasi daur ulang terdekat.",
+  },
+  leaderboard: {
+    title: "Leaderboard",
+    description: "Lihat pengguna dengan Eco Points terbanyak.",
+  },
 }
 
 export function Navbar({ activePage }) {

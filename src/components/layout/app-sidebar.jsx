@@ -34,7 +34,7 @@ import {
 const mainMenu = [
   { label: "Dashboard", page: "dashboard", icon: LayoutDashboard, },
   { label: "AI Waste Scanner", page: "scanner", icon: Camera, },
-  { label: "Recycling Map", page: "recycling-map", icon: Map, },
+  { label: "Recycling Map", page: "recyclemap", icon: Map, },
   { label: "Leaderboard", page: "leaderboard", icon: Trophy, },
 ]
 
