@@ -5,6 +5,8 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import Dashboard from "@/pages/Dashboard"
 import AIScanner from "@/pages/AIScanner"
+import RecycleMap from "@/pages/RecycleMap"
+import Leaderboard from "@/pages/Leaderboard"
 import "./App.css"
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <main className="dashboard-content">
           {activePage === "dashboard" && <Dashboard />}
           {activePage === "scanner" && <AIScanner />}
+          {activePage === "recyclemap" && <RecycleMap />}
+          {activePage === "leaderboard" && <Leaderboard />}
         </main>
 
         <Footer />
