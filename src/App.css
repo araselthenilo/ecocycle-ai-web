@@ -18,7 +18,6 @@
   min-height: 100vh;
   background-color: var(--color-bg-page);
   color: var(--color-dark);
-  overflow-x: hidden;
 }
 
 .app-container ::selection {
@@ -132,6 +131,13 @@
 
 .badge-logo {
   background-color: var(--color-primary);
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.leaf-shape {
   border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
   border-top-left-radius: 0;

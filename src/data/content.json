@@ -33,7 +33,7 @@
     {
       "id": "impact",
       "title": "Impact Tracking",
-      "description": "Pantau kontribusi lingkunganmu secara real- time. Lihat jejak karbon yang berhasil Anda kurangi.",
+      "description": "Pantau kontribusi lingkunganmu secara real-time. Lihat jejak karbon yang berhasil Anda kurangi.",
       "iconClass": "fa-solid fa-chart-line",
       "imageKey": "impact",
       "imageAlt": "Impact Tracking grafik kontribusi positif"

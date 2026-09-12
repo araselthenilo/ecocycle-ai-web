@@ -1,42 +1,47 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import heroArm from '../assets/hero-arm.png';
 import userAvatar1 from '../assets/user-avatar-1.png';
 import userAvatar2 from '../assets/user-avatar-2.png';
 import userAvatar3 from '../assets/user-avatar-3.png';
 import { Button } from '@/components/ui/button';
+import Section from './Section';
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
-    <section className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 pt-4 md:pt-6 pb-16 md:pb-20">
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
-        
+    <Section
+      size="hero"
+      variant="transparent"
+      containerClassName="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8"
+    >
+
         {/* Left Column: Hero Text */}
         <div className="w-full lg:max-w-xl flex flex-col justify-between shrink-0 gap-7 md:gap-8">
-          
+
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-dark">
             Kelola Sampah Lebih Cerdas dengan AI
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg leading-relaxed text-dark">
+          <p className="text-justify sm:text-lg leading-relaxed text-dark">
             Ubah kebiasaan membuang sampah menjadi kontribusi nyata untuk bumi. Identifikasi, kelola, dan dapatkan poin dengan teknologi AI terkini.
           </p>
 
           {/* Button Group */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 w-full">
-            <Button 
-              href="#daftar" 
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 sm:gap-5 w-full">
+            <Button
+              onClick={() => navigate('/login')}
               variant="primary"
-              className="w-full sm:w-60 px-5 py-3.5 text-lg sm:text-xl leading-6"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 cursor-pointer"
             >
               Mulai Sekarang
             </Button>
 
-            <Button 
-              href="#layanan" 
+            <Button
+              href="#layanan"
               variant="outline"
-              className="w-full sm:w-60 px-5 py-3.5 text-lg sm:text-xl leading-6"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6"
             >
               Pelajari Lebih Lanjut
             </Button>
@@ -49,24 +54,24 @@ export default function Hero() {
           <div className="flex items-center gap-4 pt-1">
             <div className="flex items-center">
               <div className="size-10 rounded-full border-2 border-page -mr-3 overflow-hidden shadow-xs relative z-30">
-                <img 
-                  src={userAvatar1} 
-                  alt="Avatar Pengguna 1" 
-                  className="size-full object-cover" 
+                <img
+                  src={userAvatar1}
+                  alt="Avatar Pengguna 1"
+                  className="size-full object-cover"
                 />
               </div>
               <div className="size-10 rounded-full border-2 border-page -mr-3 overflow-hidden shadow-xs relative z-20">
-                <img 
-                  src={userAvatar2} 
-                  alt="Avatar Pengguna 2" 
-                  className="size-full object-cover" 
+                <img
+                  src={userAvatar2}
+                  alt="Avatar Pengguna 2"
+                  className="size-full object-cover"
                 />
               </div>
               <div className="size-10 rounded-full border-2 border-page overflow-hidden shadow-xs relative z-10">
-                <img 
-                  src={userAvatar3} 
-                  alt="Avatar Pengguna 3" 
-                  className="size-full object-cover" 
+                <img
+                  src={userAvatar3}
+                  alt="Avatar Pengguna 3"
+                  className="size-full object-cover"
                 />
               </div>
             </div>
@@ -79,15 +84,13 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Hero Image (Robotic Arm) */}
-        <div className="w-full lg:max-w-xl h-80 sm:h-96 rounded-3xl hero-image-shadow overflow-hidden shrink-0 group">
-          <img 
-            src={heroArm} 
-            alt="Robot AI pemilah sampah di pusat daur ulang" 
-            className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
+        <div className="w-full md:max-w-xl h-80 sm:h-96 rounded-2xl hero-image-shadow overflow-hidden">
+          <img
+            src={heroArm}
+            alt="Robot AI pemilah sampah di pusat daur ulang"
+            className="w-full h-full object-cover"
           />
         </div>
-
-      </div>
-    </section>
+    </Section>
   );
 }

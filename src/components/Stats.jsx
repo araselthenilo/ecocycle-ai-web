@@ -1,14 +1,16 @@
 import React from 'react';
 import content from '../data/content.json';
+import Section from './Section';
 
 const { statistics } = content;
 
-
 export default function Stats() {
   return (
-    <section className="w-full bg-primary py-16 md:py-20 px-6 md:px-12 lg:px-20">
-      <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 items-center text-center">
-        
+    <Section
+      variant="primary"
+      containerClassName="flex flex-col gap-12 items-center text-center"
+    >
+
         {/* Section Heading */}
         <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-white-app">
           Dampak Komunitas Kami
@@ -34,8 +36,6 @@ export default function Stats() {
             </React.Fragment>
           ))}
         </div>
-
-      </div>
-    </section>
+    </Section>
   );
 }
