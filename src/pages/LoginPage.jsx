@@ -83,6 +83,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isRegisterMode && !fullName.trim()) {
+      setNotification({
+        type: 'error',
+        message: 'Mohon isi nama lengkap Anda.',
+      });
+      return;
+    }
+
     if (!email || !password) {
       setNotification({
         type: 'error',
@@ -92,11 +100,18 @@ export default function LoginPage() {
     }
 
     try {
-      const res = await login(email, password, rememberMe);
+      const res = await login(
+        email,
+        password,
+        rememberMe,
+        isRegisterMode ? fullName : ""
+      );
       if (res.success) {
         setNotification({
           type: 'success',
-          message: `Selamat datang kembali, ${res.user.name}!`,
+          message: isRegisterMode
+            ? `Akun berhasil dibuat. Selamat datang, ${res.user.name}!`
+            : `Selamat datang kembali, ${res.user.name}!`,
         });
         setTimeout(() => {
           navigate('/dashboard');
@@ -105,7 +120,9 @@ export default function LoginPage() {
     } catch {
       setNotification({
         type: 'error',
-        message: 'Terjadi kesalahan saat masuk. Silakan coba lagi.',
+        message: isRegisterMode
+          ? 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.'
+          : 'Terjadi kesalahan saat masuk. Silakan coba lagi.',
       });
     }
   };
@@ -136,7 +153,7 @@ export default function LoginPage() {
       {/* Hidden on smaller devices (< lg), perfectly fitted on desktop */}
       <div className="relative hidden lg:block lg:w-[58%] xl:w-[59.7%] h-full bg-[#1F7A65] overflow-hidden shrink-0">
         <LoginBackground className="w-full h-full" />
-        
+
         {/* Subtle Brand Watermark on desktop */}
         <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
           <div className="badge-logo flex items-center justify-center size-7 xl:size-8 shadow-sm">
@@ -159,7 +176,7 @@ export default function LoginPage() {
 
       {/* RIGHT COLUMN: Form Login (Exact Figma Node 4:439) */}
       <div className="w-full lg:w-[42%] xl:w-[40.3%] h-full flex flex-col justify-center items-center px-6 sm:px-10 lg:px-8 xl:px-14 py-8 lg:py-4 bg-white relative overflow-y-auto lg:overflow-hidden">
-        
+
         {/* Mobile / Tablet Top Header with Back button */}
         <div className="w-full max-w-[440px] flex items-center justify-between lg:hidden mb-6 shrink-0">
           <Link
@@ -183,11 +200,10 @@ export default function LoginPage() {
           {/* Toast / Notification banner */}
           {notification && (
             <div
-              className={`mb-3.5 p-3 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 animate-in fade-in slide-in-from-top-2 shrink-0 ${
-                notification.type === 'success'
+              className={`mb-3.5 p-3 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 animate-in fade-in slide-in-from-top-2 shrink-0 ${notification.type === 'success'
                   ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                   : 'bg-red-50 text-red-800 border border-red-200'
-              }`}
+                }`}
             >
               {notification.type === 'success' && <Check className="size-4 shrink-0 text-emerald-600" />}
               <span>{notification.message}</span>
@@ -208,7 +224,7 @@ export default function LoginPage() {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 xl:gap-4 w-full">
-            
+
             {/* Optional Name field in Register mode */}
             {isRegisterMode && (
               <div className="flex flex-col gap-1">
@@ -270,11 +286,10 @@ export default function LoginPage() {
               <label className="flex items-center gap-2 cursor-pointer select-none group">
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
-                  className={`size-4 sm:size-5 rounded-md flex items-center justify-center transition-all ${
-                    rememberMe
+                  className={`size-4 sm:size-5 rounded-md flex items-center justify-center transition-all ${rememberMe
                       ? 'bg-[#006B55] text-white shadow-xs'
                       : 'bg-[#D9DEDC] group-hover:bg-[#CED5D2]'
-                  }`}
+                    }`}
                 >
                   {rememberMe && <Check className="size-3 stroke-[3]" />}
                 </div>
