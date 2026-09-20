@@ -32,24 +32,41 @@ export function AuthProvider({ children }) {
   };
 
   // Standard Email / Password login
-  const login = async (email, password, rememberMe = true) => {
+  const login = async (
+    email,
+    password,
+    rememberMe = true,
+    providedName = ""
+  ) => {
     setIsLoading(true);
+
     try {
       // Simulate network request latency
       await new Promise((resolve) => setTimeout(resolve, 500));
-      
-      const displayName = email.split('@')[0];
+
+      const fallbackName = email.split("@")[0];
+      const displayName =
+        providedName.trim() ||
+        fallbackName.charAt(0).toUpperCase() + fallbackName.slice(1);
+
       const userData = {
-        id: 'usr_' + Date.now(),
-        name: displayName.charAt(0).toUpperCase() + displayName.slice(1),
+        id: "usr_" + Date.now(),
+        name: displayName,
         email,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
-        provider: 'email',
-        role: 'user',
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(
+          email
+        )}`,
+        provider: "email",
+        role: "user",
         createdAt: new Date().toISOString(),
       };
+
       saveUserSession(userData, rememberMe);
-      return { success: true, user: userData };
+
+      return {
+        success: true,
+        user: userData,
+      };
     } finally {
       setIsLoading(false);
     }
