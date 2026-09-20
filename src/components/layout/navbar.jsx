@@ -2,6 +2,7 @@ import { Bell } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { useAuth } from "@/context/AuthContext"
 
 const pageGreetings = {
   dashboard: {
@@ -22,8 +23,22 @@ const pageGreetings = {
   },
 }
 
+function getInitials(name = "Pengguna") {
+  return name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase()
+}
+
 export function Navbar({ activePage }) {
+  const { user } = useAuth()
+
+  const userName = user?.name || "Pengguna"
   const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
+  const pageTitle = activePage === "dashboard" ? `Selamat Datang, ${userName}` : greeting.title
+
   return (
     <header className="dashboard-header">
       <div className="navbar-top">
@@ -45,21 +60,33 @@ export function Navbar({ activePage }) {
           <Button
             variant="outline"
             className="profile-button"
-            aria-label="Profil Budi Santoso"
+            aria-label={`Profil ${userName}`}
             onMouseEnter={(event) => event.currentTarget.blur()}
           >
-            <span className="profile-avatar">BS</span>
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={userName}
+                className="profile-avatar-image"
+              />
+            ) : (
+              <span className="profile-avatar">
+                {getInitials(userName)}
+              </span>
+            )}
 
             <span className="profile-text">
-              <strong>Budi Santoso</strong>
-              <small>ANGGOTA</small>
+              <strong>{userName}</strong>
+              <small>
+                {user?.role === "admin" ? "ADMIN" : "ANGGOTA"}
+              </small>
             </span>
           </Button>
         </div>
       </div>
 
       <div className="navbar-greeting">
-        <h1>{greeting.title}</h1>
+        <h1>{pageTitle}</h1>
         <p>{greeting.description}</p>
       </div>
     </header>
