@@ -1,4 +1,5 @@
 import { Bell } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -21,6 +22,10 @@ const pageGreetings = {
     title: "Leaderboard",
     description: "Lihat pengguna dengan Eco Points terbanyak.",
   },
+  profile: {
+    title: "Profil Pengguna",
+    description: "Kelola akun, pantau pencapaian gaya hidup hijau, dan riwayat kontribusimu.",
+  },
 }
 
 function getInitials(name = "Pengguna") {
@@ -34,6 +39,7 @@ function getInitials(name = "Pengguna") {
 
 export function Navbar({ activePage }) {
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   const userName = user?.name || "Pengguna"
   const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
@@ -59,8 +65,9 @@ export function Navbar({ activePage }) {
 
           <Button
             variant="outline"
-            className="profile-button"
+            className={`profile-button ${activePage === "profile" ? "profile-button-active" : ""}`}
             aria-label={`Profil ${userName}`}
+            onClick={() => navigate("/profile")}
             onMouseEnter={(event) => event.currentTarget.blur()}
           >
             {user?.avatar ? (

@@ -42,7 +42,7 @@ const mainMenu = [
 
 const accountMenu = [
   { label: "Notifikasi", icon: Bell },
-  { label: "Profil", icon: UserCircle },
+  { label: "Profil", page: "profile", icon: UserCircle },
 ]
 
 export function AppSidebar({ activePage, onNavigate }) {
@@ -95,14 +95,24 @@ export function AppSidebar({ activePage, onNavigate }) {
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {accountMenu.map(({ label, icon: Icon }) => (
-                <SidebarMenuItem key={label}>
-                  <SidebarMenuButton type="button" tooltip={label}>
-                    <Icon />
-                    <span>{label}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {accountMenu.map(({ label, page, icon: Icon }) => {
+                const isActive = page && activePage === page
+
+                return (
+                  <SidebarMenuItem key={label}>
+                    <SidebarMenuButton
+                      type="button"
+                      isActive={isActive}
+                      tooltip={label}
+                      onClick={() => (page ? onNavigate(page) : null)}
+                      className={isActive ? "sidebar-menu-active" : ""}
+                    >
+                      <Icon />
+                      <span>{label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
