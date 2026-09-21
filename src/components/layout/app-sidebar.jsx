@@ -30,6 +30,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 
 const mainMenu = [
   { label: "Dashboard", page: "dashboard", icon: LayoutDashboard, },
@@ -44,6 +46,13 @@ const accountMenu = [
 ]
 
 export function AppSidebar({ activePage, onNavigate }) {
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    navigate("/", { replace: true })
+  }
   return (
     <Sidebar className="ecocycle-sidebar">
       <SidebarHeader>
@@ -102,7 +111,7 @@ export function AppSidebar({ activePage, onNavigate }) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton type="button" className="logout-menu-button">
+            <SidebarMenuButton type="button" className="logout-menu-button" onClick={handleLogout}>
               <LogOut />
               <span>Keluar</span>
             </SidebarMenuButton>
