@@ -46,7 +46,7 @@ export default function Solutions() {
                     {feature.title}
                   </h3>
                 </div>
-                <p className="text-xs sm:text-sm leading-5 text-muted">
+                <p className="text-xs sm:text-sm leading-relaxed text-muted">
                   {feature.description}
                 </p>
               </div>

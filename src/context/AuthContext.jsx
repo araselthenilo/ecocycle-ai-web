@@ -95,6 +95,24 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Update user profile fields
+  const updateProfile = (updatedFields) => {
+    setUser((prev) => {
+      if (!prev) return null;
+      const updated = { ...prev, ...updatedFields };
+      try {
+        if (localStorage.getItem(STORAGE_KEY)) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        } else {
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        }
+      } catch (e) {
+        console.error('Failed to update session:', e);
+      }
+      return updated;
+    });
+  };
+
   // Logout
   const logout = () => {
     setUser(null);
@@ -115,6 +133,7 @@ export function AuthProvider({ children }) {
         login,
         loginWithGoogle,
         logout,
+        updateProfile,
       }}
     >
       {children}

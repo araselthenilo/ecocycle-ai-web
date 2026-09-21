@@ -14,6 +14,7 @@ import Dashboard from "@/pages/Dashboard"
 import AIScanner from "@/pages/AIScanner"
 import RecycleMap from "@/pages/RecycleMap"
 import Leaderboard from "@/pages/Leaderboard"
+import Profile from "@/pages/Profile"
 import "./App.css"
 
 // Fallback client ID if .env is not yet populated
@@ -123,6 +124,17 @@ export default function App() {
                 <ProtectedRoute>
                   <DashboardLayout>
                     <Leaderboard />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Profile />
                   </DashboardLayout>
                 </ProtectedRoute>
               }

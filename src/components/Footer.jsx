@@ -13,10 +13,10 @@ export default function Footer() {
             <i className="fa-solid fa-recycle text-white-app text-lg sm:text-xl" aria-hidden="true"></i>
           </div>
           <div className="flex flex-col items-start justify-center">
-            <span className="text-xl sm:text-2xl font-bold leading-tight text-dark">
+            <span className="font-heading text-xl sm:text-2xl font-bold leading-tight text-dark">
               EcoCycle AI
             </span>
-            <span className="font-jakarta text-xs sm:text-sm font-medium leading-5 text-muted">
+            <span className="text-xs sm:text-sm font-medium leading-5 text-muted">
               © 2026 Arunika Progressive. All rights reserved.
             </span>
           </div>

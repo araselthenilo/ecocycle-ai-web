@@ -86,7 +86,7 @@ export default function Navbar() {
           <div className="badge-logo flex items-center justify-center size-9 sm:size-10 shadow-sm group-hover:scale-105 transition-transform shrink-0">
             <i className="fa-solid fa-recycle text-white-app text-base sm:text-lg" aria-hidden="true"></i>
           </div>
-          <span className="font-bold text-lg sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
+          <span className="font-heading font-bold text-lg sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
             EcoCycle AI
           </span>
         </Link>

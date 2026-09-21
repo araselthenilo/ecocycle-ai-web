@@ -31,7 +31,7 @@ export default function Steps() {
               <h3 className="text-lg sm:text-xl md:text-lg lg:text-2xl font-semibold leading-snug text-dark">
                 {item.title}
               </h3>
-              <p className="text-xs sm:text-sm leading-5 text-muted">
+              <p className="text-xs sm:text-sm leading-relaxed text-muted">
                 {item.description}
               </p>
             </div>
