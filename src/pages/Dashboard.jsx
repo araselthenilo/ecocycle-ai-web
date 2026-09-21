@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Camera,
   Download,
@@ -102,6 +103,7 @@ const chartConfig = {
 }
 
 function Dashboard() {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("Sampah")
 
   return (
@@ -212,7 +214,7 @@ function Dashboard() {
               cara mengelolanya secara instan.
             </p>
 
-            <Button className="scanner-action-button">
+            <Button className="scanner-action-button" onClick={() => navigate("/scanner")}>
               <Camera />
               Ayo Scan Sampahmu
             </Button>

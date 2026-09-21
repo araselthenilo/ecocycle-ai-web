@@ -7,7 +7,6 @@ import { useAuth } from "@/context/AuthContext"
 
 const pageGreetings = {
   dashboard: {
-    title: "Selamat Datang, Budi",
     description: "Sayangilah Bumi dengan cara kelola sampah-sampah ini.",
   },
   scanner: {

@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useRef, useState } from "react"
 
 const initialHandlingSteps = [
   "Arahkan kamera atau unggah foto sampah yang ingin dipindai.",
@@ -295,6 +296,13 @@ function AIScanner() {
               <FileUp />
               Unggah Gambar
             </Button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              className="hidden"
+              accept="image/*"
+            />
           </CardContent>
         </Card>
 
