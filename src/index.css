@@ -2,9 +2,10 @@
 @import "tw-animate-css";
 
 @theme {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-
+  --font-heading: "Manrope", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --color-brand: #006b55;
+  --color-brand-hover: #005644;
 
   --color-primary: #006b55;
   --color-primary-hover: #005644;
@@ -16,6 +17,18 @@
   --color-section: #f3f4f5;
   --color-card: #fcfcfc;
   --color-card-border: #6c7a74;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: #1f2937; /* neutral-800 for readable copy */
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 }
 :root {
   --text: #6b6375;
@@ -30,8 +43,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: var(--font-sans, 'Inter', sans-serif);
+  --heading: var(--font-heading, 'Manrope', sans-serif);
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);

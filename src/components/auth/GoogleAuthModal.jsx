@@ -93,7 +93,7 @@ export default function GoogleAuthModal({ isOpen, onClose, onSelectAccount }) {
             />
           </svg>
           <div>
-            <h3 className="text-xl font-bold text-gray-900">Masuk dengan Google</h3>
+            <h3 className="font-heading text-xl font-bold text-gray-900">Masuk dengan Google</h3>
             <p className="text-sm text-gray-500 mt-1">
               Pilih akun untuk melanjutkan ke <span className="font-semibold text-primary">EcoCycle AI</span>
             </p>

@@ -159,7 +159,7 @@ export default function LoginPage() {
           <div className="badge-logo flex items-center justify-center size-7 xl:size-8 shadow-sm">
             <i className="fa-solid fa-recycle text-white-app text-xs xl:text-sm" aria-hidden="true"></i>
           </div>
-          <span className="font-bold text-sm xl:text-base text-white tracking-tight">
+          <span className="font-heading font-bold text-sm xl:text-base text-white tracking-tight">
             EcoCycle AI
           </span>
         </div>
@@ -190,7 +190,7 @@ export default function LoginPage() {
             <div className="badge-logo flex items-center justify-center size-6">
               <i className="fa-solid fa-recycle text-white-app text-[10px]" aria-hidden="true"></i>
             </div>
-            <span className="font-bold text-primary text-sm">EcoCycle AI</span>
+            <span className="font-heading font-bold text-primary text-sm">EcoCycle AI</span>
           </div>
         </div>
 
@@ -201,8 +201,8 @@ export default function LoginPage() {
           {notification && (
             <div
               className={`mb-3.5 p-3 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 animate-in fade-in slide-in-from-top-2 shrink-0 ${notification.type === 'success'
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                  : 'bg-red-50 text-red-800 border border-red-200'
+                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                : 'bg-red-50 text-red-800 border border-red-200'
                 }`}
             >
               {notification.type === 'success' && <Check className="size-4 shrink-0 text-emerald-600" />}
@@ -212,7 +212,7 @@ export default function LoginPage() {
 
           {/* Heading (Frame 4 in Figma) */}
           <div className="flex flex-col gap-1 mb-4 xl:mb-6 text-left shrink-0">
-            <h1 className="text-2xl sm:text-[28px] xl:text-[32px] font-bold text-[#191C1D] leading-tight tracking-tight">
+            <h1 className="font-heading text-2xl sm:text-[28px] xl:text-[32px] font-extrabold text-[#191C1D] leading-tight tracking-tight">
               {isRegisterMode ? 'Buat Akun Baru' : 'Selamat Datang'}
             </h1>
             <p className="text-xs sm:text-sm xl:text-base text-[#191C1D] font-normal leading-relaxed">
@@ -287,8 +287,8 @@ export default function LoginPage() {
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
                   className={`size-4 sm:size-5 rounded-md flex items-center justify-center transition-all ${rememberMe
-                      ? 'bg-[#006B55] text-white shadow-xs'
-                      : 'bg-[#D9DEDC] group-hover:bg-[#CED5D2]'
+                    ? 'bg-[#006B55] text-white shadow-xs'
+                    : 'bg-[#D9DEDC] group-hover:bg-[#CED5D2]'
                     }`}
                 >
                   {rememberMe && <Check className="size-3 stroke-[3]" />}

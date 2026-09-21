@@ -21,7 +21,7 @@ export default function Stats() {
           {statistics.map((stat, idx) => (
             <React.Fragment key={stat.label}>
               <div className="flex flex-col gap-4 items-center text-center w-56">
-                <div className="font-jakarta font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
+                <div className="font-heading font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
                   {stat.value}
                 </div>
                 <div className="text-base leading-6 text-white-app">

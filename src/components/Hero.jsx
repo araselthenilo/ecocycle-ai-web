@@ -19,7 +19,7 @@ export default function Hero() {
       <div className="w-full lg:max-w-xl flex flex-col justify-between shrink-0 gap-3 order-last lg:order-first">
 
         {/* Heading */}
-        <h1 className="text-3xl sm:text-2xl lg:text-5xl font-bold leading-tight text-dark">
+        <h1 className="text-3xl sm:text-2xl lg:text-5xl font-extrabold leading-tight text-dark">
           Kelola Sampah Lebih Cerdas dengan AI
         </h1>
 
