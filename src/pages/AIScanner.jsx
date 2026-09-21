@@ -16,7 +16,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useRef, useState } from "react"
 
 const initialHandlingSteps = [
   "Arahkan kamera atau unggah foto sampah yang ingin dipindai.",
@@ -296,13 +295,6 @@ function AIScanner() {
               <FileUp />
               Unggah Gambar
             </Button>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              className="hidden"
-              accept="image/*"
-            />
           </CardContent>
         </Card>
 
@@ -444,8 +436,8 @@ function AIScanner() {
                 {isScanning
                   ? "Memindai..."
                   : hasScanned
-                  ? scanResult.name
-                  : "Belum ada objek"}
+                    ? scanResult.name
+                    : "Belum ada objek"}
               </span>
             </div>
 
@@ -455,8 +447,8 @@ function AIScanner() {
                 {isScanning
                   ? "Menganalisis..."
                   : hasScanned
-                  ? scanResult.material
-                  : "—"}
+                    ? scanResult.material
+                    : "—"}
               </span>
             </div>
 
@@ -466,8 +458,8 @@ function AIScanner() {
                 {isScanning
                   ? "Mengukur..."
                   : hasScanned
-                  ? scanResult.weight
-                  : "—"}
+                    ? scanResult.weight
+                    : "—"}
               </span>
             </div>
 
@@ -477,8 +469,8 @@ function AIScanner() {
                 {isScanning
                   ? "..."
                   : hasScanned
-                  ? scanResult.recyclable
-                  : "—"}
+                    ? scanResult.recyclable
+                    : "—"}
               </span>
             </div>
           </CardContent>
