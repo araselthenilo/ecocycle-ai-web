@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useRef, useState } from "react"
 
 const handlingSteps = [
   "Kosongkan isi botol dari sisa cairan.",
@@ -22,6 +23,18 @@ const handlingSteps = [
 ]
 
 function AIScanner() {
+  const fileInputRef = useRef(null)
+  const [selectedImage, setSelectedImage] = useState(plasticBottle)
+
+  function handleImageChange(event) {
+    const file = event.target.files?.[0]
+
+    if (!file) return
+
+    const imageUrl = URL.createObjectURL(file)
+    setSelectedImage(imageUrl)
+  }
+  
   return (
     <div className="scanner-page">
       <section className="scanner-upload-column">
@@ -36,22 +49,29 @@ function AIScanner() {
           </CardHeader>
 
           <CardContent className="scanner-upload-actions">
-            <Button className="scanner-action-button">
+            <Button className="scanner-action-button" onClick={() => fileInputRef.current?.click()}>
               <Camera />
               Ambil Foto
             </Button>
 
-            <Button className="scanner-action-button">
+            <Button className="scanner-action-button" onClick={() => fileInputRef.current?.click()}>
               <FileUp />
               Unggah Gambar
             </Button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              className="hidden"
+              accept="image/*"
+            />
           </CardContent>
         </Card>
 
         <div className="scanner-preview">
           <img
-            src={plasticBottle}
-            alt="Botol plastik"
+            src={selectedImage}
+            alt="Preview sampah"
             className="scanner-preview-image"
           />
         </div>

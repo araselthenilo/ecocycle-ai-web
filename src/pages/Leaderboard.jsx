@@ -9,6 +9,10 @@ import {
 
 import leaderboardUsers from "@/data/leaderboardUsers"
 
+function formatPoints(points) {
+  return new Intl.NumberFormat("id-ID").format(points)
+}
+
 const rankIcons = {
   1: Crown,
   2: Trophy,
@@ -45,10 +49,10 @@ function Leaderboard() {
   return (
     <section className="leaderboard-page">
       <div className="top-three-grid">
-        {topUsers.map(({ rank, name, status, ecoPoints, icon: Icon }) => (
+        {topUsers.map(({ id, rank, name, status, ecoPoints, icon: Icon }) => (
         <Card
             className={`top-user-card top-user-card-${rank}`}
-            key={name}
+            key={id}
         >
             <CardHeader className="top-user-header">
                 <div className="top-user-rank">
@@ -72,7 +76,7 @@ function Leaderboard() {
 
                 <div className="top-user-points">
                     <span>Eco Points</span>
-                    <strong>{ecoPoints.toLocaleString("id-ID")}</strong>
+                    <strong>{formatPoints(ecoPoints)}</strong>
                 </div>
             </CardContent>
         </Card>
@@ -92,8 +96,8 @@ function Leaderboard() {
             <span>Eco Points</span>
           </div>
 
-          {otherUsers.map(({ rank, name, status, ecoPoints }) => (
-            <div className="leaderboard-table-row" key={name}>
+          {otherUsers.map(({ id, rank, name, status, ecoPoints }) => (
+            <div className="leaderboard-table-row" key={id}>
                 <strong>#{rank}</strong>
 
                 <div className="leaderboard-user-cell">
@@ -110,7 +114,7 @@ function Leaderboard() {
                 </span>
 
                 <strong className="leaderboard-points">
-                {ecoPoints.toLocaleString("id-ID")}
+                {formatPoints(ecoPoints)}
                 </strong>
             </div>
             ))}
