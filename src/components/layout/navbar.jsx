@@ -6,7 +6,6 @@ import { useAuth } from "@/context/AuthContext"
 
 const pageGreetings = {
   dashboard: {
-    title: "Selamat Datang, Budi",
     description: "Sayangilah Bumi dengan cara kelola sampah-sampah ini.",
   },
   scanner: {
@@ -59,7 +58,7 @@ export function Navbar({ activePage }) {
 
           <Button
             variant="outline"
-            className="profile-button"
+            className="profile-button !px-2"
             aria-label={`Profil ${userName}`}
             onMouseEnter={(event) => event.currentTarget.blur()}
           >

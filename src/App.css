@@ -642,11 +642,13 @@ body {
 }
 
 .scanner-action-button {
-  min-width: 130px;
+  min-width: 150px;
   background: white;
   color: var(--eco-green);
   font-size: 12px;
   font-weight: 800;
+  padding: 8px 0;
+  gap: 5px;
 }
 
 .scanner-action-button:hover {
@@ -1312,6 +1314,29 @@ footer {
 .recycle-map-page {
   width: 100%;
   min-width: 0;
+}
+
+.recycle-map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.recycle-map-toolbar label {
+  color: var(--eco-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.recycle-map-toolbar select {
+  padding: 8px 12px;
+  border: 1px solid var(--eco-border);
+  border-radius: 8px;
+  background: white;
+  color: var(--eco-text);
+  font-size: 12px;
 }
 
 .recycle-map-wrapper {
