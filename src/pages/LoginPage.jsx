@@ -151,7 +151,7 @@ export default function LoginPage() {
     <div className="h-screen w-full bg-white flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden font-sans select-none">
       {/* LEFT COLUMN: Visual Banner (Exact Figma Node 4:459 Reconstructed with Pure Code) */}
       {/* Hidden on smaller devices (< lg), perfectly fitted on desktop */}
-      <div className="relative hidden lg:block lg:w-[58%] xl:w-[59.7%] h-full bg-[#1F7A65] overflow-hidden shrink-0">
+      <div className="relative hidden lg:block lg:w-[58%] xl:w-[59.7%] h-full bg-primary overflow-hidden shrink-0">
         <LoginBackground className="w-full h-full" />
 
         {/* Subtle Brand Watermark on desktop */}
@@ -212,10 +212,10 @@ export default function LoginPage() {
 
           {/* Heading (Frame 4 in Figma) */}
           <div className="flex flex-col gap-1 mb-4 xl:mb-6 text-left shrink-0">
-            <h1 className="font-heading text-2xl sm:text-[28px] xl:text-[32px] font-extrabold text-[#191C1D] leading-tight tracking-tight">
+            <h1 className="font-heading text-2xl sm:text-[28px] xl:text-[32px] font-extrabold text-dark leading-tight tracking-tight">
               {isRegisterMode ? 'Buat Akun Baru' : 'Selamat Datang'}
             </h1>
-            <p className="text-xs sm:text-sm xl:text-base text-[#191C1D] font-normal leading-relaxed">
+            <p className="text-xs sm:text-sm xl:text-base text-dark font-normal leading-relaxed">
               {isRegisterMode
                 ? 'Daftar sekarang untuk mulai mengelola sampah'
                 : 'Buat akun baru atau masuk yang sudah ada'}
@@ -228,7 +228,7 @@ export default function LoginPage() {
             {/* Optional Name field in Register mode */}
             {isRegisterMode && (
               <div className="flex flex-col gap-1">
-                <label className="text-xs xl:text-sm font-medium text-[#191C1D]">
+                <label className="text-xs xl:text-sm font-medium text-dark">
                   Nama Lengkap
                 </label>
                 <input
@@ -236,14 +236,14 @@ export default function LoginPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Nama lengkap Anda"
-                  className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-[#E9ECEF] text-sm xl:text-base text-[#191C1D] placeholder-[#8F9B96] outline-none focus:ring-2 focus:ring-[#006B55]/25 transition-all"
+                  className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
                 />
               </div>
             )}
 
             {/* Email Field (Node 4:444) */}
             <div className="flex flex-col gap-1">
-              <label className="text-xs xl:text-sm font-medium text-[#191C1D]">
+              <label className="text-xs xl:text-sm font-medium text-dark">
                 Email
               </label>
               <input
@@ -252,13 +252,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="contoh@email.com"
-                className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-[#E9ECEF] text-sm xl:text-base text-[#191C1D] placeholder-[#8F9B96] outline-none focus:ring-2 focus:ring-[#006B55]/25 transition-all"
+                className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
               />
             </div>
 
             {/* Password Field (Node 4:445) */}
             <div className="flex flex-col gap-1">
-              <label className="text-xs xl:text-sm font-medium text-[#191C1D]">
+              <label className="text-xs xl:text-sm font-medium text-dark">
                 Password
               </label>
               <div className="relative w-full">
@@ -268,12 +268,12 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="password"
-                  className="w-full h-11 lg:h-11 xl:h-13 px-4 pr-12 xl:px-5 xl:pr-14 leaf-shape bg-[#E9ECEF] text-sm xl:text-base text-[#191C1D] placeholder-[#8F9B96] outline-none focus:ring-2 focus:ring-[#006B55]/25 transition-all"
+                  className="w-full h-11 lg:h-11 xl:h-13 px-4 pr-12 xl:px-5 xl:pr-14 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 xl:right-4 top-1/2 -translate-y-1/2 p-1.5 text-[#8F9B96] hover:text-[#191C1D] transition-colors focus:outline-none cursor-pointer flex items-center justify-center"
+                  className="absolute right-3.5 xl:right-4 top-1/2 -translate-y-1/2 p-1.5 text-muted hover:text-dark transition-colors focus:outline-none cursor-pointer flex items-center justify-center"
                   aria-label={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
                 >
                   <i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'} text-base xl:text-lg`} />
@@ -287,13 +287,13 @@ export default function LoginPage() {
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
                   className={`size-4 sm:size-5 rounded-md flex items-center justify-center transition-all ${rememberMe
-                    ? 'bg-[#006B55] text-white shadow-xs'
-                    : 'bg-[#D9DEDC] group-hover:bg-[#CED5D2]'
+                    ? 'bg-primary text-white shadow-xs'
+                    : 'bg-section border border-muted/30 group-hover:bg-muted/20'
                     }`}
                 >
                   {rememberMe && <Check className="size-3 stroke-[3]" />}
                 </div>
-                <span className="text-xs xl:text-sm text-[#191C1D] font-medium">
+                <span className="text-xs xl:text-sm text-dark font-medium">
                   Ingat saya
                 </span>
               </label>
@@ -306,7 +306,7 @@ export default function LoginPage() {
                     message: 'Instruksi reset password telah dikirim ke email terdaftar.',
                   });
                 }}
-                className="text-xs xl:text-sm font-normal text-[#191C1D] hover:text-[#006B55] transition-colors cursor-pointer"
+                className="text-xs xl:text-sm font-normal text-dark hover:text-primary transition-colors cursor-pointer"
               >
                 Lupa password?
               </button>
@@ -316,7 +316,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-[#006B55] hover:bg-[#005644] active:scale-[0.99] text-white font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:shadow-md disabled:opacity-70 mt-0.5"
+              className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-primary hover:bg-primary-hover active:scale-[0.99] text-white font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:shadow-md disabled:opacity-70 mt-0.5"
             >
               <span>{isRegisterMode ? 'Daftar' : 'Login'}</span>
               <i className="fa-solid fa-arrow-right text-base xl:text-lg" />
@@ -325,18 +325,18 @@ export default function LoginPage() {
 
           {/* Divider: "ATAU MASUK DENGAN" (Node 4:450) */}
           <div className="flex items-center justify-center gap-3 my-3 xl:my-4 w-full shrink-0">
-            <div className="flex-1 h-[1px] bg-[#E3E7E5]" />
-            <span className="text-[10px] sm:text-xs font-semibold tracking-wider text-[#6C7A74] whitespace-nowrap uppercase">
+            <div className="flex-1 h-[1px] bg-muted/20" />
+            <span className="text-[10px] sm:text-xs font-semibold tracking-wider text-muted whitespace-nowrap uppercase">
               ATAU MASUK DENGAN
             </span>
-            <div className="flex-1 h-[1px] bg-[#E3E7E5]" />
+            <div className="flex-1 h-[1px] bg-muted/20" />
           </div>
 
           {/* Google Button (Node 4:457) */}
           <button
             type="button"
             onClick={handleGoogleClick}
-            className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-[#E9ECEF] hover:bg-[#DDE2E5] active:scale-[0.99] text-[#191C1D] font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-2xs shrink-0"
+            className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-section hover:bg-muted/15 active:scale-[0.99] text-dark font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-2xs shrink-0"
           >
             <span>Google</span>
             <svg className="size-4 sm:size-5 xl:size-6" viewBox="0 0 24 24">
@@ -360,14 +360,14 @@ export default function LoginPage() {
           </button>
 
           {/* Footer Text (Node 4:458) */}
-          <div className="mt-3.5 xl:mt-5 text-center text-xs sm:text-sm text-[#191C1D] shrink-0">
+          <div className="mt-3.5 xl:mt-5 text-center text-xs sm:text-sm text-dark shrink-0">
             <span>
               {isRegisterMode ? 'Sudah punya akun? ' : 'Belum punya akun? '}
             </span>
             <button
               type="button"
               onClick={() => setIsRegisterMode(!isRegisterMode)}
-              className="text-[#006B55] font-semibold hover:underline cursor-pointer"
+              className="text-primary font-semibold hover:underline cursor-pointer"
             >
               {isRegisterMode ? 'Masuk sekarang' : 'Daftar sekarang'}
             </button>

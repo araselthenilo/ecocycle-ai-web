@@ -98,7 +98,7 @@ const chartData = [
 const chartConfig = {
   amount: {
     label: "Sampah",
-    color: "#007a63",
+    color: "var(--eco-green)",
   },
 }
 
@@ -118,7 +118,7 @@ function Dashboard() {
                 </span>
 
                 <span className="stat-label">{label}</span>
-                <strong className="text-[#303634]">{value}</strong>
+                <strong className="text-eco-text">{value}</strong>
               </CardContent>
             </Card>
           ))}
@@ -126,7 +126,7 @@ function Dashboard() {
 
         <Card className="weekly-card">
           <CardHeader className="weekly-header">
-            <CardTitle className="text-[#303634]">Progress Mingguan</CardTitle>
+            <CardTitle className="text-eco-text">Progress Mingguan</CardTitle>
 
             <div className="progress-tabs">
               {["Sampah", "Points"].map((tab) => (
@@ -160,7 +160,7 @@ function Dashboard() {
               >
                 <CartesianGrid
                   vertical={false}
-                  stroke="#dce3df"
+                  stroke="var(--eco-border)"
                   strokeDasharray="3 3"
                 />
 
@@ -170,7 +170,7 @@ function Dashboard() {
                   axisLine={false}
                   tickMargin={10}
                   tick={{
-                    fill: "#303634",
+                    fill: "var(--eco-text)",
                     fontSize: 10,
                     fontWeight: 700,
                   }}
@@ -191,7 +191,7 @@ function Dashboard() {
             </ChartContainer>
 
             <div className="target-row">
-              <strong className="text-[#303634]">Target Bulan Ini</strong>
+              <strong className="text-eco-text">Target Bulan Ini</strong>
               <span>2,4 kg / 3 kg</span>
             </div>
 
