@@ -39,8 +39,8 @@ export default function Solutions() {
             >
               <div className="flex flex-col gap-3 lg:gap-4">
                 <div className="flex items-center gap-3 lg:gap-4">
-                  <div className="size-10 lg:size-12 rounded-xl bg-[#00B894]/20 flex items-center justify-center shrink-0">
-                    <i className={`${feature.iconClass} text-lg lg:text-xl text-[#006B55]`} aria-hidden="true"></i>
+                  <div className="size-10 lg:size-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <i className={`${feature.iconClass} text-lg lg:text-xl text-primary`} aria-hidden="true"></i>
                   </div>
                   <h3 className="text-lg sm:text-xl md:text-base lg:text-xl xl:text-2xl font-semibold leading-snug text-dark break-words">
                     {feature.title}

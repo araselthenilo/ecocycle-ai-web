@@ -48,7 +48,7 @@ export default function Hero() {
         </div>
 
         {/* Line Divider (CSS) */}
-        <div className="w-full h-px bg-[#6C7A74]/30 my-2" aria-hidden="true" />
+        <div className="w-full h-px bg-muted/30 my-2" aria-hidden="true" />
 
         {/* User Join Social Proof */}
         <div className="flex items-center gap-4 pt-1">

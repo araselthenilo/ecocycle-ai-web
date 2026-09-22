@@ -54,9 +54,9 @@ function RecycleMap() {
               center={bank.position}
               radius={10}
               pathOptions={{
-                color: "#ffffff",
+                color: "var(--color-card, white)",
                 weight: 3,
-                fillColor: "#007a63",
+                fillColor: "var(--eco-green)",
                 fillOpacity: 1,
               }}
             >

@@ -224,7 +224,7 @@ export default function LoginBackground({ className = '' }) {
   }, []);
 
   return (
-    <div className={`relative w-full h-full overflow-hidden bg-[#1F7A65] ${className}`}>
+    <div className={`relative w-full h-full overflow-hidden bg-primary ${className}`}>
       {/* Exact geometric circles, moving smoothly like floating lava lamp bubbles */}
       <canvas
         ref={canvasRef}

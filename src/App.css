@@ -197,7 +197,7 @@
 
 body {
   margin: 0;
-  background: #f8faf9;
+  background: var(--color-bg-page);
   color: var(--eco-text);
 }
 
@@ -293,7 +293,7 @@ body {
 
 /* Navbar */
 .dashboard-inset {
-  background: #f8faf9;
+  background: var(--color-bg-page);
 }
 
 .dashboard-header {
@@ -350,6 +350,7 @@ body {
   gap: 9px;
   border-color: var(--eco-border);
   border-radius: 999px;
+  padding: 0.3rem 0.5rem;
 }
 
 .profile-button:hover,
@@ -531,7 +532,7 @@ body {
 }
 
 .progress-tabs button {
-  color: #303634;
+  color: var(--eco-text);
   height: 27px;
   padding: 0 10px;
   font-size: 11px;
@@ -549,7 +550,7 @@ body {
 
 .progress-tabs button.inactive-tab {
   background: transparent;
-  color: #303634;
+  color: var(--eco-text);
 }
 
 .progress-tabs button.inactive-tab:hover {
@@ -1142,8 +1143,15 @@ footer {
 }
 
 @keyframes pulseButton {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 .scanner-preview {
@@ -1283,8 +1291,17 @@ footer {
 }
 
 @keyframes liveIndicatorPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
 }
 
 .scanner-close-camera-btn {
@@ -1349,8 +1366,13 @@ footer {
 }
 
 @keyframes laserScanSweep {
-  0% { top: 4%; }
-  100% { top: 96%; }
+  0% {
+    top: 4%;
+  }
+
+  100% {
+    top: 96%;
+  }
 }
 
 .scanner-scanning-pill {
@@ -1943,6 +1965,7 @@ footer {
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2017,7 +2040,7 @@ footer {
 .profile-large-avatar {
   display: grid;
   place-items: center;
-  background: #006b55;
+  background: var(--color-primary);
   color: white;
   font-size: 30px;
   font-weight: 800;
@@ -2053,28 +2076,28 @@ footer {
 .profile-user-name {
   font-size: 22px;
   font-weight: 800;
-  color: #191c1d;
+  color: var(--color-dark);
   margin: 0;
 }
 
 .profile-role-pill {
   font-size: 11px;
   font-weight: 700;
-  color: #005644;
-  background: #baeed9;
+  color: var(--color-primary-hover);
+  background: var(--color-primary-light);
   padding: 3px 10px;
   border-radius: 999px;
 }
 
 .profile-email-text {
   font-size: 13px;
-  color: #6c7a74;
+  color: var(--color-muted);
   margin: 0;
 }
 
 .profile-bio-text {
   font-size: 13px;
-  color: #3c4a44;
+  color: var(--color-body);
   line-height: 1.5;
   margin: 4px 0 6px;
   max-width: 640px;
@@ -2107,8 +2130,8 @@ footer {
 }
 
 .profile-id-btn:hover {
-  border-color: #006b55;
-  color: #006b55;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
   background: #f0fdf4;
 }
 
@@ -2129,19 +2152,19 @@ footer {
 }
 
 .profile-action-btn.edit-btn {
-  border-color: #006b55;
-  color: #006b55;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .profile-action-btn.edit-btn:hover {
-  background: #006b55;
+  background: var(--color-primary);
   color: white;
 }
 
 .profile-level-box {
   margin-top: 20px;
   padding: 16px 18px;
-  background: #f8faf9;
+  background: var(--color-bg-page);
   border: 1px solid #e5e7eb;
   border-radius: 12px;
 }
@@ -2157,13 +2180,13 @@ footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #191c1d;
+  color: var(--color-dark);
 }
 
 .profile-level-points {
   font-size: 12px;
   font-weight: 600;
-  color: #006b55;
+  color: var(--color-primary);
 }
 
 .profile-progress-bar-track {
@@ -2218,14 +2241,14 @@ footer {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #6c7a74;
+  color: var(--color-muted);
   font-weight: 600;
 }
 
 .profile-stat-value {
   font-size: 18px;
   font-weight: 800;
-  color: #006b55;
+  color: var(--color-primary);
 }
 
 .profile-stat-sub {
@@ -2246,7 +2269,7 @@ footer {
 .profile-section-title {
   font-size: 16px;
   font-weight: 800;
-  color: #191c1d;
+  color: var(--color-dark);
 }
 
 .profile-badge-count {
@@ -2376,8 +2399,8 @@ footer {
 .profile-activity-points {
   font-size: 11px;
   font-weight: 700;
-  color: #005644;
-  background: #baeed9;
+  color: var(--color-primary-hover);
+  background: var(--color-primary-light);
   padding: 2px 8px;
   border-radius: 999px;
 }
@@ -2416,6 +2439,7 @@ footer {
     transform: scale(0.96);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -2434,7 +2458,7 @@ footer {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: #191c1d;
+  color: var(--color-dark);
 }
 
 .profile-modal-close {
@@ -2448,7 +2472,7 @@ footer {
 
 .profile-modal-close:hover {
   background: #f3f4f6;
-  color: #191c1d;
+  color: var(--color-dark);
 }
 
 .profile-modal-form {
@@ -2483,8 +2507,8 @@ footer {
 
 .profile-textarea:focus {
   outline: none;
-  border-color: #006b55;
-  box-shadow: 0 0 0 1px #006b55;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
 }
 
 .profile-form-grid {
@@ -2505,6 +2529,7 @@ footer {
   .profile-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .profile-two-columns {
     grid-template-columns: 1fr;
   }
@@ -2514,25 +2539,31 @@ footer {
   .profile-stats-grid {
     grid-template-columns: 1fr;
   }
+
   .profile-badges-grid {
     grid-template-columns: 1fr;
   }
+
   .profile-hero-main {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
+
   .profile-identity {
     align-items: center;
   }
+
   .profile-meta-tags {
     justify-content: center;
   }
+
   .profile-actions-column {
     margin-top: 16px;
     width: 100%;
     justify-content: center;
   }
+
   .profile-form-grid {
     grid-template-columns: 1fr;
   }

@@ -1,9 +1,9 @@
 import { Bell } from "lucide-react"
-import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
+import ProfileButton from "@/components/ProfileButton"
 
 const pageGreetings = {
   dashboard: {
@@ -27,18 +27,8 @@ const pageGreetings = {
   },
 }
 
-function getInitials(name = "Pengguna") {
-  return name
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase()
-}
-
 export function Navbar({ activePage }) {
   const { user } = useAuth()
-  const navigate = useNavigate()
 
   const userName = user?.name || "Pengguna"
   const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
@@ -62,32 +52,7 @@ export function Navbar({ activePage }) {
             <Bell />
           </Button>
 
-          <Button
-            variant="outline"
-            className={`profile-button ${activePage === "profile" ? "profile-button-active" : ""}`}
-            aria-label={`Profil ${userName}`}
-            onClick={() => navigate("/profile")}
-            onMouseEnter={(event) => event.currentTarget.blur()}
-          >
-            {user?.avatar ? (
-              <img
-                src={user.avatar}
-                alt={userName}
-                className="profile-avatar-image"
-              />
-            ) : (
-              <span className="profile-avatar">
-                {getInitials(userName)}
-              </span>
-            )}
-
-            <span className="profile-text">
-              <strong>{userName}</strong>
-              <small>
-                {user?.role === "admin" ? "ADMIN" : "ANGGOTA"}
-              </small>
-            </span>
-          </Button>
+          <ProfileButton />
         </div>
       </div>
 

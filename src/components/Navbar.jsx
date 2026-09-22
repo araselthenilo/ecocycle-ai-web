@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogOut, Sparkles, ChevronDown } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import content from '../data/content.json';
 import { useAuth } from '../context/AuthContext';
+import ProfileButton from './ProfileButton';
 
 const { navLinks } = content;
 
@@ -13,8 +14,6 @@ export default function Navbar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     let ticking = false;
@@ -44,17 +43,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setUserDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   const handleDaftarClick = (e) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -63,7 +51,6 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    setUserDropdownOpen(false);
     setMobileMenuOpen(false);
   };
 
@@ -103,62 +90,7 @@ export default function Navbar() {
         {/* Desktop Auth Section */}
         <div className="hidden md:flex items-center shrink-0">
           {isAuthenticated ? (
-            /* Logged-in User Profile Dropdown */
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2.5 py-1.5 px-3 rounded-full bg-primary/10 hover:bg-primary/15 border border-primary/20 transition-all cursor-pointer select-none"
-              >
-                <img
-                  src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
-                  alt={user.name}
-                  className="size-8 rounded-full object-cover border border-primary/30 shrink-0"
-                />
-                <span className="font-semibold text-sm text-primary max-w-[120px] truncate">
-                  {user.name}
-                </span>
-                <ChevronDown className={`size-4 text-primary transition-transform ${userDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Profile Dropdown Menu */}
-              {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-black/10 py-3 px-4 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="flex items-center gap-3 pb-3 border-b border-black/10">
-                    <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="size-10 rounded-full object-cover border border-gray-200"
-                    />
-                    <div className="min-w-0">
-                      <p className="font-bold text-sm text-gray-900 truncate">{user.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                      {user.provider === 'google' && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md mt-1">
-                          <Sparkles className="size-3" /> Akun Google
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="py-2 flex flex-col gap-1">
-                    <div className="px-2 py-1.5 text-xs text-gray-500 flex items-center justify-between">
-                      <span>Poin Lingkungan</span>
-                      <span className="font-bold text-primary">120 Poin</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 border-t border-black/10">
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-2 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors cursor-pointer"
-                    >
-                      <LogOut className="size-4" />
-                      Keluar
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <ProfileButton />
           ) : (
             /* Not Logged In: "Daftar" Button */
             <Button

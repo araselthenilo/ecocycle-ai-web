@@ -78,7 +78,7 @@ export function AppSidebar({ activePage, onNavigate }) {
                       isActive={isActive}
                       tooltip={label}
                       onClick={() => onNavigate(page)}
-                      className={isActive ? "sidebar-menu-active" : ""}
+                      className={"cursor-pointer " + (isActive ? "sidebar-menu-active" : "")}
                     >
                       <Icon />
                       <span>{label}</span>
@@ -105,7 +105,7 @@ export function AppSidebar({ activePage, onNavigate }) {
                       isActive={isActive}
                       tooltip={label}
                       onClick={() => (page ? onNavigate(page) : null)}
-                      className={isActive ? "sidebar-menu-active" : ""}
+                      className={"cursor-pointer " + (isActive ? "sidebar-menu-active" : "")}
                     >
                       <Icon />
                       <span>{label}</span>
