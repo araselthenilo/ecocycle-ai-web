@@ -144,6 +144,29 @@
   border-bottom-right-radius: 0;
 }
 
+/* Elegant subtle scrollbar for auth & modal containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 107, 85, 0.2);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 107, 85, 0.4);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 107, 85, 0.2) transparent;
+}
+
 .card-feature {
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
@@ -205,50 +228,39 @@ body {
 .ecocycle-sidebar {
   background: var(--eco-green);
   color: white;
+  box-shadow: 5px 0 10px -3px rgba(35, 57, 44, 0.1);
+  border-right: none !important;
 }
 
 .ecocycle-sidebar [data-sidebar="sidebar"] {
   background: var(--eco-green);
 }
 
-.ecocycle-sidebar [data-sidebar="menu-button"] {
-  color: white;
-  background: transparent;
-}
-
-.ecocycle-sidebar [data-sidebar="menu-button"]:hover:not([data-active="true"]) {
-  background: var(--eco-green-dark);
-  color: white;
-}
-
-.ecocycle-sidebar [data-sidebar="menu-button"][data-active="true"] {
+.ecocycle-sidebar [data-sidebar="header"] {
   background: white;
-  color: var(--eco-green);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 14px 16px;
 }
 
-.ecocycle-sidebar [data-sidebar="menu-button"][data-active="true"]:hover {
-  background: white;
-  color: var(--eco-green);
-}
-
-.sidebar-brand {
+.ecocycle-sidebar .sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
-  font-size: 14px;
-  font-weight: 800;
+  padding: 0;
+  color: var(--eco-green-dark);
 }
 
-.sidebar-brand-icon {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  border-radius: 8px;
-  background: white;
-  color: var(--eco-green);
-  font-size: 20px;
+.ecocycle-sidebar .sidebar-brand span {
+  color: var(--eco-green-dark);
+  font-family: var(--font-heading, "Manrope", sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ecocycle-sidebar [data-sidebar="separator"] {
+  background-color: rgba(255, 255, 255, 0.16);
+  height: 1px;
 }
 
 .ecocycle-sidebar [data-sidebar="menu-button"] {
@@ -460,8 +472,8 @@ body {
 
 .stat-card {
   min-height: 123px;
-  border-color: var(--eco-border);
-  border-radius: 15px 15px 0 15px;
+  border-color: var(--eco-green-dark);
+  border-radius: 0 15px 0 15px;
   background: white;
 }
 

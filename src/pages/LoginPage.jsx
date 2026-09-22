@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Check, ArrowLeft } from 'lucide-react';
+import { Check, ArrowLeft, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import LoginBackground from '../components/auth/LoginBackground';
 import { useAuth } from '../context/AuthContext';
@@ -18,6 +18,15 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState('');
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+
+  // Auto-dismiss toast notification after 4.5 seconds
+  useEffect(() => {
+    if (!notification) return;
+    const timer = setTimeout(() => {
+      setNotification(null);
+    }, 4500);
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   // Check if valid client ID is configured in .env
   const isGoogleConfigured = Boolean(
@@ -148,18 +157,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen w-full bg-white flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden font-sans select-none">
+    <div className="h-screen w-full bg-white flex flex-col lg:flex-row overflow-hidden font-sans select-none">
       {/* LEFT COLUMN: Visual Banner (Exact Figma Node 4:459 Reconstructed with Pure Code) */}
       {/* Hidden on smaller devices (< lg), perfectly fitted on desktop */}
       <div className="relative hidden lg:block lg:w-[58%] xl:w-[59.7%] h-full bg-primary overflow-hidden shrink-0">
         <LoginBackground className="w-full h-full" />
 
-        {/* Subtle Brand Watermark on desktop */}
-        <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-          <div className="badge-logo flex items-center justify-center size-7 xl:size-8 shadow-sm">
-            <i className="fa-solid fa-recycle text-white-app text-xs xl:text-sm" aria-hidden="true"></i>
-          </div>
-          <span className="font-heading font-bold text-sm xl:text-base text-white tracking-tight">
+        {/* Brand Badge on desktop */}
+        <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2 rounded-bl-2xl rounded-tr-2xl shadow-sm border border-white/80 transition-all hover:scale-[1.02]">
+          <img
+            src="/ecocyle-logo.svg"
+            alt="EcoCycle AI Logo"
+            className="size-7 xl:size-8 shrink-0 object-contain drop-shadow-xs"
+          />
+          <span className="font-heading font-bold text-sm xl:text-base text-primary tracking-tight">
             EcoCycle AI
           </span>
         </div>
@@ -167,18 +178,18 @@ export default function LoginPage() {
         {/* Floating Back to Home button on banner */}
         <Link
           to="/"
-          className="absolute bottom-6 left-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs font-semibold tracking-wide transition-all border border-white/20"
+          className="absolute bottom-6 left-6 inline-flex items-center gap-2 px-4 py-2 rounded-tl-2xl rounded-br-2xl bg-white/95 hover:bg-white backdrop-blur-md text-dark hover:text-primary text-xs font-semibold tracking-wide transition-all border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
         >
-          <ArrowLeft className="size-3.5" />
-          Kembali ke Beranda
+          <ArrowLeft className="size-3.5 text-primary group-hover:-translate-x-0.5 transition-transform" />
+          <span>Kembali ke Beranda</span>
         </Link>
       </div>
 
       {/* RIGHT COLUMN: Form Login (Exact Figma Node 4:439) */}
-      <div className="w-full lg:w-[42%] xl:w-[40.3%] h-full flex flex-col justify-center items-center px-6 sm:px-10 lg:px-8 xl:px-14 py-8 lg:py-4 bg-white relative overflow-y-auto lg:overflow-hidden">
+      <div className="w-full lg:w-[42%] xl:w-[40.3%] h-full flex flex-col items-center px-6 sm:px-10 lg:px-8 xl:px-12 py-6 lg:py-4 bg-white relative overflow-y-auto custom-scrollbar">
 
         {/* Mobile / Tablet Top Header with Back button */}
-        <div className="w-full max-w-[440px] flex items-center justify-between lg:hidden mb-6 shrink-0">
+        <div className="w-full max-w-[420px] xl:max-w-[440px] flex items-center justify-between lg:hidden mb-4 sm:mb-6 shrink-0">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-dark/70 hover:text-primary text-xs font-semibold"
@@ -187,32 +198,21 @@ export default function LoginPage() {
             Kembali ke Beranda
           </Link>
           <div className="flex items-center gap-2">
-            <div className="badge-logo flex items-center justify-center size-6">
-              <i className="fa-solid fa-recycle text-white-app text-[10px]" aria-hidden="true"></i>
-            </div>
+            <img
+              src="/ecocyle-logo.svg"
+              alt="EcoCycle AI Logo"
+              className="size-6 shrink-0 object-contain"
+            />
             <span className="font-heading font-bold text-primary text-sm">EcoCycle AI</span>
           </div>
         </div>
 
-        {/* Form Container: Fitted for desktop viewports without vertical scroll */}
-        <div className="w-full max-w-[420px] xl:max-w-[460px] flex flex-col justify-center my-auto">
-
-          {/* Toast / Notification banner */}
-          {notification && (
-            <div
-              className={`mb-3.5 p-3 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 animate-in fade-in slide-in-from-top-2 shrink-0 ${notification.type === 'success'
-                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                : 'bg-red-50 text-red-800 border border-red-200'
-                }`}
-            >
-              {notification.type === 'success' && <Check className="size-4 shrink-0 text-emerald-600" />}
-              <span>{notification.message}</span>
-            </div>
-          )}
+        {/* Form Container: Fitted for desktop viewports and scrollable when height is constrained (e.g. 150% zoom) */}
+        <div className="w-full max-w-[400px] xl:max-w-[440px] flex flex-col justify-center my-auto py-2 sm:py-4">
 
           {/* Heading (Frame 4 in Figma) */}
-          <div className="flex flex-col gap-1 mb-4 xl:mb-6 text-left shrink-0">
-            <h1 className="font-heading text-2xl sm:text-[28px] xl:text-[32px] font-extrabold text-dark leading-tight tracking-tight">
+          <div className="flex flex-col gap-0.5 sm:gap-1 mb-3 xl:mb-5 text-left shrink-0">
+            <h1 className="font-heading text-xl sm:text-2xl xl:text-[28px] font-extrabold text-dark leading-tight tracking-tight">
               {isRegisterMode ? 'Buat Akun Baru' : 'Selamat Datang'}
             </h1>
             <p className="text-xs sm:text-sm xl:text-base text-dark font-normal leading-relaxed">
@@ -223,7 +223,7 @@ export default function LoginPage() {
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3 xl:gap-4 w-full">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 sm:gap-3 xl:gap-3.5 w-full">
 
             {/* Optional Name field in Register mode */}
             {isRegisterMode && (
@@ -236,7 +236,7 @@ export default function LoginPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Nama lengkap Anda"
-                  className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                  className="w-full h-10 sm:h-11 xl:h-12 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
                 />
               </div>
             )}
@@ -252,7 +252,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="contoh@email.com"
-                className="w-full h-11 lg:h-11 xl:h-13 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                className="w-full h-10 sm:h-11 xl:h-12 px-4 xl:px-5 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
               />
             </div>
 
@@ -268,7 +268,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="password"
-                  className="w-full h-11 lg:h-11 xl:h-13 px-4 pr-12 xl:px-5 xl:pr-14 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                  className="w-full h-10 sm:h-11 xl:h-12 px-4 pr-12 xl:px-5 xl:pr-14 leaf-shape bg-section text-sm xl:text-base text-dark placeholder-muted outline-none focus:ring-2 focus:ring-primary/25 transition-all"
                 />
                 <button
                   type="button"
@@ -286,7 +286,7 @@ export default function LoginPage() {
               <label className="flex items-center gap-2 cursor-pointer select-none group">
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
-                  className={`size-4 sm:size-5 rounded-md flex items-center justify-center transition-all ${rememberMe
+                  className={`size-4 sm:size-5 rounded-tr-md rounded-bl-md flex items-center justify-center transition-all ${rememberMe
                     ? 'bg-primary text-white shadow-xs'
                     : 'bg-section border border-muted/30 group-hover:bg-muted/20'
                     }`}
@@ -316,7 +316,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-primary hover:bg-primary-hover active:scale-[0.99] text-white font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:shadow-md disabled:opacity-70 mt-0.5"
+              className="w-full h-10 sm:h-11 xl:h-12 leaf-shape bg-primary hover:bg-primary-hover active:scale-[0.99] text-white font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:shadow-md disabled:opacity-70 mt-0.5"
             >
               <span>{isRegisterMode ? 'Daftar' : 'Login'}</span>
               <i className="fa-solid fa-arrow-right text-base xl:text-lg" />
@@ -324,7 +324,7 @@ export default function LoginPage() {
           </form>
 
           {/* Divider: "ATAU MASUK DENGAN" (Node 4:450) */}
-          <div className="flex items-center justify-center gap-3 my-3 xl:my-4 w-full shrink-0">
+          <div className="flex items-center justify-center gap-3 my-2.5 xl:my-3.5 w-full shrink-0">
             <div className="flex-1 h-[1px] bg-muted/20" />
             <span className="text-[10px] sm:text-xs font-semibold tracking-wider text-muted whitespace-nowrap uppercase">
               ATAU MASUK DENGAN
@@ -336,7 +336,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={handleGoogleClick}
-            className="w-full h-11 lg:h-11 xl:h-13 leaf-shape bg-section hover:bg-muted/15 active:scale-[0.99] text-dark font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-2xs shrink-0"
+            className="w-full h-10 sm:h-11 xl:h-12 leaf-shape bg-section hover:bg-muted/15 active:scale-[0.99] text-dark font-bold text-sm sm:text-base xl:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer shadow-2xs shrink-0"
           >
             <span>Google</span>
             <svg className="size-4 sm:size-5 xl:size-6" viewBox="0 0 24 24">
@@ -360,7 +360,7 @@ export default function LoginPage() {
           </button>
 
           {/* Footer Text (Node 4:458) */}
-          <div className="mt-3.5 xl:mt-5 text-center text-xs sm:text-sm text-dark shrink-0">
+          <div className="mt-2.5 xl:mt-4 text-center text-xs sm:text-sm text-dark shrink-0">
             <span>
               {isRegisterMode ? 'Sudah punya akun? ' : 'Belum punya akun? '}
             </span>
@@ -382,6 +382,52 @@ export default function LoginPage() {
         onClose={() => setIsGoogleModalOpen(false)}
         onSelectAccount={handleGoogleAccountSelected}
       />
+
+      {/* Floating Modern Toast Notification */}
+      {notification && (
+        <div className="fixed top-5 right-5 z-50 max-w-sm sm:max-w-md w-[calc(100%-2.5rem)] animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto">
+          <div
+            role="alert"
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-2xl shadow-2xl backdrop-blur-md border text-xs sm:text-sm font-medium transition-all ${
+              notification.type === 'success'
+                ? 'bg-white/95 border-emerald-200/90 text-emerald-950 shadow-emerald-900/10'
+                : 'bg-white/95 border-rose-200/90 text-rose-950 shadow-rose-900/10'
+            }`}
+          >
+            <div
+              className={`size-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                notification.type === 'success'
+                  ? 'bg-emerald-100 text-emerald-700'
+                  : 'bg-rose-100 text-rose-700'
+              }`}
+            >
+              {notification.type === 'success' ? (
+                <CheckCircle2 className="size-4 stroke-[2.5]" />
+              ) : (
+                <AlertCircle className="size-4 stroke-[2.5]" />
+              )}
+            </div>
+
+            <div className="flex-1 min-w-0 pr-1">
+              <p className="font-semibold text-xs sm:text-sm leading-snug">
+                {notification.type === 'success' ? 'Berhasil' : 'Perhatian'}
+              </p>
+              <p className="text-muted text-[11px] sm:text-xs mt-0.5 leading-relaxed break-words">
+                {notification.message}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setNotification(null)}
+              className="text-muted hover:text-dark p-1 rounded-lg hover:bg-black/5 transition-colors shrink-0 cursor-pointer"
+              aria-label="Tutup notifikasi"
+            >
+              <X className="size-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

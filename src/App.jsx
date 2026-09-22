@@ -108,7 +108,7 @@ export default function App() {
             />
 
             <Route
-              path="recyclemap"
+              path="/recyclemap"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
@@ -119,7 +119,7 @@ export default function App() {
             />
 
             <Route
-              path="leaderboard"
+              path="/leaderboard"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
@@ -130,7 +130,7 @@ export default function App() {
             />
 
             <Route
-              path="profile"
+              path="/profile"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>

@@ -9,9 +9,11 @@ export default function Footer() {
 
         {/* Logo & Copyright */}
         <div className="flex items-center gap-3.5 sm:gap-4">
-          <div className="badge-logo flex items-center justify-center size-11 sm:size-12 shrink-0 shadow-xs">
-            <i className="fa-solid fa-recycle text-white-app text-lg sm:text-xl" aria-hidden="true"></i>
-          </div>
+          <img
+            src="/ecocyle-logo.svg"
+            alt="EcoCycle AI Logo"
+            className="size-11 sm:size-12 shrink-0 object-contain drop-shadow-xs"
+          />
           <div className="flex flex-col items-start justify-center">
             <span className="font-heading text-xl sm:text-2xl font-bold leading-tight text-dark">
               EcoCycle AI

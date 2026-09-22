@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { ChevronDown, LogOut, Sparkles, User, LayoutDashboard, Leaf, UserRound } from "lucide-react"
+import { ChevronDown, LogOut, User, LayoutDashboard, Leaf, UserRound } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 
 function getInitials(name = "Pengguna") {
@@ -86,7 +86,7 @@ export default function ProfileButton({ className = "" }) {
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={`Menu profil ${userName}`}
-        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-3 rounded-full border transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 hover:bg-eco-green-dark hover:border-eco-green-dark hover:text-white ${isOpen
+        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-2 rounded-full border transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 hover:bg-eco-green-dark hover:border-eco-green-dark hover:text-white ${isOpen
           ? "bg-eco-green/10 border-eco-green/30 shadow-sm text-eco-text"
           : isProfileActive
             ? "bg-white border-eco-green/40 shadow-xs text-eco-text"

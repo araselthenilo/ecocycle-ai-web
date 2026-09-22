@@ -207,9 +207,9 @@ function Dashboard() {
           <CardContent>
             <Leaf className="scanner-icon" />
 
-            <h2>Ada sampah tapi tak tahu jenisnya?</h2>
+            <h2 className="text-center">Ada sampah tapi tak tahu jenisnya?</h2>
 
-            <p>
+            <p className="text-center">
               Foto sampahnya dan EcoCycle AI akan mendeteksinya dan memberikan
               cara mengelolanya secara instan.
             </p>
