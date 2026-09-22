@@ -23,6 +23,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -54,16 +55,21 @@ export function AppSidebar({ activePage, onNavigate }) {
     navigate("/", { replace: true })
   }
   return (
-    <Sidebar className="ecocycle-sidebar">
-      <SidebarHeader>
-        <div className="sidebar-brand">
-          <span className="sidebar-brand-icon">♻</span>
-          <span>EcoCycle AI</span>
+    <Sidebar className="ecocycle-sidebar border-r-0">
+      <SidebarHeader className="bg-white border-b border-black/8 px-4 py-3.5">
+        <div className="sidebar-brand flex items-center gap-2.5">
+          <img
+            src="/ecocycle-logo.svg"
+            alt="EcoCycle AI Logo"
+            className="size-8.5 shrink-0 object-contain drop-shadow-xs"
+          />
+          <span className="font-heading font-bold text-base sm:text-lg text-primary tracking-tight select-none">
+            EcoCycle AI
+          </span>
         </div>
-
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="pb-2">
         <SidebarGroup>
           <SidebarGroupLabel>Menu Utama</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -90,9 +96,10 @@ export function AppSidebar({ activePage, onNavigate }) {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        <SidebarSeparator className="mt-1 mx-3 bg-white/15" />
+
         <SidebarGroup>
           <SidebarGroupLabel>Akun</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               {accountMenu.map(({ label, page, icon: Icon }) => {
@@ -117,6 +124,8 @@ export function AppSidebar({ activePage, onNavigate }) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarSeparator className="mx-3 bg-white/15" />
 
       <SidebarFooter>
         <SidebarMenu>

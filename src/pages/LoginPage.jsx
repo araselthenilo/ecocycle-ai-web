@@ -156,9 +156,11 @@ export default function LoginPage() {
 
         {/* Subtle Brand Watermark on desktop */}
         <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-          <div className="badge-logo flex items-center justify-center size-7 xl:size-8 shadow-sm">
-            <i className="fa-solid fa-recycle text-white-app text-xs xl:text-sm" aria-hidden="true"></i>
-          </div>
+          <img
+            src="/ecocyle-logo.svg"
+            alt="EcoCycle AI Logo"
+            className="size-7 xl:size-8 shrink-0 object-contain drop-shadow-sm"
+          />
           <span className="font-heading font-bold text-sm xl:text-base text-white tracking-tight">
             EcoCycle AI
           </span>
@@ -187,9 +189,11 @@ export default function LoginPage() {
             Kembali ke Beranda
           </Link>
           <div className="flex items-center gap-2">
-            <div className="badge-logo flex items-center justify-center size-6">
-              <i className="fa-solid fa-recycle text-white-app text-[10px]" aria-hidden="true"></i>
-            </div>
+            <img
+              src="/ecocyle-logo.svg"
+              alt="EcoCycle AI Logo"
+              className="size-6 shrink-0 object-contain"
+            />
             <span className="font-heading font-bold text-primary text-sm">EcoCycle AI</span>
           </div>
         </div>
