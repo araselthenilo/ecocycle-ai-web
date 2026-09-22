@@ -144,6 +144,29 @@
   border-bottom-right-radius: 0;
 }
 
+/* Elegant subtle scrollbar for auth & modal containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 107, 85, 0.2);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 107, 85, 0.4);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 107, 85, 0.2) transparent;
+}
+
 .card-feature {
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
@@ -449,8 +472,8 @@ body {
 
 .stat-card {
   min-height: 123px;
-  border-color: var(--eco-border);
-  border-radius: 15px 15px 0 15px;
+  border-color: var(--eco-green-dark);
+  border-radius: 0 15px 0 15px;
   background: white;
 }
 
