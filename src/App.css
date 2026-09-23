@@ -538,37 +538,66 @@ body {
 }
 
 .progress-tabs {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 4px;
-  border-radius: 8px;
+  border-radius: 8px 0 8px 0;
   background: #dce6e1;
+  gap: 4px;
+  isolation: isolate;
+  user-select: none;
+}
+
+.progress-tabs-slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  background: #ffffff;
+  border-radius: 8px 0 8px 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.progress-tabs[data-active="Points"] .progress-tabs-slider {
+  transform: translateX(calc(100% + 4px));
 }
 
 .progress-tabs button {
+  position: relative;
+  z-index: 2;
   color: var(--eco-text);
   height: 27px;
   padding: 0 10px;
   font-size: 11px;
-}
-
-.progress-tabs button:hover {
-  background: #dce3df;
-  color: #eef4f1;
+  font-weight: 600;
+  border-radius: 8px 0 8px 0;
+  cursor: pointer;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  width: 100%;
 }
 
 .progress-tabs button.active-tab {
-  background: white;
   color: var(--eco-green);
+  font-weight: 700;
+  opacity: 1;
 }
 
 .progress-tabs button.inactive-tab {
-  background: transparent;
   color: var(--eco-text);
+  opacity: 0.7;
 }
 
 .progress-tabs button.inactive-tab:hover {
-  background: var(--eco-green-dark);
-  color: #eef4f1;
+  opacity: 1;
+  color: var(--eco-green-dark);
 }
 
 .chart {

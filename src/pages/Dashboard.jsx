@@ -128,12 +128,13 @@ function Dashboard() {
           <CardHeader className="weekly-header">
             <CardTitle className="text-eco-text">Progress Mingguan</CardTitle>
 
-            <div className="progress-tabs">
+            <div className="progress-tabs gap-1" data-active={activeTab}>
+              <div className="progress-tabs-slider" aria-hidden="true" />
               {["Sampah", "Points"].map((tab) => (
                 <Button
                   key={tab}
                   size="sm"
-                  variant={activeTab === tab ? "secondary" : "ghost"}
+                  variant="ghost"
                   className={activeTab === tab ? "active-tab" : "inactive-tab"}
                   onClick={() => setActiveTab(tab)}
                 >
@@ -178,14 +179,20 @@ function Dashboard() {
 
                 <ChartTooltip
                   cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
+                  content={
+                    <ChartTooltipContent
+                      hideLabel
+                      className="bg-white border-gray-200 shadow-md"
+                    />
+                  }
                 />
 
                 <Bar
                   dataKey="amount"
                   fill="var(--color-amount)"
                   radius={[8, 8, 0, 0]}
-                  maxBarSize={24}
+                  maxBarSize={60}
+                  cursor="pointer"
                 />
               </BarChart>
             </ChartContainer>
