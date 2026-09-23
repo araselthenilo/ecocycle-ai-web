@@ -48,39 +48,40 @@ function UserAvatar({ name }) {
 function Leaderboard() {
   return (
     <section className="leaderboard-page">
-      <div className="top-three-grid">
-        {topUsers.map(({ id, rank, name, status, ecoPoints, icon: Icon }) => (
-        <Card
-            className={`top-user-card top-user-card-${rank}`}
-            key={id}
-        >
-            <CardHeader className="top-user-header">
-                <div className="top-user-rank">
-                    {Icon && <Icon />}
-                    <span>#{rank}</span>
+      {/* Podium top-3 — Kahoot style */}
+      <div className="podium-wrapper">
+        <div className="podium-stage">
+          {/* Display order: 2nd | 1st | 3rd */}
+          {[topUsers[1], topUsers[0], topUsers[2]].map(({ id, rank, name, status, ecoPoints, icon: Icon }) => (
+            <div key={id} className={`podium-slot podium-slot-${rank}`}>
+              {/* Player card above the block */}
+              <div className="podium-player">
+                {rank === 1 && <div className="podium-crown-glow" />}
+                <div className={`podium-icon-badge podium-icon-badge-${rank}`}>
+                  <Icon />
                 </div>
-
-                <UserAvatar name={name} />
-            </CardHeader>
-
-            <CardContent className="top-user-content">
-                <strong>{name}</strong>
-
-                <span
-                    className={`leaderboard-status ${
-                    status === "Veteran" ? "veteran" : ""
-                    }`}
-                >
-                    {status}
+                <div className={`podium-avatar podium-avatar-${rank}`}>
+                  {name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
+                </div>
+                <strong className="podium-name">{name}</strong>
+                <span className={`leaderboard-status ${status === "Veteran" ? "veteran" : ""}`}>
+                  {status}
                 </span>
-
-                <div className="top-user-points">
-                    <span>Eco Points</span>
-                    <strong>{formatPoints(ecoPoints)}</strong>
+                <div className="podium-points">
+                  <span className="podium-points-label">Eco Points</span>
+                  <strong className={`podium-points-value podium-points-value-${rank}`}>
+                    {formatPoints(ecoPoints)}
+                  </strong>
                 </div>
-            </CardContent>
-        </Card>
-        ))}
+              </div>
+
+              {/* The stepped podium block */}
+              <div className={`podium-block podium-block-${rank}`}>
+                <span className="podium-rank-label">#{rank}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <Card className="leaderboard-table-card">
@@ -98,26 +99,26 @@ function Leaderboard() {
 
           {otherUsers.map(({ id, rank, name, status, ecoPoints }) => (
             <div className="leaderboard-table-row" key={id}>
-                <strong>#{rank}</strong>
+              <strong>#{rank}</strong>
 
-                <div className="leaderboard-user-cell">
+              <div className="leaderboard-user-cell">
                 <UserAvatar name={name} />
                 <span>{name}</span>
-                </div>
+              </div>
 
-                <span
+              <span
                 className={`leaderboard-status ${
-                    status === "Veteran" ? "veteran" : ""
+                  status === "Veteran" ? "veteran" : ""
                 }`}
-                >
+              >
                 {status}
-                </span>
+              </span>
 
-                <strong className="leaderboard-points">
+              <strong className="leaderboard-points">
                 {formatPoints(ecoPoints)}
-                </strong>
+              </strong>
             </div>
-            ))}
+          ))}
         </CardContent>
       </Card>
     </section>

@@ -42,7 +42,7 @@ const mainMenu = [
 ]
 
 const accountMenu = [
-  { label: "Notifikasi", icon: Bell },
+  { label: "Notifikasi", page: "notifications", icon: Bell },
   { label: "Profil", page: "profile", icon: UserCircle },
 ]
 

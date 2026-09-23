@@ -1,4 +1,5 @@
 import { Bell } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -25,14 +26,20 @@ const pageGreetings = {
     title: "Profil Pengguna",
     description: "Kelola akun, pantau pencapaian gaya hidup hijau, dan riwayat kontribusimu.",
   },
+  notifications: {
+    title: "Notifikasi & Riwayat",
+    description: "Pantau aktivitas pemilahan daur ulang terbaru dan perolehan Eco Points kamu.",
+  },
 }
 
 export function Navbar({ activePage }) {
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   const userName = user?.name || "Pengguna"
   const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
   const pageTitle = activePage === "dashboard" ? `Selamat Datang, ${userName}` : greeting.title
+  const isNotificationActive = activePage === "notifications"
 
   return (
     <header className="dashboard-header">
@@ -46,8 +53,10 @@ export function Navbar({ activePage }) {
           <Button
             variant="outline"
             size="icon"
-            className="notification-button"
+            className={`notification-button ${isNotificationActive ? "active" : ""}`}
             aria-label="Notifikasi"
+            onClick={() => navigate("/notifications")}
+            title="Lihat Notifikasi"
           >
             <Bell />
           </Button>
