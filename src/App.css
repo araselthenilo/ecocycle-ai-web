@@ -3077,14 +3077,17 @@ footer {
 
 .leaderboard-status {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
-  padding: 3px 8px;
+  padding: 3px 10px;
   border: 1px solid #8ca29a;
   border-radius: 999px;
   background: #e1e9e5;
   color: #56655f;
   font-size: 10px;
   font-weight: 700;
+  text-align: center;
 }
 
 .leaderboard-status.veteran {
@@ -3096,6 +3099,7 @@ footer {
 .leaderboard-table-card {
   overflow: hidden;
   border-radius: 15px;
+  padding-bottom: 0 !important;
 }
 
 .leaderboard-table-header h2 {
@@ -3105,7 +3109,9 @@ footer {
 
 .leaderboard-table-content {
   gap: 0;
-  padding: 0;
+  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .leaderboard-table-head,
@@ -3128,12 +3134,16 @@ footer {
   text-transform: uppercase;
 }
 
+.leaderboard-table-head span:first-child {
+  text-align: center;
+}
+
 .leaderboard-table-head span:nth-child(3) {
   text-align: center;
 }
 
 .leaderboard-table-head span:nth-child(4) {
-  text-align: right;
+  text-align: center;
 }
 
 .leaderboard-table-row {
@@ -3144,6 +3154,7 @@ footer {
 
 .leaderboard-table-row>strong:first-child {
   color: var(--eco-muted);
+  text-align: center;
 }
 
 .leaderboard-user-cell {
@@ -3161,7 +3172,7 @@ footer {
 }
 
 .leaderboard-table-row .leaderboard-status {
-  justify-self: start;
+  justify-self: center;
 }
 
 .leaderboard-user-cell .leaderboard-avatar {
@@ -3173,7 +3184,7 @@ footer {
 
 .leaderboard-points {
   color: var(--eco-green);
-  text-align: right;
+  text-align: center;
 }
 
 @media (max-width: 700px) {

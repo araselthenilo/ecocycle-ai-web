@@ -89,7 +89,7 @@ function Leaderboard() {
           <CardTitle>Peringkat Pengguna</CardTitle>
         </CardHeader>
 
-        <CardContent className="leaderboard-table-content">
+        <CardContent className="leaderboard-table-content py-0">
           <div className="leaderboard-table-head">
             <span>Peringkat</span>
             <span>Nama Pengguna</span>
