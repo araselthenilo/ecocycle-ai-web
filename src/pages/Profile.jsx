@@ -10,12 +10,13 @@ import {
   Flame,
   Globe,
   Leaf,
+  Lock,
   Mail,
   MapPin,
   Package,
+  Phone,
   Recycle,
   ScanLine,
-  Share2,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -33,7 +34,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useAuth } from "@/context/AuthContext"
-import { useNavigate } from "react-router-dom"
 
 const userBadges = [
   {
@@ -98,48 +98,13 @@ const userBadges = [
   },
 ]
 
-const recentActivities = [
-  {
-    id: 1,
-    title: "Gelas Plastik (PET)",
-    category: "Anorganik • Plastik",
-    location: "Bank Sampah Denpasar Resik",
-    points: "+15",
-    weight: "0,15 kg",
-    time: "2 menit lalu",
-    status: "SELESAI",
-  },
-  {
-    id: 2,
-    title: "Kardus Karton Cokelat",
-    category: "Anorganik • Kertas",
-    location: "Pusat Daur Ulang Renon",
-    points: "+10",
-    weight: "0,80 kg",
-    time: "3 jam lalu",
-    status: "SELESAI",
-  },
-  {
-    id: 3,
-    title: "Kaleng Minuman Bersih",
-    category: "Anorganik • Logam",
-    location: "Dropbox Sanur Green",
-    points: "+20",
-    weight: "0,35 kg",
-    time: "9 jam lalu",
-    status: "SELESAI",
-  },
-  {
-    id: 4,
-    title: "Botol Kaca Bening",
-    category: "Anorganik • Kaca",
-    location: "Bank Sampah Ubung",
-    points: "+25",
-    weight: "1,10 kg",
-    time: "1 hari lalu",
-    status: "SELESAI",
-  },
-]
+function formatMemberId(id) {
+  if (!id) return "ECO-2026"
+  if (id.length > 14) {
+    return `${id.slice(0, 6)}...${id.slice(-4)}`
+  }
+  return id
+}
 
 function getInitials(name = "Pengguna") {
   return name
@@ -152,7 +117,6 @@ function getInitials(name = "Pengguna") {
 
 export default function Profile() {
   const { user, updateProfile } = useAuth()
-  const navigate = useNavigate()
 
   // Profile data with fallbacks
   const displayName = user?.name || "Budi Santoso"
@@ -185,6 +149,17 @@ export default function Profile() {
       }))
     }
   }, [user])
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isEditing) {
+        setIsEditing(false)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isEditing])
 
   const handleCopyId = () => {
     navigator.clipboard?.writeText(memberId)
@@ -240,7 +215,6 @@ export default function Profile() {
                   {getInitials(displayName)}
                 </div>
               )}
-              <span className="profile-online-indicator" title="Online Aktif" />
             </div>
 
             <div className="profile-identity">
@@ -269,14 +243,18 @@ export default function Profile() {
                   type="button"
                   className="profile-meta-tag profile-id-btn"
                   onClick={handleCopyId}
-                  title="Klik untuk salin ID"
+                  title={`Klik untuk salin ID lengkap: ${memberId}`}
+                  aria-label="Salin ID Pengguna"
                 >
                   {copiedId ? (
                     <Check className="size-3.5 text-emerald-600" />
                   ) : (
-                    <Copy className="size-3.5 opacity-60" />
+                    <Copy className="size-3.5 text-emerald-700" />
                   )}
-                  <span>ID: {memberId}</span>
+                  <span>ID: {formatMemberId(memberId)}</span>
+                  <span className="profile-id-chip-action">
+                    {copiedId ? "Tersalin!" : "Salin"}
+                  </span>
                 </button>
               </div>
             </div>
@@ -289,14 +267,6 @@ export default function Profile() {
               >
                 <Edit3 className="size-4 mr-2" />
                 Edit Profil
-              </Button>
-              <Button
-                variant="outline"
-                className="profile-action-btn share-btn"
-                onClick={handleCopyId}
-              >
-                <Share2 className="size-4 mr-2" />
-                {copiedId ? "ID Tersalin!" : "Salin ID"}
               </Button>
             </div>
           </div>
@@ -377,199 +347,201 @@ export default function Profile() {
         </Card>
       </div>
 
-      {/* Badges & Recent Activity 2-Column Grid */}
-      <div className="profile-two-columns">
-        {/* Badges / Pencapaian */}
-        <Card className="profile-card">
-          <CardHeader className="profile-card-header">
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="profile-section-title">
-                  Lencana & Prestasi Hijau
-                </CardTitle>
-                <CardDescription>
-                  Pencapaian gaya hidup minim sampah yang telah kamu raih.
-                </CardDescription>
-              </div>
-              <span className="profile-badge-count">5 / 6 Terbuka</span>
+      {/* Badges / Pencapaian Hijau (Full Width) */}
+      <Card className="profile-card profile-badges-card">
+        <CardHeader className="profile-card-header">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="profile-section-title">
+                Lencana & Prestasi Hijau
+              </CardTitle>
+              <CardDescription>
+                Pencapaian gaya hidup minim sampah yang telah kamu raih.
+              </CardDescription>
             </div>
-          </CardHeader>
+            <span className="profile-badge-count">5 / 6 Terbuka</span>
+          </div>
+        </CardHeader>
 
-          <CardContent className="profile-badges-grid">
-            {userBadges.map(
-              ({ id, name, desc, icon: Icon, color, bg, unlocked, date, progress }) => (
-                <div
-                  key={id}
-                  className={`profile-badge-item ${
-                    unlocked ? "unlocked" : "locked"
-                  }`}
-                >
-                  <div
-                    className="profile-badge-icon"
-                    style={{ backgroundColor: bg, color }}
-                  >
-                    <Icon className="size-5" />
-                  </div>
-                  <div className="profile-badge-text">
-                    <div className="flex items-center justify-between">
-                      <strong className="profile-badge-name">{name}</strong>
-                      {unlocked ? (
-                        <span className="profile-badge-status-unlocked">
-                          {date}
-                        </span>
-                      ) : (
-                        <span className="profile-badge-status-locked">
-                          Progres: {progress}
-                        </span>
-                      )}
-                    </div>
-                    <p className="profile-badge-desc">{desc}</p>
-                  </div>
-                </div>
-              )
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Riwayat Pemilahan Terakhir */}
-        <Card className="profile-card">
-          <CardHeader className="profile-card-header">
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="profile-section-title">
-                  Aktivitas Daur Ulang Terakhir
-                </CardTitle>
-                <CardDescription>
-                  Log kontribusi sampah yang telah dipindai & disetorkan.
-                </CardDescription>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-emerald-700 text-xs font-semibold"
-                onClick={() => navigate("/dashboard")}
+        <CardContent className="profile-badges-grid">
+          {userBadges.map(
+            ({ id, name, desc, icon: Icon, color, bg, unlocked, date, progress }) => (
+              <div
+                key={id}
+                className={`profile-badge-item ${
+                  unlocked ? "unlocked" : "locked"
+                }`}
               >
-                Lihat Semua
-              </Button>
-            </div>
-          </CardHeader>
-
-          <CardContent className="profile-activities-list">
-            {recentActivities.map((act) => (
-              <div key={act.id} className="profile-activity-item">
-                <div className="profile-activity-icon">
-                  <Recycle className="size-4 text-emerald-700" />
+                <div
+                  className="profile-badge-icon"
+                  style={{ backgroundColor: bg, color }}
+                >
+                  <Icon className="size-5" />
                 </div>
-                <div className="profile-activity-details">
-                  <div className="flex items-center justify-between">
-                    <strong className="profile-activity-title">
-                      {act.title}
-                    </strong>
-                    <span className="profile-activity-points">
-                      {act.points} Poin
-                    </span>
+                <div className="profile-badge-text">
+                  <div className="flex items-center justify-between gap-2">
+                    <strong className="profile-badge-name">{name}</strong>
+                    {unlocked ? (
+                      <span className="profile-badge-status-unlocked">
+                        {date}
+                      </span>
+                    ) : (
+                      <span className="profile-badge-status-locked">
+                        {progress}
+                      </span>
+                    )}
                   </div>
-                  <p className="profile-activity-meta">
-                    {act.category} • {act.weight}
-                  </p>
-                  <div className="flex items-center justify-between mt-1 text-xs text-muted">
-                    <span>{act.location}</span>
-                    <span>{act.time}</span>
-                  </div>
+                  <p className="profile-badge-desc">{desc}</p>
                 </div>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
+            )
+          )}
+        </CardContent>
+      </Card>
 
       {/* Edit Profile Modal / Backdrop */}
       {isEditing && (
-        <div className="profile-modal-overlay">
+        <div
+          className="profile-modal-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsEditing(false)
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
           <div className="profile-modal-box">
+            {/* Modal Header */}
             <div className="profile-modal-header">
-              <h3 className="profile-modal-title">Edit Informasi Profil</h3>
+              <div className="flex items-center gap-3">
+                <div className="profile-modal-icon-badge">
+                  <Edit3 className="size-4.5 text-emerald-700" />
+                </div>
+                <div>
+                  <h3 id="modal-title" className="profile-modal-title">
+                    Edit Informasi Profil
+                  </h3>
+                  <p className="profile-modal-subtitle">
+                    Perbarui data diri dan preferensi akun EcoCycle AI kamu.
+                  </p>
+                </div>
+              </div>
               <button
                 type="button"
                 className="profile-modal-close"
                 onClick={() => setIsEditing(false)}
-                aria-label="Tutup"
+                aria-label="Tutup modal"
               >
                 <X className="size-5" />
               </button>
             </div>
 
+            {/* Modal Form */}
             <form onSubmit={handleSaveProfile} className="profile-modal-form">
-              <div className="profile-form-group">
-                <label htmlFor="form-name">Nama Lengkap</label>
-                <Input
-                  id="form-name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  required
-                />
-              </div>
-
-              <div className="profile-form-group">
-                <label htmlFor="form-email">Email Terdaftar</label>
-                <Input
-                  id="form-email"
-                  value={displayEmail}
-                  disabled
-                  className="bg-gray-100 text-muted cursor-not-allowed"
-                />
-              </div>
-
-              <div className="profile-form-group">
-                <label htmlFor="form-bio">Bio Ringkas</label>
-                <textarea
-                  id="form-bio"
-                  rows={3}
-                  className="profile-textarea"
-                  value={formData.bio}
-                  onChange={(e) =>
-                    setFormData({ ...formData, bio: e.target.value })
-                  }
-                />
-              </div>
-
-              <div className="profile-form-grid">
+              <div className="profile-modal-body">
                 <div className="profile-form-group">
-                  <label htmlFor="form-location">Domisili / Lokasi</label>
-                  <Input
-                    id="form-location"
-                    value={formData.location}
+                  <label htmlFor="form-name">Nama Lengkap</label>
+                  <div className="profile-input-wrapper">
+                    <User className="profile-input-icon size-4" />
+                    <Input
+                      id="form-name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      placeholder="Masukkan nama lengkap"
+                      className="profile-modal-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="profile-form-group">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="form-email">Email Terdaftar</label>
+                    <span className="profile-field-hint">
+                      <Lock className="size-3 inline mr-1" /> Terkunci
+                    </span>
+                  </div>
+                  <div className="profile-input-wrapper">
+                    <Mail className="profile-input-icon size-4 text-gray-400" />
+                    <Input
+                      id="form-email"
+                      value={displayEmail}
+                      disabled
+                      className="profile-modal-input bg-gray-50 text-gray-500 cursor-not-allowed border-dashed"
+                    />
+                  </div>
+                </div>
+
+                <div className="profile-form-group">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="form-bio">Bio Ringkas</label>
+                    <span className="text-[11px] text-muted">
+                      {formData.bio.length}/200
+                    </span>
+                  </div>
+                  <textarea
+                    id="form-bio"
+                    rows={3}
+                    maxLength={200}
+                    className="profile-textarea"
+                    placeholder="Tuliskan komitmen atau ceritamu menjaga lingkungan..."
+                    value={formData.bio}
                     onChange={(e) =>
-                      setFormData({ ...formData, location: e.target.value })
+                      setFormData({ ...formData, bio: e.target.value })
                     }
                   />
                 </div>
 
-                <div className="profile-form-group">
-                  <label htmlFor="form-phone">Nomor Telepon</label>
-                  <Input
-                    id="form-phone"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                  />
+                <div className="profile-form-grid">
+                  <div className="profile-form-group">
+                    <label htmlFor="form-location">Domisili / Lokasi</label>
+                    <div className="profile-input-wrapper">
+                      <MapPin className="profile-input-icon size-4" />
+                      <Input
+                        id="form-location"
+                        value={formData.location}
+                        onChange={(e) =>
+                          setFormData({ ...formData, location: e.target.value })
+                        }
+                        placeholder="Contoh: Denpasar, Bali"
+                        className="profile-modal-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="profile-form-group">
+                    <label htmlFor="form-phone">Nomor Telepon / WhatsApp</label>
+                    <div className="profile-input-wrapper">
+                      <Phone className="profile-input-icon size-4" />
+                      <Input
+                        id="form-phone"
+                        value={formData.phone}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
+                        placeholder="+62 812-xxxx-xxxx"
+                        className="profile-modal-input"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
+              {/* Modal Actions */}
               <div className="profile-modal-actions">
                 <Button
                   type="button"
                   variant="outline"
+                  className="profile-modal-btn cancel-btn"
                   onClick={() => setIsEditing(false)}
                 >
                   Batal
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white"
+                  className="profile-modal-btn save-btn bg-emerald-700 hover:bg-emerald-800 text-white"
                 >
                   Simpan Perubahan
                 </Button>

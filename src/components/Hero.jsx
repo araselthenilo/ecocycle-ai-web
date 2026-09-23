@@ -29,11 +29,11 @@ export default function Hero() {
         </p>
 
         {/* Button Group */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 sm:gap-5 w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5 w-full">
           <Button
             onClick={() => navigate('/login')}
             variant="primary"
-            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 cursor-pointer"
+            className="flex-1 w-full px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 cursor-pointer"
           >
             Mulai Sekarang
           </Button>
@@ -41,7 +41,7 @@ export default function Hero() {
           <Button
             href="#layanan"
             variant="outline"
-            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6"
+            className="flex-1 w-full px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6"
           >
             Pelajari Lebih Lanjut
           </Button>

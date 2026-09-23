@@ -15,6 +15,7 @@ import AIScanner from "@/pages/AIScanner"
 import RecycleMap from "@/pages/RecycleMap"
 import Leaderboard from "@/pages/Leaderboard"
 import Profile from "@/pages/Profile"
+import Notifications from "@/pages/Notifications"
 import "./App.css"
 
 // Fallback client ID if .env is not yet populated
@@ -139,6 +140,18 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/notifications"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Notifications />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/notifikasi" element={<Navigate to="/notifications" replace />} />
 
             {/* Catch-all fallback redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
