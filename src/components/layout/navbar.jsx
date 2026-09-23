@@ -38,17 +38,20 @@ export function Navbar({ activePage }) {
 
   const userName = user?.name || "Pengguna"
   const greeting = pageGreetings[activePage] ?? pageGreetings.dashboard
-  const pageTitle = activePage === "dashboard" ? `Selamat Datang, ${userName}` : greeting.title
+  const pageTitle =
+    activePage === "dashboard" ? (
+      <>
+        <span className="highlight">Selamat Datang, </span>
+        {userName}
+      </>
+    ) : (
+      greeting.title
+    )
   const isNotificationActive = activePage === "notifications"
 
   return (
     <header className="dashboard-header">
       <div className="navbar-top">
-        <SidebarTrigger
-          className="navbar-toggle"
-          aria-label="Buka navigasi"
-        />
-
         <div className="dashboard-profile">
           <Button
             variant="outline"
@@ -69,6 +72,6 @@ export function Navbar({ activePage }) {
         <h1>{pageTitle}</h1>
         <p>{greeting.description}</p>
       </div>
-    </header>
+    </header >
   )
 }

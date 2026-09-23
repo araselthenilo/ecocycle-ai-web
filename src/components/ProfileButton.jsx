@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { ChevronDown, LogOut, User, LayoutDashboard, Leaf, UserRound } from "lucide-react"
+import { ChevronDown, LogOut, User, LayoutDashboard, Leaf, UserRound, Home } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 
 function getInitials(name = "Pengguna") {
@@ -29,6 +29,7 @@ export default function ProfileButton({ className = "" }) {
   const userRole = user?.role === "admin" ? "ADMIN" : "ANGGOTA"
   const isProfileActive = location.pathname === "/profile"
   const isDashboardActive = location.pathname === "/dashboard"
+  const isLandingPageActive = location.pathname === "/"
 
   // Avatar source with robust fallback
   const avatarSrc =
@@ -189,6 +190,18 @@ export default function ProfileButton({ className = "" }) {
 
           {/* Navigation Links */}
           <div className="py-1 flex flex-col gap-0.5">
+            <button
+              type="button"
+              onClick={() => handleNavigate("/")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-tl-xl rounded-br-xl transition-colors cursor-pointer text-left ${isLandingPageActive
+                ? "bg-eco-green/10 text-eco-green"
+                : "text-eco-text hover:bg-black/5"
+                }`}
+            >
+              <Home className="size-4 shrink-0 text-eco-green" />
+              <span className="flex-1">Beranda</span>
+            </button>
+
             <button
               type="button"
               onClick={() => handleNavigate("/dashboard")}
