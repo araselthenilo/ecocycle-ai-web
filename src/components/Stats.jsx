@@ -1,6 +1,7 @@
 import React from 'react';
 import content from '../data/content.json';
 import Section from './Section';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
 const { statistics } = content;
 
@@ -12,26 +13,41 @@ export default function Stats() {
     >
 
         {/* Section Heading */}
-        <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-white-app">
-          Dampak Komunitas Kami
-        </h2>
+        <ScrollReveal delay={50} distance={24} duration={700}>
+          <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-white-app">
+            Dampak Komunitas Kami
+          </h2>
+        </ScrollReveal>
 
         {/* Stats Flex Grid */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-12 lg:gap-20 w-full">
           {statistics.map((stat, idx) => (
             <React.Fragment key={stat.label}>
-              <div className="flex flex-col gap-4 items-center text-center w-56">
-                <div className="font-heading font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
-                  {stat.value}
+              <ScrollReveal
+                delay={120 + idx * 150}
+                distance={28}
+                duration={750}
+              >
+                <div className="flex flex-col gap-4 items-center text-center w-56">
+                  <div className="font-heading font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
+                    {stat.value}
+                  </div>
+                  <div className="text-base leading-6 text-white-app">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-base leading-6 text-white-app">
-                  {stat.label}
-                </div>
-              </div>
+              </ScrollReveal>
 
               {/* Vertical Divider (shown between items on desktop) */}
               {idx < statistics.length - 1 && (
-                <div className="hidden md:block h-20 w-px bg-white/20 self-center" aria-hidden="true" />
+                <ScrollReveal
+                  delay={120 + idx * 150 + 75}
+                  direction="fade"
+                  duration={750}
+                  className="hidden md:block self-center"
+                >
+                  <div className="h-20 w-px bg-white/20" aria-hidden="true" />
+                </ScrollReveal>
               )}
             </React.Fragment>
           ))}
