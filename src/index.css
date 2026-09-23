@@ -29,14 +29,22 @@
 @layer base {
   body {
     font-family: var(--font-sans);
-    color: #1f2937; /* neutral-800 for readable copy */
+    color: #1f2937;
+    /* neutral-800 for readable copy */
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.02em;
   }
 }
+
 :root {
   --color-primary: #006b55;
   --color-primary-hover: #005644;
@@ -55,6 +63,7 @@
   --eco-text: #303634;
   --eco-muted: #7a8580;
   --eco-border: #9da8a4;
+
 
   --text: #6b6375;
   --text-h: #08060d;
@@ -144,7 +153,8 @@
 
   --sidebar-border: oklch(0.922 0 0);
 
-  --sidebar-ring: oklch(0.708 0 0)}
+  --sidebar-ring: oklch(0.708 0 0)
+}
 
 @media (prefers-color-scheme: dark) {
   :root {

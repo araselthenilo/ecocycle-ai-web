@@ -25,12 +25,6 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 
@@ -55,9 +49,13 @@ export function AppSidebar({ activePage, onNavigate }) {
     navigate("/", { replace: true })
   }
   return (
-    <Sidebar className="ecocycle-sidebar border-r-0">
+    <Sidebar className="ecocycle-sidebar border-r-0 pb-5">
       <SidebarHeader className="bg-white border-b border-black/8 px-4 py-3.5">
-        <div className="sidebar-brand flex items-center gap-2.5">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="sidebar-brand flex items-center gap-2.5 text-left w-full cursor-pointer hover:opacity-85 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 rounded-md"
+        >
           <img
             src="/ecocycle-logo.svg"
             alt="EcoCycle AI Logo"
@@ -66,7 +64,7 @@ export function AppSidebar({ activePage, onNavigate }) {
           <span className="font-heading font-bold text-base sm:text-lg text-primary tracking-tight select-none">
             EcoCycle AI
           </span>
-        </div>
+        </button>
       </SidebarHeader>
 
       <SidebarContent className="pb-2">
@@ -84,7 +82,7 @@ export function AppSidebar({ activePage, onNavigate }) {
                       isActive={isActive}
                       tooltip={label}
                       onClick={() => onNavigate(page)}
-                      className={"cursor-pointer " + (isActive ? "sidebar-menu-active" : "")}
+                      className={"cursor-pointer pl-5 py-5 mt-1 gap-3 " + (isActive ? "sidebar-menu-active" : "")}
                     >
                       <Icon />
                       <span>{label}</span>
@@ -96,7 +94,7 @@ export function AppSidebar({ activePage, onNavigate }) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="mt-1 mx-3 bg-white/15" />
+        <SidebarSeparator className="mt-1 mx-3 !bg-white/50 !h-[2px] rounded-full" />
 
         <SidebarGroup>
           <SidebarGroupLabel>Akun</SidebarGroupLabel>
@@ -112,7 +110,7 @@ export function AppSidebar({ activePage, onNavigate }) {
                       isActive={isActive}
                       tooltip={label}
                       onClick={() => (page ? onNavigate(page) : null)}
-                      className={"cursor-pointer " + (isActive ? "sidebar-menu-active" : "")}
+                      className={"cursor-pointer pl-5 py-5 mt-1 gap-3 " + (isActive ? "sidebar-menu-active" : "")}
                     >
                       <Icon />
                       <span>{label}</span>
@@ -130,7 +128,11 @@ export function AppSidebar({ activePage, onNavigate }) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton type="button" className="logout-menu-button" onClick={handleLogout}>
+            <SidebarMenuButton
+              type="button"
+              className="cursor-pointer pl-5 py-5 mt-1 gap-3 logout-menu-button"
+              onClick={handleLogout}
+            >
               <LogOut />
               <span>Keluar</span>
             </SidebarMenuButton>

@@ -16,7 +16,7 @@
 
 .app-container {
   min-height: 100vh;
-  background-color: var(--color-bg-page);
+  background-color: transparent;
   color: var(--color-dark);
 }
 
@@ -26,11 +26,11 @@
 }
 
 .bg-page {
-  background-color: var(--color-bg-page);
+  background-color: rgba(248, 249, 250, 0.45);
 }
 
 .bg-section {
-  background-color: var(--color-bg-section);
+  background-color: rgb(255, 255, 255);
 }
 
 .bg-primary {
@@ -167,23 +167,190 @@
   scrollbar-color: rgba(0, 107, 85, 0.2) transparent;
 }
 
+/* Enhanced Solutions / Feature Cards (CTA-like elevation with hover/focus color transition) */
 .card-feature {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  filter: var(--shadow-card);
-  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  position: relative;
+  background: linear-gradient(145deg, #ffffff 0%, #fafdfb 45%, #eefbf5 100%);
+  border: 1.5px solid rgba(0, 107, 85, 0.12);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 20px 40px -12px rgba(0, 107, 85, 0.2),
+    0 10px 22px -6px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 107, 85, 0.06);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
-.card-feature:hover {
-  transform: translateY(-4px);
+/* Subtle ambient radial glow inside card like CTA banner */
+.card-feature::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 23px;
+  background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.18) 0%, rgba(0, 107, 85, 0.08) 40%, transparent 70%);
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+/* Secondary background layer that smoothly cross-fades to new color on hover/focus */
+.card-feature::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 23px;
+  background: linear-gradient(145deg, #ffffff 0%, #e2f7ed 35%, #c0eedb 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.card-feature:hover,
+.card-feature:focus-within,
+.card-feature:focus {
+  transform: translateY(-6px);
+  border-color: rgba(0, 107, 85, 0.4);
+  box-shadow:
+    0 30px 60px -12px rgba(0, 107, 85, 0.32),
+    0 14px 28px -6px rgba(0, 0, 0, 0.12),
+    0 0 35px 2px rgba(16, 185, 129, 0.25),
+    0 0 0 1.5px rgba(0, 107, 85, 0.25);
+}
+
+.card-feature:hover::after,
+.card-feature:focus-within::after,
+.card-feature:focus::after {
+  opacity: 1;
+}
+
+.card-feature:hover::before,
+.card-feature:focus-within::before,
+.card-feature:focus::before {
+  opacity: 1;
+}
+
+/* Icon badge color transition */
+.card-feature .feature-icon-badge {
+  background-color: rgba(0, 107, 85, 0.1);
+  color: var(--color-primary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-feature:hover .feature-icon-badge,
+.card-feature:focus-within .feature-icon-badge,
+.card-feature:focus .feature-icon-badge {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 4px 14px rgba(0, 107, 85, 0.35);
+}
+
+/* Image container inside card */
+.card-feature .feature-image-container {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+
+
+
+
+/* Enhanced CTA Banner with Circling Light and Pronounced Drop Shadow */
+@keyframes cta-beam-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cta-banner-wrapper {
+  position: relative;
+  border-radius: 28px;
+  padding: 2.5px;
+  overflow: hidden;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 107, 85, 0.28),
+    0 16px 32px -8px rgba(0, 0, 0, 0.14),
+    0 0 40px 2px rgba(0, 107, 85, 0.12),
+    0 0 0 1px rgba(0, 107, 85, 0.15);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta-banner-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 35px 70px -14px rgba(0, 107, 85, 0.36),
+    0 20px 38px -8px rgba(0, 0, 0, 0.16),
+    0 0 60px 6px rgba(16, 185, 129, 0.22),
+    0 0 0 1px rgba(0, 107, 85, 0.25);
+}
+
+.cta-border-beam {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(from 0deg,
+      transparent 0deg,
+      transparent 280deg,
+      rgba(0, 107, 85, 0.3) 300deg,
+      #059669 325deg,
+      #10b981 345deg,
+      #6ee7b7 355deg,
+      #ffffff 360deg);
+  animation: cta-beam-spin 4s linear infinite;
+  pointer-events: none;
+}
+
+.cta-border-beam-glow {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(from 0deg,
+      transparent 0deg,
+      transparent 280deg,
+      rgba(16, 185, 129, 0.4) 320deg,
+      rgba(52, 211, 153, 0.8) 350deg,
+      #ffffff 360deg);
+  filter: blur(8px);
+  animation: cta-beam-spin 4s linear infinite;
+  pointer-events: none;
 }
 
 .card-cta {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 24px;
-  filter: var(--shadow-card);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(145deg, #ffffff 0%, #fafdfb 45%, #eefbf5 100%);
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.cta-ambient-glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(0, 107, 85, 0.12) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .step-circle {
@@ -292,6 +459,7 @@ body {
 .ecocycle-sidebar .sidebar-menu-active:focus {
   background: white !important;
   color: var(--eco-green-dark) !important;
+  font-weight: bold !important;
 }
 
 .ecocycle-sidebar .sidebar-menu-active svg {
@@ -299,8 +467,13 @@ body {
 }
 
 .ecocycle-sidebar .logout-menu-button {
-  background: #ffc2c4;
-  color: #d82e34;
+  cursor: pointer;
+  padding: 20px 8px 20px 20px;
+}
+
+.ecocycle-sidebar .logout-menu-button:hover {
+  background: #e62f35ca !important;
+  font-weight: semibold;
 }
 
 /* Navbar */
@@ -635,6 +808,7 @@ body {
   justify-content: space-between;
   margin-top: 16px;
   font-size: 12px;
+
 }
 
 .target-row span {
@@ -4904,5 +5078,20 @@ footer {
 
   .map-permission-banner-actions {
     justify-content: flex-end;
+  }
+}
+
+/* Gentle Landing Scroll Reveal Utilities */
+.scroll-reveal-item {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
