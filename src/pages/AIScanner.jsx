@@ -7,7 +7,11 @@ import {
   X,
   ScanLine,
   UploadCloud,
+  AlertCircle,
+  CheckCircle2,
 } from "lucide-react"
+
+import PermissionModal from "@/components/ui/PermissionModal"
 
 import {
   Card,
@@ -52,6 +56,8 @@ function AIScanner() {
   const [isScanning, setIsScanning] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const [cameraError, setCameraError] = useState(null)
+  const [showPermissionModal, setShowPermissionModal] = useState(false)
+  const [permissionStatus, setPermissionStatus] = useState("prompt")
 
   // Scan result state
   const [scanResult, setScanResult] = useState({
@@ -109,6 +115,7 @@ function AIScanner() {
   // Start real device camera using MediaDevices API
   const startCamera = async () => {
     setCameraError(null)
+    setShowPermissionModal(false)
     try {
       if (!navigator?.mediaDevices?.getUserMedia) {
         throw new Error("Perangkat atau peramban tidak mendukung akses kamera.")
@@ -125,14 +132,19 @@ function AIScanner() {
 
       streamRef.current = stream
       setIsCameraActive(true)
+      localStorage.setItem("ecocycle_cam_permission", "granted")
     } catch (err) {
       console.error("Camera access failed:", err)
-      setCameraError(
+      const isDenied =
         err.name === "NotAllowedError" || err.name === "PermissionDeniedError"
-          ? "Izin akses kamera ditolak. Silakan izinkan kamera di peramban Anda."
-          : "Kamera tidak ditemukan atau sedang digunakan oleh aplikasi lain."
-      )
-      alert("Akses kamera: " + (err.message || "Tidak dapat membuka kamera perangkat."))
+      if (isDenied) {
+        setPermissionStatus("denied")
+        setShowPermissionModal(true)
+      } else {
+        setCameraError(
+          "Kamera tidak ditemukan atau sedang digunakan oleh aplikasi lain. Anda tetap dapat mengunggah file foto secara manual."
+        )
+      }
     }
   }
 
@@ -170,7 +182,36 @@ function AIScanner() {
     if (isCameraActive) {
       capturePhoto()
     } else {
-      startCamera()
+      if (navigator.permissions && navigator.permissions.query) {
+        navigator.permissions
+          .query({ name: "camera" })
+          .then((res) => {
+            if (res.state === "granted") {
+              startCamera()
+            } else if (res.state === "denied") {
+              setPermissionStatus("denied")
+              setShowPermissionModal(true)
+            } else {
+              setPermissionStatus("prompt")
+              setShowPermissionModal(true)
+            }
+          })
+          .catch(() => {
+            if (localStorage.getItem("ecocycle_cam_permission") === "granted") {
+              startCamera()
+            } else {
+              setPermissionStatus("prompt")
+              setShowPermissionModal(true)
+            }
+          })
+      } else {
+        if (localStorage.getItem("ecocycle_cam_permission") === "granted") {
+          startCamera()
+        } else {
+          setPermissionStatus("prompt")
+          setShowPermissionModal(true)
+        }
+      }
     }
   }
 
@@ -298,6 +339,45 @@ function AIScanner() {
           </CardContent>
         </Card>
 
+        {/* Friendly In-Page Camera Error Banner */}
+        {cameraError && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "10px",
+              padding: "12px 16px",
+              background: "#fff1f2",
+              border: "1px solid #fecdd3",
+              borderRadius: "14px",
+              color: "#be123c",
+              fontSize: "13px",
+              fontWeight: "500",
+              margin: "12px 0",
+              animation: "fadeInDown 0.3s ease",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{cameraError}</span>
+            </div>
+            <button
+              onClick={() => setCameraError(null)}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "#be123c",
+                padding: "4px",
+              }}
+              title="Tutup pesan"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         {/* Enhanced Scanner Preview Area */}
         <div className="scanner-preview">
           {isCameraActive ? (
@@ -410,7 +490,17 @@ function AIScanner() {
                   Klik untuk unggah gambar atau seret file sampah ke sini
                 </p>
 
-                <div className="scanner-dropzone-action-hint">
+                <div
+                  className="scanner-dropzone-action-hint"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleCameraToggle()
+                  }}
+                  style={{ cursor: "pointer" }}
+                  role="button"
+                  tabIndex={0}
+                  title="Klik untuk membuka kamera"
+                >
                   <Camera className="w-3.5 h-3.5 text-emerald-700" />
                   <span>atau gunakan tombol <strong>"Ambil Foto"</strong> di atas</span>
                 </div>
@@ -494,6 +584,16 @@ function AIScanner() {
           </CardContent>
         </Card>
       </section>
+
+      {/* Camera Permission Modal Dialog */}
+      <PermissionModal
+        isOpen={showPermissionModal}
+        type="camera"
+        status={permissionStatus}
+        onAllow={startCamera}
+        onDismiss={() => setShowPermissionModal(false)}
+        onRetry={startCamera}
+      />
     </div>
   )
 }

@@ -18,20 +18,13 @@ import {
   Clock,
   Compass,
   RotateCcw,
-  Building2,
-  Recycle,
-  Factory,
-  CheckCircle2,
   Star,
-  List,
-  Map as MapIcon,
-  Sparkles,
-  Layers,
-  ChevronRight,
-  ShieldCheck,
+  Info,
+  CheckCircle2,
 } from "lucide-react"
 
 import recyclingBanks from "@/data/recyclingBanks"
+import PermissionModal from "@/components/ui/PermissionModal"
 
 // Haversine formula to compute distance in km
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -41,9 +34,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2)
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   return (R * c).toFixed(1)
 }
@@ -164,31 +157,22 @@ export default function RecycleMap() {
   const [selectedWaste, setSelectedWaste] = useState("Semua Sampah")
   const [selectedDistrict, setSelectedDistrict] = useState("Semua Wilayah")
   const [selectedBankId, setSelectedBankId] = useState(null)
-  const [mobileTab, setMobileTab] = useState("both") // 'list' | 'map' | 'both'
   const [userLocation, setUserLocation] = useState(null)
   const [locatingUser, setLocatingUser] = useState(false)
   const [flyTarget, setFlyTarget] = useState(null)
   const [resetBounds, setResetBounds] = useState(null)
+  const [showLegend, setShowLegend] = useState(false)
+  const [showPermissionModal, setShowPermissionModal] = useState(false)
+  const [permissionStatus, setPermissionStatus] = useState("prompt")
+  const [locationToast, setLocationToast] = useState("")
+  const [showLocationBanner, setShowLocationBanner] = useState(() => {
+    return (
+      !localStorage.getItem("ecocycle_loc_dismissed") &&
+      !localStorage.getItem("ecocycle_loc_permission")
+    )
+  })
 
-  const cardRefs = useRef({})
   const markerRefs = useRef({})
-
-  // Category counts
-  const categoryCounts = useMemo(() => {
-    const counts = {
-      Semua: recyclingBanks.length,
-      "Bank Sampah Induk": 0,
-      "Bank Sampah": 0,
-      "TPS 3R": 0,
-      "Recycling Point": 0,
-    }
-    recyclingBanks.forEach((bank) => {
-      if (counts[bank.type] !== undefined) {
-        counts[bank.type]++
-      }
-    })
-    return counts
-  }, [])
 
   // Filtered & enriched banks
   const filteredBanks = useMemo(() => {
@@ -241,36 +225,10 @@ export default function RecycleMap() {
       })
   }, [searchQuery, selectedType, selectedWaste, selectedDistrict, userLocation])
 
-  // Select card and animate map
-  const handleSelectBank = (bank) => {
-    setSelectedBankId(bank.id)
-    setFlyTarget([...bank.position])
-
-    // Open marker popup if available
-    if (markerRefs.current[bank.id]) {
-      markerRefs.current[bank.id].openPopup()
-    }
-
-    // Scroll card into view
-    if (cardRefs.current[bank.id]) {
-      cardRefs.current[bank.id].scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      })
-    }
-  }
-
   // Handle Marker click
   const handleMarkerClick = (bank) => {
     setSelectedBankId(bank.id)
     setFlyTarget([...bank.position])
-
-    if (cardRefs.current[bank.id]) {
-      cardRefs.current[bank.id].scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      })
-    }
   }
 
   // Reset View to Bali
@@ -283,35 +241,131 @@ export default function RecycleMap() {
     setTimeout(() => setResetBounds(null), 800)
   }
 
-  // Get User Geolocation
-  const handleLocateUser = () => {
+  // Toast notification helper
+  const showToast = (msg) => {
+    setLocationToast(msg)
+    setTimeout(() => setLocationToast(""), 4500)
+  }
+
+  // Trigger actual browser geolocation
+  const executeGeolocation = () => {
     if (!navigator.geolocation) {
-      alert("Geolocation tidak didukung oleh browser Anda.")
+      showToast("Geolocation tidak didukung oleh browser Anda.")
+      setShowPermissionModal(false)
       return
     }
 
     setLocatingUser(true)
+    setShowPermissionModal(false)
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const coords = [pos.coords.latitude, pos.coords.longitude]
         setUserLocation(coords)
         setFlyTarget(coords)
         setLocatingUser(false)
+        setShowLocationBanner(false)
+        localStorage.setItem("ecocycle_loc_permission", "granted")
+        showToast("Lokasi Anda berhasil diaktifkan! Bank sampah terdekat diurutkan.")
       },
       (err) => {
-        console.warn("Geolocation error:", err.message)
-        // Fallback demo location: Denpasar City Center
-        const fallback = [-8.6500, 115.2166]
-        setUserLocation(fallback)
-        setFlyTarget(fallback)
         setLocatingUser(false)
+        console.warn("Geolocation error:", err.message)
+        if (err.code === 1) {
+          // Permission Denied by browser
+          setPermissionStatus("denied")
+          setShowPermissionModal(true)
+        } else {
+          // Other error (timeout/offline) -> fallback to Denpasar
+          const fallback = [-8.6500, 115.2166]
+          setUserLocation(fallback)
+          setFlyTarget(fallback)
+          showToast("Sinyal GPS lemah. Menggunakan titik pusat Denpasar.")
+        }
       },
-      { timeout: 8000 }
+      { timeout: 10000, enableHighAccuracy: true }
     )
+  }
+
+  // Handle Locate User button click
+  const handleLocateUser = () => {
+    if (userLocation) {
+      setFlyTarget([...userLocation])
+      return
+    }
+
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          if (result.state === "granted") {
+            executeGeolocation()
+          } else if (result.state === "denied") {
+            setPermissionStatus("denied")
+            setShowPermissionModal(true)
+          } else {
+            setPermissionStatus("prompt")
+            setShowPermissionModal(true)
+          }
+        })
+        .catch(() => {
+          setPermissionStatus("prompt")
+          setShowPermissionModal(true)
+        })
+    } else {
+      setPermissionStatus("prompt")
+      setShowPermissionModal(true)
+    }
+  }
+
+  const handleDismissBanner = () => {
+    setShowLocationBanner(false)
+    localStorage.setItem("ecocycle_loc_dismissed", "true")
+  }
+
+  const handleDismissModal = () => {
+    setShowPermissionModal(false)
+    if (!userLocation) {
+      localStorage.setItem("ecocycle_loc_dismissed", "true")
+    }
   }
 
   return (
     <section className="recycle-map-page">
+      {/* Toast Alert for Location Status */}
+      {locationToast && (
+        <div className="profile-toast-alert" style={{ marginBottom: "12px" }}>
+          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <span>{locationToast}</span>
+        </div>
+      )}
+
+      {/* Suggestion Banner when location is not yet active */}
+      {showLocationBanner && !userLocation && (
+        <div className="map-permission-banner">
+          <div className="map-permission-banner-text">
+            <Compass className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span>
+              Aktifkan izin lokasi untuk menemukan dan mengurutkan bank sampah terdekat secara otomatis dari posisi Anda.
+            </span>
+          </div>
+          <div className="map-permission-banner-actions">
+            <button
+              className="map-permission-banner-btn"
+              onClick={handleLocateUser}
+            >
+              Aktifkan Lokasi
+            </button>
+            <button
+              className="map-permission-banner-close"
+              onClick={handleDismissBanner}
+              title="Nanti saja"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
       {/* Compact Unified Toolbar */}
       <div className="recycle-filter-box">
         <div className="recycle-filter-row-top">
@@ -336,257 +390,42 @@ export default function RecycleMap() {
             )}
           </div>
 
-          {/* District Select */}
-          <select
-            className="recycle-district-select"
-            value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
-            aria-label="Pilih Wilayah"
-          >
-            {districtOptions.map((dist) => (
-              <option key={dist} value={dist}>
-                {dist}
-              </option>
-            ))}
-          </select>
+          {/* Filter Selects Group (Side-by-side) */}
+          <div className="recycle-selects-group">
+            {/* District Select */}
+            <select
+              className="recycle-district-select"
+              value={selectedDistrict}
+              onChange={(e) => setSelectedDistrict(e.target.value)}
+              aria-label="Pilih Wilayah"
+            >
+              {districtOptions.map((dist) => (
+                <option key={dist} value={dist}>
+                  {dist}
+                </option>
+              ))}
+            </select>
 
-          {/* Waste Type Select */}
-          <select
-            className="recycle-waste-select"
-            value={selectedWaste}
-            onChange={(e) => setSelectedWaste(e.target.value)}
-            aria-label="Filter Jenis Sampah"
-          >
-            {wasteOptions.map((w) => (
-              <option key={w} value={w}>
-                {w === "Semua Sampah" ? "Semua Jenis Sampah" : `Sampah: ${w}`}
-              </option>
-            ))}
-          </select>
-
-          {/* Quick Counter Badge */}
-          <div className="recycle-stat-chip">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
-            <span>20 Titik Terverifikasi</span>
+            {/* Waste Type Select */}
+            <select
+              className="recycle-waste-select"
+              value={selectedWaste}
+              onChange={(e) => setSelectedWaste(e.target.value)}
+              aria-label="Filter Jenis Sampah"
+            >
+              {wasteOptions.map((w) => (
+                <option key={w} value={w}>
+                  {w === "Semua Sampah" ? "Semua Jenis Sampah" : `Sampah: ${w}`}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-
-        {/* Category Pills */}
-        <div className="recycle-category-pills">
-          <button
-            className={`recycle-pill ${selectedType === "Semua" ? "active" : ""}`}
-            onClick={() => setSelectedType("Semua")}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span>Semua Lokasi</span>
-            <span className="recycle-pill-badge">{categoryCounts.Semua}</span>
-          </button>
-
-          <button
-            className={`recycle-pill ${selectedType === "Bank Sampah Induk" ? "active" : ""}`}
-            data-category="induk"
-            onClick={() => setSelectedType("Bank Sampah Induk")}
-          >
-            <Building2 className="w-3.5 h-3.5" />
-            <span>Bank Sampah Induk</span>
-            <span className="recycle-pill-badge">{categoryCounts["Bank Sampah Induk"]}</span>
-          </button>
-
-          <button
-            className={`recycle-pill ${selectedType === "Bank Sampah" ? "active" : ""}`}
-            data-category="unit"
-            onClick={() => setSelectedType("Bank Sampah")}
-          >
-            <Recycle className="w-3.5 h-3.5" />
-            <span>Bank Sampah Unit</span>
-            <span className="recycle-pill-badge">{categoryCounts["Bank Sampah"]}</span>
-          </button>
-
-          <button
-            className={`recycle-pill ${selectedType === "TPS 3R" ? "active" : ""}`}
-            data-category="tps3r"
-            onClick={() => setSelectedType("TPS 3R")}
-          >
-            <Factory className="w-3.5 h-3.5" />
-            <span>TPS 3R</span>
-            <span className="recycle-pill-badge">{categoryCounts["TPS 3R"]}</span>
-          </button>
-
-          <button
-            className={`recycle-pill ${selectedType === "Recycling Point" ? "active" : ""}`}
-            data-category="point"
-            onClick={() => setSelectedType("Recycling Point")}
-          >
-            <MapPin className="w-3.5 h-3.5" />
-            <span>Recycling Point</span>
-            <span className="recycle-pill-badge">{categoryCounts["Recycling Point"]}</span>
-          </button>
-        </div>
       </div>
 
-      {/* Mobile Tab Toggle */}
-      <div className="recycle-mobile-toggle">
-        <button
-          className={mobileTab === "both" || mobileTab === "list" ? "active" : ""}
-          onClick={() => setMobileTab("list")}
-        >
-          <List className="w-4 h-4" />
-          <span>Daftar Lokasi ({filteredBanks.length})</span>
-        </button>
-        <button
-          className={mobileTab === "map" ? "active" : ""}
-          onClick={() => setMobileTab("map")}
-        >
-          <MapIcon className="w-4 h-4" />
-          <span>Peta Interaktif</span>
-        </button>
-      </div>
-
-      {/* Split Explorer: Sidebar + Interactive Leaflet Map */}
+      {/* Full-width Map Explorer */}
       <div className="recycle-explorer">
-        {/* Left Sidebar List */}
-        <aside
-          className={`recycle-sidebar ${mobileTab === "map" ? "mobile-hidden" : ""}`}
-        >
-          <div className="recycle-sidebar-header">
-            <span className="recycle-sidebar-title">
-              <MapPin className="w-4 h-4 text-emerald-700" />
-              Titik Daur Ulang
-            </span>
-            <span className="recycle-sidebar-count">
-              {filteredBanks.length} Ditemukan
-            </span>
-          </div>
-
-          <div className="recycle-sidebar-list">
-            {filteredBanks.length === 0 ? (
-              <div className="recycle-empty-state">
-                <Recycle className="recycle-empty-icon" />
-                <h3>Tidak ada lokasi ditemukan</h3>
-                <p>Coba sesuaikan kata kunci pencarian atau ganti filter kategori.</p>
-                <button
-                  className="recycle-action-btn recycle-action-btn-primary mt-2"
-                  onClick={() => {
-                    setSearchQuery("")
-                    setSelectedType("Semua")
-                    setSelectedWaste("Semua Sampah")
-                    setSelectedDistrict("Semua Wilayah")
-                  }}
-                >
-                  Reset Semua Filter
-                </button>
-              </div>
-            ) : (
-              filteredBanks.map((bank) => {
-                const isSelected = selectedBankId === bank.id
-                const badgeConfig =
-                  categoryPinConfig[bank.categoryKey] || categoryPinConfig.unit
-
-                return (
-                  <div
-                    key={bank.id}
-                    ref={(el) => (cardRefs.current[bank.id] = el)}
-                    className={`recycle-card ${isSelected ? "active" : ""}`}
-                    onClick={() => handleSelectBank(bank)}
-                  >
-                    <div className="recycle-card-header">
-                      <span className={`recycle-badge ${badgeConfig.badgeClass}`}>
-                        {bank.type}
-                      </span>
-                      <div className="recycle-card-rating">
-                        <Star />
-                        <span>{bank.rating}</span>
-                        <span className="text-gray-400 font-normal">
-                          ({bank.reviewsCount})
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="recycle-card-title">
-                      {bank.name}
-                      {bank.verified && (
-                        <CheckCircle2
-                          className="recycle-verified-icon"
-                          title="Lokasi Terverifikasi"
-                        />
-                      )}
-                    </h3>
-
-                    <p className="recycle-card-address">
-                      <MapPin />
-                      <span>{bank.address}</span>
-                    </p>
-
-                    <div className="recycle-card-hours">
-                      <Clock />
-                      <span>{bank.operatingHours}</span>
-                    </div>
-
-                    {/* Accepted Waste Tags */}
-                    <div className="recycle-card-tags">
-                      {bank.acceptedWaste.slice(0, 4).map((waste) => (
-                        <span key={waste} className="recycle-tag">
-                          {waste}
-                        </span>
-                      ))}
-                      {bank.acceptedWaste.length > 4 && (
-                        <span className="recycle-tag font-semibold">
-                          +{bank.acceptedWaste.length - 4} lainnya
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Card Footer Actions */}
-                    <div className="recycle-card-footer">
-                      <div>
-                        {bank.distanceKm && (
-                          <span className="recycle-card-distance">
-                            <Compass className="w-3.5 h-3.5" />
-                            {bank.distanceKm} km dari Anda
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="recycle-card-actions">
-                        <button
-                          type="button"
-                          className="recycle-action-btn"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleSelectBank(bank)
-                            if (window.innerWidth <= 840) {
-                              setMobileTab("map")
-                            }
-                          }}
-                        >
-                          <MapIcon className="w-3.5 h-3.5" />
-                          <span>Peta</span>
-                        </button>
-
-                        <a
-                          href={bank.googleMapsUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="recycle-action-btn recycle-action-btn-primary"
-                          onClick={(e) => e.stopPropagation()}
-                          title="Petunjuk Arah Google Maps"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>Rute</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })
-            )}
-          </div>
-        </aside>
-
-        {/* Right Map Pane */}
-        <div
-          className={`recycle-map-pane ${mobileTab === "list" ? "mobile-hidden" : ""}`}
-        >
+        <div className="recycle-map-pane">
           {/* Floating Action Controls */}
           <div className="map-floating-controls">
             <button
@@ -609,148 +448,183 @@ export default function RecycleMap() {
             </button>
           </div>
 
-          {/* Map Legend Overlay */}
-          <div className="map-legend-card">
-            <div className="map-legend-title">Legenda Lokasi</div>
-            <div className="map-legend-item">
-              <span className="map-legend-dot induk" />
-              <span>Bank Sampah Induk</span>
-            </div>
-            <div className="map-legend-item">
-              <span className="map-legend-dot unit" />
-              <span>Bank Sampah Unit</span>
-            </div>
-            <div className="map-legend-item">
-              <span className="map-legend-dot tps3r" />
-              <span>TPS 3R</span>
-            </div>
-            <div className="map-legend-item">
-              <span className="map-legend-dot point" />
-              <span>Recycling Point</span>
-            </div>
-            {userLocation && (
-              <div className="map-legend-item">
-                <span className="map-legend-dot user" />
-                <span>Posisi Anda</span>
+          {/* Non-intrusive Floating Legend */}
+          <div className="map-legend-wrapper">
+            {showLegend ? (
+              <div className="map-legend-card">
+                <span className="map-legend-title">Legenda:</span>
+                <div className="map-legend-items">
+                  <div className="map-legend-item">
+                    <span className="map-legend-dot induk" />
+                    <span>Bank Sampah Induk</span>
+                  </div>
+                  <div className="map-legend-item">
+                    <span className="map-legend-dot unit" />
+                    <span>Bank Sampah Unit</span>
+                  </div>
+                  <div className="map-legend-item">
+                    <span className="map-legend-dot tps3r" />
+                    <span>TPS 3R</span>
+                  </div>
+                  <div className="map-legend-item">
+                    <span className="map-legend-dot point" />
+                    <span>Recycling Point</span>
+                  </div>
+                  {userLocation && (
+                    <div className="map-legend-item">
+                      <span className="map-legend-dot user" />
+                      <span>Posisi Anda</span>
+                    </div>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  className="map-legend-close-btn"
+                  onClick={() => setShowLegend(false)}
+                  title="Sembunyikan Legenda"
+                  aria-label="Sembunyikan Legenda"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
               </div>
+            ) : (
+              <button
+                type="button"
+                className="map-legend-toggle-btn"
+                onClick={() => setShowLegend(true)}
+                title="Tampilkan Legenda Peta"
+              >
+                <Info className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Legenda</span>
+              </button>
             )}
           </div>
 
-          {/* Leaflet Map Container */}
-          <MapContainer
-            center={[-8.665, 115.215]}
-            zoom={12}
-            scrollWheelZoom
-            className="recycle-map"
-          >
-            {/* OpenStreetMap tile layer with high reliability and zero watermarks */}
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        {/* Leaflet Map Container */}
+        <MapContainer
+          center={[-8.665, 115.215]}
+          zoom={12}
+          scrollWheelZoom
+          className="recycle-map"
+        >
+          {/* OpenStreetMap tile layer with high reliability and zero watermarks */}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-            {/* Map Animation Controller */}
-            <MapController target={flyTarget} bounds={resetBounds} />
+          {/* Map Animation Controller */}
+          <MapController target={flyTarget} bounds={resetBounds} />
 
-            {/* User Marker if geolocation is granted */}
-            {userLocation && (
-              <Marker position={userLocation} icon={userLocationPin}>
-                <Popup autoPan={true} autoPanPadding={[50, 50]}>
+          {/* User Marker if geolocation is granted */}
+          {userLocation && (
+            <Marker position={userLocation} icon={userLocationPin}>
+              <Popup autoPan={true} autoPanPadding={[50, 50]}>
+                <div className="modern-map-popup">
+                  <div className="modern-popup-top">
+                    <span className="recycle-badge recycle-badge-point">
+                      Posisi Anda
+                    </span>
+                  </div>
+                  <strong className="modern-popup-title">Lokasi Saat Ini</strong>
+                  <p className="modern-popup-desc">
+                    Menampilkan jarak terdekat ke titik daur ulang di sekitarmu.
+                  </p>
+                </div>
+              </Popup>
+            </Marker>
+          )}
+
+          {/* Recycling Centers Markers */}
+          {filteredBanks.map((bank) => {
+            const isSelected = selectedBankId === bank.id
+            const pinIcon = createCustomPin(bank.categoryKey, isSelected)
+            const badgeConfig =
+              categoryPinConfig[bank.categoryKey] || categoryPinConfig.unit
+
+            return (
+              <Marker
+                key={bank.id}
+                position={bank.position}
+                icon={pinIcon}
+                ref={(el) => (markerRefs.current[bank.id] = el)}
+                eventHandlers={{
+                  click: () => handleMarkerClick(bank),
+                }}
+              >
+                <Popup autoPan={true} autoPanPadding={[60, 60]}>
                   <div className="modern-map-popup">
                     <div className="modern-popup-top">
-                      <span className="recycle-badge recycle-badge-point">
-                        Posisi Anda
+                      <span className={`recycle-badge ${badgeConfig.badgeClass}`}>
+                        {bank.type}
                       </span>
+                      <div className="recycle-card-rating">
+                        <Star />
+                        <span>{bank.rating}</span>
+                      </div>
                     </div>
-                    <strong className="modern-popup-title">Lokasi Saat Ini</strong>
-                    <p className="modern-popup-desc">
-                      Menampilkan jarak terdekat ke titik daur ulang di sekitarmu.
-                    </p>
+
+                    <strong className="modern-popup-title">{bank.name}</strong>
+
+                    <p className="modern-popup-desc">{bank.description}</p>
+
+                    <div className="modern-popup-address">
+                      <MapPin />
+                      <span>{bank.address}</span>
+                    </div>
+
+                    <div className="modern-popup-hours">
+                      <Clock />
+                      <span>{bank.operatingHours}</span>
+                    </div>
+
+                    <div className="modern-popup-waste">
+                      {bank.acceptedWaste.slice(0, 4).map((w) => (
+                        <span key={w} className="modern-popup-waste-chip">
+                          {w}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="modern-popup-actions">
+                      <a
+                        href={bank.googleMapsUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="modern-popup-btn modern-popup-btn-nav"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Petunjuk Rute</span>
+                      </a>
+
+                      {bank.phone && (
+                        <a
+                          href={`tel:${bank.phone.replace(/[^0-9+]/g, "")}`}
+                          className="modern-popup-btn modern-popup-btn-call"
+                        >
+                          <Phone className="w-3.5 h-3.5" />
+                          <span>Hubungi</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Popup>
               </Marker>
-            )}
-
-            {/* Recycling Centers Markers */}
-            {filteredBanks.map((bank) => {
-              const isSelected = selectedBankId === bank.id
-              const pinIcon = createCustomPin(bank.categoryKey, isSelected)
-              const badgeConfig =
-                categoryPinConfig[bank.categoryKey] || categoryPinConfig.unit
-
-              return (
-                <Marker
-                  key={bank.id}
-                  position={bank.position}
-                  icon={pinIcon}
-                  ref={(el) => (markerRefs.current[bank.id] = el)}
-                  eventHandlers={{
-                    click: () => handleMarkerClick(bank),
-                  }}
-                >
-                  <Popup autoPan={true} autoPanPadding={[60, 60]}>
-                    <div className="modern-map-popup">
-                      <div className="modern-popup-top">
-                        <span className={`recycle-badge ${badgeConfig.badgeClass}`}>
-                          {bank.type}
-                        </span>
-                        <div className="recycle-card-rating">
-                          <Star />
-                          <span>{bank.rating}</span>
-                        </div>
-                      </div>
-
-                      <strong className="modern-popup-title">{bank.name}</strong>
-
-                      <p className="modern-popup-desc">{bank.description}</p>
-
-                      <div className="modern-popup-address">
-                        <MapPin />
-                        <span>{bank.address}</span>
-                      </div>
-
-                      <div className="modern-popup-hours">
-                        <Clock />
-                        <span>{bank.operatingHours}</span>
-                      </div>
-
-                      <div className="modern-popup-waste">
-                        {bank.acceptedWaste.slice(0, 4).map((w) => (
-                          <span key={w} className="modern-popup-waste-chip">
-                            {w}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="modern-popup-actions">
-                        <a
-                          href={bank.googleMapsUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="modern-popup-btn modern-popup-btn-nav"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>Petunjuk Rute</span>
-                        </a>
-
-                        {bank.phone && (
-                          <a
-                            href={`tel:${bank.phone.replace(/[^0-9+]/g, "")}`}
-                            className="modern-popup-btn modern-popup-btn-call"
-                          >
-                            <Phone className="w-3.5 h-3.5" />
-                            <span>Hubungi</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
-              )
-            })}
-          </MapContainer>
-        </div>
+            )
+          })}
+        </MapContainer>
       </div>
-    </section>
+    </div>
+
+    {/* Location Permission Modal Dialog */}
+    <PermissionModal
+      isOpen={showPermissionModal}
+      type="location"
+      status={permissionStatus}
+      onAllow={executeGeolocation}
+      onDismiss={handleDismissModal}
+      onRetry={executeGeolocation}
+    />
+    </section >
   )
 }
