@@ -35,22 +35,25 @@ const stats = [
     label: "Total Sampah",
     value: "2,4 kg",
     icon: Recycle,
+    theme: "emerald",
   },
   {
     label: "ECO Points",
     value: "120",
     icon: Package,
+    theme: "amber",
   },
   {
     label: "Item Dikelola",
     value: "42",
     icon: FileCheck2,
+    theme: "teal",
   },
   {
     label: "Green Streak",
     value: "7 hari",
     icon: Flame,
-    danger: true,
+    theme: "rose",
   },
 ]
 
@@ -108,161 +111,162 @@ function Dashboard() {
 
   return (
     <div className="dashboard-grid">
-      <section className="dashboard-main">
-        <div className="stats-grid">
-          {stats.map(({ label, value, icon: Icon, danger }) => (
-            <Card className="stat-card py-0" key={label}>
-              <CardContent className="gap-1 p-2">
-                <span className={`stat-icon ${danger ? "danger" : ""}`}>
-                  <Icon />
-                </span>
+      {/* ROW 1: Weekly Progress Chart */}
+      <Card className="weekly-card">
+        <CardHeader className="weekly-header">
+          <CardTitle className="text-eco-text">Progress Mingguan</CardTitle>
 
-                <span className="stat-label">{label}</span>
-                <strong className="text-eco-text">{value}</strong>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Card className="weekly-card">
-          <CardHeader className="weekly-header">
-            <CardTitle className="text-eco-text">Progress Mingguan</CardTitle>
-
-            <div className="progress-tabs gap-1" data-active={activeTab}>
-              <div className="progress-tabs-slider" aria-hidden="true" />
-              {["Sampah", "Points"].map((tab) => (
-                <Button
-                  key={tab}
-                  size="sm"
-                  variant="ghost"
-                  className={activeTab === tab ? "active-tab" : "inactive-tab"}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </Button>
-              ))}
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            <ChartContainer
-              config={chartConfig}
-              className="weekly-chart h-[257px] w-full"
-            >
-              <BarChart
-                accessibilityLayer
-                data={chartData}
-                margin={{
-                  top: 12,
-                  right: 4,
-                  left: 4,
-                  bottom: 20,
-                }}
+          <div className="progress-tabs gap-1" data-active={activeTab}>
+            <div className="progress-tabs-slider" aria-hidden="true" />
+            {["Sampah", "Points"].map((tab) => (
+              <Button
+                key={tab}
+                size="sm"
+                variant="ghost"
+                className={activeTab === tab ? "active-tab" : "inactive-tab"}
+                onClick={() => setActiveTab(tab)}
               >
-                <CartesianGrid
-                  vertical={false}
-                  stroke="var(--eco-border)"
-                  strokeDasharray="3 3"
-                />
-
-                <XAxis
-                  dataKey="day"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={10}
-                  tick={{
-                    fill: "var(--eco-text)",
-                    fontSize: 10,
-                    fontWeight: 700,
-                  }}
-                />
-
-                <ChartTooltip
-                  cursor={false}
-                  content={
-                    <ChartTooltipContent
-                      hideLabel
-                      className="bg-white border-gray-200 shadow-md"
-                    />
-                  }
-                />
-
-                <Bar
-                  dataKey="amount"
-                  fill="var(--color-amount)"
-                  radius={[8, 8, 0, 0]}
-                  maxBarSize={60}
-                  cursor="pointer"
-                />
-              </BarChart>
-            </ChartContainer>
-
-            <div className="target-row">
-              <strong className="text-eco-text">Target Bulan Ini</strong>
-              <span>2,4 kg / 3 kg</span>
-            </div>
-
-            <div className="progress-track">
-              <div className="progress-value" />
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      <aside className="dashboard-side">
-        <Card className="scanner-card">
-          <CardContent>
-            <Leaf className="scanner-icon" />
-
-            <h2 className="text-center">Ada sampah tapi tak tahu jenisnya?</h2>
-
-            <p className="text-center">
-              Foto sampahnya dan EcoCycle AI akan mendeteksinya dan memberikan
-              cara mengelolanya secara instan.
-            </p>
-
-            <Button className="scanner-action-button" onClick={() => navigate("/scanner")}>
-              <Camera />
-              Ayo Scan Sampahmu
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="activity-card py-2 gap-1">
-          <CardHeader className="activity-header">
-            <CardTitle className="text-xs">Aktivitas Terakhir</CardTitle>
-
-            <div className="activity-actions">
-              <Button variant="outline" size="icon-xs">
-                <SlidersHorizontal />
+                {tab}
               </Button>
-
-              <Button variant="outline" size="icon-xs">
-                <Download />
-              </Button>
-            </div>
-          </CardHeader>
-
-          <CardContent className="activity-list gap-0">
-            {activities.map((activity) => (
-              <div className="activity-item" key={activity.name}>
-                <div>
-                  <strong>{activity.name}</strong>
-                  <span>{activity.time}</span>
-                </div>
-
-                <div className="activity-result">
-                  <small className={activity.completed ? "done" : ""}>
-                    {activity.status}
-                  </small>
-
-                  <span>{activity.points}</span>
-                </div>
-              </div>
             ))}
-          </CardContent>
-        </Card>
-      </aside>
+          </div>
+        </CardHeader>
+
+        <CardContent>
+          <ChartContainer
+            config={chartConfig}
+            className="weekly-chart h-[257px] w-full"
+          >
+            <BarChart
+              accessibilityLayer
+              data={chartData}
+              margin={{
+                top: 12,
+                right: 4,
+                left: 4,
+                bottom: 20,
+              }}
+            >
+              <CartesianGrid
+                vertical={false}
+                stroke="var(--eco-border)"
+                strokeDasharray="3 3"
+              />
+
+              <XAxis
+                dataKey="day"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={10}
+                tick={{
+                  fill: "var(--eco-text)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                }}
+              />
+
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    hideLabel
+                    className="bg-white border-gray-200 shadow-md"
+                  />
+                }
+              />
+
+              <Bar
+                dataKey="amount"
+                fill="var(--color-amount)"
+                radius={[8, 8, 0, 0]}
+                maxBarSize={60}
+                cursor="pointer"
+              />
+            </BarChart>
+          </ChartContainer>
+
+          <div className="target-row">
+            <strong className="text-eco-text">Target Bulan Ini</strong>
+            <span>2,4 kg / 3 kg</span>
+          </div>
+
+          <div className="progress-track">
+            <div className="progress-value" />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ROW 1: Scan CTA Card */}
+      <Card className="scanner-card">
+        <CardContent>
+          <Leaf className="scanner-icon" />
+
+          <h2 className="text-center">Ada sampah tapi tak tahu jenisnya?</h2>
+
+          <p className="text-center">
+            Foto sampahnya dan EcoCycle AI akan mendeteksinya dan memberikan
+            cara mengelolanya secara instan.
+          </p>
+
+          <Button className="scanner-action-button" onClick={() => navigate("/scanner")}>
+            <Camera />
+            Ayo Scan Sampahmu
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* ROW 2: Summary Metric Cards (2x2 Grid) */}
+      <div className="stats-grid">
+        {stats.map(({ label, value, icon: Icon, theme }) => (
+          <Card className={`stat-card stat-card-${theme}`} key={label}>
+            <CardContent className="stat-card-content">
+              <div className="stat-icon-wrapper">
+                <Icon className="stat-icon-svg" />
+              </div>
+              <div className="stat-info">
+                <span className="stat-label">{label}</span>
+                <strong className="stat-value">{value}</strong>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* ROW 2: Recent Activities */}
+      <Card className="activity-card py-2 gap-1">
+        <CardHeader className="activity-header">
+          <CardTitle className="text-xs">Aktivitas Terakhir</CardTitle>
+
+          <div className="activity-actions">
+            <Button variant="outline" size="icon-xs">
+              <SlidersHorizontal />
+            </Button>
+
+            <Button variant="outline" size="icon-xs">
+              <Download />
+            </Button>
+          </div>
+        </CardHeader>
+
+        <CardContent className="activity-list gap-0">
+          {activities.map((activity) => (
+            <div className="activity-item" key={activity.name}>
+              <div>
+                <strong>{activity.name}</strong>
+                <span>{activity.time}</span>
+              </div>
+
+              <div className="activity-result">
+                <small className={activity.completed ? "done" : ""}>
+                  {activity.status}
+                </small>
+
+                <span>{activity.points}</span>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   )
 }
