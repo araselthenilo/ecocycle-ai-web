@@ -9,10 +9,11 @@ export default function CtaBanner() {
 
   return (
     <Section
-      id="daftar"
+      id="hubungi"
       variant="page"
       containerSize="3xl"
       containerClassName="p-0"
+      className="scroll-mt-10 md:scroll-mt-18"
     >
       <ScrollReveal
         delay={100}

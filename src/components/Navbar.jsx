@@ -54,6 +54,28 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+          setTimeout(() => {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState(null, '', href);
+          }, 150);
+        } else {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', href);
+        }
+        return;
+      }
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header
       style={{ overflowAnchor: 'none' }}
@@ -69,7 +91,17 @@ export default function Navbar() {
           }`}
       >
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (window.location.pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.history.pushState(null, '', '/');
+            }
+          }}
+          className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 cursor-pointer"
+        >
           <img
             src="/ecocyle-logo.svg"
             alt="EcoCycle AI Logo"
@@ -83,7 +115,12 @@ export default function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center justify-between w-full max-w-xs lg:max-w-lg px-2 lg:px-6 font-normal text-sm lg:text-lg text-dark gap-2 lg:gap-4">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover-text-primary py-1 whitespace-nowrap">
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="hover-text-primary py-1 whitespace-nowrap cursor-pointer transition-colors"
+            >
               {link.label}
             </a>
           ))}
@@ -138,8 +175,8 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="font-medium text-lg text-dark hover-text-primary py-2"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="font-medium text-lg text-dark hover-text-primary py-2 cursor-pointer transition-colors"
             >
               {link.label}
             </a>

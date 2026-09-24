@@ -25,9 +25,11 @@ import {
 } from "@/components/ui/chart"
 import {
   Bar,
-  BarChart,
   CartesianGrid,
+  ComposedChart,
+  Line,
   XAxis,
+  YAxis,
 } from "recharts"
 
 const stats = [
@@ -89,13 +91,13 @@ const activities = [
 ]
 
 const chartData = [
-  { day: "SEN", amount: 4 },
-  { day: "SEL", amount: 34 },
-  { day: "RAB", amount: 20 },
-  { day: "KAM", amount: 62 },
-  { day: "JUM", amount: 4 },
-  { day: "SAB", amount: 4 },
-  { day: "MIN", amount: 4 },
+  { day: "SEN", amount: 4, points: 15 },
+  { day: "SEL", amount: 34, points: 85 },
+  { day: "RAB", amount: 20, points: 60 },
+  { day: "KAM", amount: 62, points: 145 },
+  { day: "JUM", amount: 4, points: 25 },
+  { day: "SAB", amount: 4, points: 20 },
+  { day: "MIN", amount: 4, points: 15 },
 ]
 
 const chartConfig = {
@@ -103,11 +105,16 @@ const chartConfig = {
     label: "Sampah",
     color: "var(--eco-green)",
   },
+  points: {
+    label: "Points",
+    color: "#d97706",
+  },
 }
 
 function Dashboard() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("Sampah")
+  const isPoints = activeTab === "Points"
 
   return (
     <div className="dashboard-grid">
@@ -137,13 +144,13 @@ function Dashboard() {
             config={chartConfig}
             className="weekly-chart h-[257px] w-full"
           >
-            <BarChart
+            <ComposedChart
               accessibilityLayer
               data={chartData}
               margin={{
-                top: 12,
-                right: 4,
-                left: 4,
+                top: 14,
+                right: 8,
+                left: 8,
                 bottom: 20,
               }}
             >
@@ -165,33 +172,105 @@ function Dashboard() {
                 }}
               />
 
+              <YAxis
+                yAxisId="amount"
+                hide
+                domain={[0, (dataMax) => Math.max(dataMax * 1.15, 70)]}
+              />
+              <YAxis
+                yAxisId="points"
+                orientation="right"
+                hide
+                domain={[0, (dataMax) => Math.max(dataMax * 1.15, 160)]}
+              />
+
               <ChartTooltip
                 cursor={false}
                 content={
                   <ChartTooltipContent
-                    hideLabel
                     className="bg-white border-gray-200 shadow-md"
+                    formatter={(value, name, item) => {
+                      const metricKey = name || item?.dataKey
+                      const isAmountMetric = metricKey === "amount"
+                      const label = isAmountMetric ? "Sampah" : "Points"
+                      const color = isAmountMetric ? "var(--eco-green)" : "#d97706"
+                      const unit = isAmountMetric ? "kg" : "pts"
+
+                      return (
+                        <div className="flex w-full items-center justify-between gap-4 py-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className="inline-block h-2 w-2 rounded-full"
+                              style={{ backgroundColor: color }}
+                            />
+                            <span className="text-muted-foreground font-medium">
+                              {label}
+                            </span>
+                          </div>
+                          <span className="font-mono font-bold text-foreground tabular-nums">
+                            {value} {unit}
+                          </span>
+                        </div>
+                      )
+                    }}
                   />
                 }
               />
 
               <Bar
+                yAxisId="amount"
+                name="amount"
                 dataKey="amount"
                 fill="var(--color-amount)"
                 radius={[8, 8, 0, 0]}
-                maxBarSize={60}
+                maxBarSize={56}
                 cursor="pointer"
+                opacity={isPoints ? 0.22 : 1}
+                style={{
+                  transition: "opacity 0.3s ease",
+                }}
               />
-            </BarChart>
+
+              <Line
+                yAxisId="points"
+                name="points"
+                type="monotone"
+                dataKey="points"
+                stroke="var(--color-points)"
+                strokeWidth={isPoints ? 3.5 : 2}
+                strokeOpacity={isPoints ? 1 : 0.35}
+                dot={{
+                  r: isPoints ? 4.5 : 2.5,
+                  fill: isPoints ? "#ffffff" : "var(--color-points)",
+                  stroke: "var(--color-points)",
+                  strokeWidth: isPoints ? 2.5 : 1.5,
+                  strokeOpacity: isPoints ? 1 : 0.4,
+                  fillOpacity: isPoints ? 1 : 0.4,
+                }}
+                activeDot={{
+                  r: 6,
+                  fill: "var(--color-points)",
+                  stroke: "#ffffff",
+                  strokeWidth: 2,
+                }}
+                style={{
+                  transition: "all 0.3s ease",
+                }}
+              />
+            </ComposedChart>
           </ChartContainer>
 
           <div className="target-row">
             <strong className="text-eco-text">Target Bulan Ini</strong>
-            <span>2,4 kg / 3 kg</span>
+            <span className={isPoints ? "points-active" : ""}>
+              {isPoints ? "120 pts / 150 pts" : "2,4 kg / 3 kg"}
+            </span>
           </div>
 
           <div className="progress-track">
-            <div className="progress-value" />
+            <div
+              className={`progress-value ${isPoints ? "points-active" : ""}`}
+            />
           </div>
         </CardContent>
       </Card>

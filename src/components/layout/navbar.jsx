@@ -56,12 +56,15 @@ export function Navbar({ activePage }) {
           <Button
             variant="outline"
             size="icon"
-            className={`notification-button ${isNotificationActive ? "active" : ""}`}
+            className={`group notification-button ${isNotificationActive ? "active" : ""}`}
             aria-label="Notifikasi"
             onClick={() => navigate("/notifications")}
             title="Lihat Notifikasi"
           >
-            <Bell />
+            <Bell
+              strokeWidth={isNotificationActive ? 2.5 : 2}
+              className="transition-all duration-200 group-hover:stroke-[2.5px]"
+            />
           </Button>
 
           <ProfileButton />

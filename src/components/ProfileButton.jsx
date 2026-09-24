@@ -87,7 +87,7 @@ export default function ProfileButton({ className = "" }) {
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={`Menu profil ${userName}`}
-        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-2 rounded-full border transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 hover:bg-eco-green-dark hover:border-eco-green-dark hover:text-white ${isOpen
+        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-2 rounded-tr-xl rounded-bl-xl border transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 hover:bg-eco-green-dark hover:border-eco-green-dark hover:text-white ${isOpen
           ? "bg-eco-green/10 border-eco-green/30 shadow-sm text-eco-text"
           : isProfileActive
             ? "bg-white border-eco-green/40 shadow-xs text-eco-text"
@@ -95,13 +95,13 @@ export default function ProfileButton({ className = "" }) {
           }`}
       >
         {/* Avatar */}
-        <div className="relative shrink-0 flex items-center justify-center size-8 rounded-full overflow-hidden bg-eco-green/15 border border-eco-green/25 group-hover:border-white/40">
+        <div className="relative shrink-0 flex items-center justify-center size-8 rounded-tr-lg rounded-bl-lg overflow-hidden bg-eco-green/15 border border-eco-green/25 group-hover:border-white/40">
           {avatarSrc ? (
             <img
               src={avatarSrc}
               alt={userName}
               onError={() => setImgError(true)}
-              className="size-full object-cover rounded-full"
+              className="size-full object-cover rounded-tr-lg rounded-bl-lg"
             />
           ) : (
             <span className="text-[11px] font-bold text-eco-green group-hover:text-white transition-colors">
@@ -133,16 +133,16 @@ export default function ProfileButton({ className = "" }) {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 mt-2 w-72 origin-top-right rounded-2xl bg-white/95 backdrop-blur-md p-3 shadow-2xl border border-black/10 ring-1 ring-black/5 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 mt-2 w-72 origin-top-right rounded-tl-2xl rounded-br-2xl bg-white/95 backdrop-blur-md p-3 shadow-2xl border border-black/10 ring-1 ring-black/5 z-50 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Header Card: User Info */}
-          <div className="flex items-center gap-3 p-2.5 rounded-xl bg-gradient-to-br from-eco-green/8 to-primary-light/20 border border-eco-green/10">
-            <div className="relative shrink-0 flex items-center justify-center size-11 rounded-full overflow-hidden bg-white border border-eco-green/30 shadow-xs">
+          <div className="flex items-center gap-3 p-2.5 rounded-tl-xl rounded-br-xl bg-gradient-to-br from-eco-green/8 to-primary-light/20 border border-eco-green/10">
+            <div className="relative shrink-0 flex items-center justify-center size-11 rounded-tl-xl rounded-br-xl overflow-hidden bg-white border border-eco-green/30 shadow-xs">
               {avatarSrc ? (
                 <img
                   src={avatarSrc}
                   alt={userName}
-                  className="size-full object-cover rounded-full"
+                  className="size-full object-cover rounded-tl-xl rounded-br-xl"
                 />
               ) : (
                 <span className="text-xs font-bold text-eco-green">
@@ -174,7 +174,7 @@ export default function ProfileButton({ className = "" }) {
           </div>
 
           {/* Quick Stats: Eco Points */}
-          <div className="my-2.5 px-3 py-2 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between">
+          <div className="my-2.5 px-3 py-2 rounded-tl-xl rounded-br-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="size-6 rounded-lg bg-emerald-600/15 flex items-center justify-center text-emerald-700">
                 <Leaf className="size-3.5" />
