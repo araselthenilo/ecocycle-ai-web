@@ -5,13 +5,18 @@
   --color-dark: #191c1d;
   --color-body: #3c4a44;
   --color-muted: #6c7a74;
-  --color-white: #fcfcfc;
+  --color-white: #f1f1f1;
   --color-bg-page: #f8f9fa;
   --color-bg-section: #f3f4f5;
   --color-border: #6c7a74;
   --shadow-card: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.1));
   --shadow-hero: 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
   --shadow-footer: 0px -5px 10px 0px rgba(0, 0, 0, 0.25);
+
+  /* Unified Scrollbar Tokens */
+  --scrollbar-thumb: rgba(0, 107, 86, 0.35);
+  --scrollbar-thumb-hover: rgba(0, 107, 86, 0.55);
+  --scrollbar-thumb-active: rgba(0, 86, 68, 0.65);
 }
 
 .app-container {
@@ -144,7 +149,7 @@
   border-bottom-right-radius: 0;
 }
 
-/* Elegant subtle scrollbar for auth & modal containers */
+/* Elegant subtle scrollbar for auth & modal containers (Strictly button-free & square) */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -157,19 +162,27 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 122, 99, 0.35);
-  border-radius: 9999px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 0px !important;
   transition: background-color 0.2s ease-in-out;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 122, 99, 0.65);
+  background-color: var(--scrollbar-thumb-hover);
 }
 
-.custom-scrollbar::-webkit-scrollbar-button {
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-thumb-active);
+}
+
+.custom-scrollbar::-webkit-scrollbar-button,
+.custom-scrollbar::-webkit-scrollbar-button:single-button,
+.custom-scrollbar::-webkit-scrollbar-button:vertical:decrement,
+.custom-scrollbar::-webkit-scrollbar-button:vertical:increment {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  background: transparent !important;
 }
 
 /* Enhanced Solutions / Feature Cards (CTA-like elevation with hover/focus color transition) */
@@ -2800,12 +2813,35 @@ footer {
 }
 
 .recycle-sidebar-list::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
+}
+
+.recycle-sidebar-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .recycle-sidebar-list::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 9999px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 0px !important;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.recycle-sidebar-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+.recycle-sidebar-list::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-thumb-active);
+}
+
+.recycle-sidebar-list::-webkit-scrollbar-button,
+.recycle-sidebar-list::-webkit-scrollbar-button:single-button,
+.recycle-sidebar-list::-webkit-scrollbar-button:vertical:decrement,
+.recycle-sidebar-list::-webkit-scrollbar-button:vertical:increment {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* Individual Location Card (Compact & Polished) */

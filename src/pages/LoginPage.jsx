@@ -212,7 +212,7 @@ export default function LoginPage() {
 
           {/* Heading (Frame 4 in Figma) */}
           <div className="flex flex-col gap-0.5 sm:gap-1 mb-3 xl:mb-5 text-left shrink-0">
-            <h1 className="font-heading text-xl sm:text-2xl xl:text-[28px] font-extrabold text-dark leading-tight tracking-tight">
+            <h1 className="font-heading text-xl sm:text-2xl xl:text-[28px] font-extrabold text-primary leading-tight tracking-tight">
               {isRegisterMode ? 'Buat Akun Baru' : 'Selamat Datang'}
             </h1>
             <p className="text-xs sm:text-sm xl:text-base text-dark font-normal leading-relaxed">
@@ -388,18 +388,16 @@ export default function LoginPage() {
         <div className="fixed top-5 right-5 z-50 max-w-sm sm:max-w-md w-[calc(100%-2.5rem)] animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto">
           <div
             role="alert"
-            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-2xl shadow-2xl backdrop-blur-md border text-xs sm:text-sm font-medium transition-all ${
-              notification.type === 'success'
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-2xl shadow-2xl backdrop-blur-md border text-xs sm:text-sm font-medium transition-all ${notification.type === 'success'
                 ? 'bg-white/95 border-emerald-200/90 text-emerald-950 shadow-emerald-900/10'
                 : 'bg-white/95 border-rose-200/90 text-rose-950 shadow-rose-900/10'
-            }`}
+              }`}
           >
             <div
-              className={`size-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                notification.type === 'success'
+              className={`size-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${notification.type === 'success'
                   ? 'bg-emerald-100 text-emerald-700'
                   : 'bg-rose-100 text-rose-700'
-              }`}
+                }`}
             >
               {notification.type === 'success' ? (
                 <CheckCircle2 className="size-4 stroke-[2.5]" />
