@@ -52,6 +52,11 @@ export function Navbar({ activePage }) {
   return (
     <header className="dashboard-header">
       <div className="navbar-top">
+        <SidebarTrigger
+          className="navbar-toggle"
+          aria-label="Buka navigasi"
+        />
+
         <div className="dashboard-profile">
           <Button
             variant="outline"
@@ -61,10 +66,7 @@ export function Navbar({ activePage }) {
             onClick={() => navigate("/notifications")}
             title="Lihat Notifikasi"
           >
-            <Bell
-              strokeWidth={isNotificationActive ? 2.5 : 2}
-              className="transition-all duration-200 group-hover:stroke-[2.5px]"
-            />
+            <Bell />
           </Button>
 
           <ProfileButton />
