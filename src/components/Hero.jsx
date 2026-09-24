@@ -49,7 +49,7 @@ export default function Hero() {
             <Button
               href="#layanan"
               variant="outline"
-              className="flex-1 w-full px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6"
+              className="flex-1 w-full px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 bg-actual-white"
             >
               Pelajari Lebih Lanjut
             </Button>

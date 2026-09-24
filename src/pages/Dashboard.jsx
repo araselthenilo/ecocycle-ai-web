@@ -1,14 +1,8 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import {
   Camera,
-  Download,
-  FileCheck2,
-  Flame,
   Leaf,
-  Package,
-  Recycle,
-  SlidersHorizontal,
 } from "lucide-react"
 
 import {
@@ -36,25 +30,25 @@ const stats = [
   {
     label: "Total Sampah",
     value: "2,4 kg",
-    icon: Recycle,
+    iconClass: "fa-solid fa-recycle",
     theme: "emerald",
   },
   {
     label: "ECO Points",
     value: "120",
-    icon: Package,
+    iconClass: "fa-solid fa-box",
     theme: "amber",
   },
   {
     label: "Item Dikelola",
     value: "42",
-    icon: FileCheck2,
+    iconClass: "fa-solid fa-file-circle-check",
     theme: "teal",
   },
   {
     label: "Green Streak",
     value: "7 hari",
-    icon: Flame,
+    iconClass: "fa-solid fa-fire",
     theme: "rose",
   },
 ]
@@ -296,11 +290,11 @@ function Dashboard() {
 
       {/* ROW 2: Summary Metric Cards (2x2 Grid) */}
       <div className="stats-grid">
-        {stats.map(({ label, value, icon: Icon, theme }) => (
+        {stats.map(({ label, value, iconClass, theme }) => (
           <Card className={`stat-card stat-card-${theme}`} key={label}>
             <CardContent className="stat-card-content">
               <div className="stat-icon-wrapper">
-                <Icon className="stat-icon-svg" />
+                <i className={`${iconClass} stat-icon-svg`} />
               </div>
               <div className="stat-info">
                 <span className="stat-label">{label}</span>
@@ -312,19 +306,10 @@ function Dashboard() {
       </div>
 
       {/* ROW 2: Recent Activities */}
-      <Card className="activity-card py-2 gap-1">
+      <Card className="activity-card py-2 gap-0">
         <CardHeader className="activity-header">
-          <CardTitle className="text-xs">Aktivitas Terakhir</CardTitle>
-
-          <div className="activity-actions">
-            <Button variant="outline" size="icon-xs">
-              <SlidersHorizontal />
-            </Button>
-
-            <Button variant="outline" size="icon-xs">
-              <Download />
-            </Button>
-          </div>
+          <CardTitle className="text-md font-bold">Aktivitas Terakhir</CardTitle>
+          <Link to="/notifications" className="text-xs font-light text-muted">Semua aktivitas</Link>
         </CardHeader>
 
         <CardContent className="activity-list gap-0">

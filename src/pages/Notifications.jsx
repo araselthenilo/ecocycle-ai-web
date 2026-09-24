@@ -4,19 +4,13 @@ import {
   Bell,
   CheckCheck,
   CheckCircle2,
-  ChevronRight,
   Clock,
-  ExternalLink,
-  Filter,
   Flame,
-  Info,
   MapPin,
   Package,
   Recycle,
   ScanLine,
-  Sparkles,
   Trash2,
-  Trophy,
 } from "lucide-react"
 
 import {
@@ -39,6 +33,7 @@ const initialNotifications = [
     time: "2 menit lalu",
     status: "SELESAI",
     type: "recycling",
+    theme: "emerald",
     isRead: false,
     icon: Recycle,
     color: "#059669",
@@ -56,6 +51,7 @@ const initialNotifications = [
     time: "3 jam lalu",
     status: "SELESAI",
     type: "recycling",
+    theme: "amber",
     isRead: false,
     icon: Package,
     color: "#d97706",
@@ -73,6 +69,7 @@ const initialNotifications = [
     time: "9 jam lalu",
     status: "SELESAI",
     type: "recycling",
+    theme: "sky",
     isRead: true,
     icon: Recycle,
     color: "#0284c7",
@@ -90,6 +87,7 @@ const initialNotifications = [
     time: "1 hari lalu",
     status: "SELESAI",
     type: "recycling",
+    theme: "teal",
     isRead: true,
     icon: Recycle,
     color: "#0d9488",
@@ -107,6 +105,7 @@ const initialNotifications = [
     time: "1 hari lalu",
     status: "SELESAI",
     type: "points",
+    theme: "rose",
     isRead: true,
     icon: Flame,
     color: "#ef4444",
@@ -124,6 +123,7 @@ const initialNotifications = [
     time: "2 hari lalu",
     status: "INFO",
     type: "system",
+    theme: "indigo",
     isRead: true,
     icon: MapPin,
     color: "#6366f1",
@@ -171,6 +171,8 @@ export default function Notifications() {
 
   const unreadCount = notifications.filter((n) => !n.isRead).length
   const recyclingCount = notifications.filter((n) => n.type === "recycling").length
+  const pointsCount = notifications.filter((n) => n.type === "points").length
+  const systemCount = notifications.filter((n) => n.type === "system").length
 
   return (
     <div className="notifications-page">
@@ -199,62 +201,85 @@ export default function Notifications() {
 
             <div className="notification-hero-actions">
               {unreadCount > 0 && (
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={markAllAsRead}
-                  className="notification-hero-btn mark-read-btn"
+                  className="notification-leaf-btn read-all-btn"
                 >
                   <CheckCheck className="size-4 mr-1.5" />
                   Tandai Dibaca ({unreadCount})
-                </Button>
+                </button>
               )}
-              <Button
-                size="sm"
+              <button
+                type="button"
                 onClick={() => navigate("/scanner")}
-                className="notification-hero-btn scan-btn bg-emerald-700 hover:bg-emerald-800 text-white"
+                className="notification-leaf-btn scan-now-btn"
               >
                 <ScanLine className="size-4 mr-1.5" />
                 Pindai Sampah
-              </Button>
+              </button>
             </div>
           </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="notification-stats-row">
-            <div className="notification-stat-item">
-              <span className="notification-stat-label">Total Aktivitas</span>
-              <strong className="notification-stat-val">
-                {notifications.length} Catatan
-              </strong>
+          {/* 4-Grid Colorful Summary Cards (Borderless & Leaf-Shaped) */}
+          <div className="notification-summary-grid">
+            {/* 1. Total Aktivitas (Indigo) */}
+            <div className="notification-stat-card notif-stat-indigo">
+              <div className="notif-stat-icon-wrapper">
+                <i className="fa-solid fa-list-check" />
+              </div>
+              <div className="notif-stat-info">
+                <span className="notif-stat-label">Total Aktivitas</span>
+                <strong className="notif-stat-value">
+                  {notifications.length} Catatan
+                </strong>
+                <span className="notif-stat-sub">Log tersimpan</span>
+              </div>
             </div>
-            <div className="notification-stat-divider" />
-            <div className="notification-stat-item">
-              <span className="notification-stat-label">Daur Ulang Selesai</span>
-              <strong className="notification-stat-val text-emerald-700">
-                {recyclingCount} Setoran
-              </strong>
+
+            {/* 2. Daur Ulang Selesai (Emerald) */}
+            <div className="notification-stat-card notif-stat-emerald">
+              <div className="notif-stat-icon-wrapper">
+                <i className="fa-solid fa-recycle" />
+              </div>
+              <div className="notif-stat-info">
+                <span className="notif-stat-label">Daur Ulang</span>
+                <strong className="notif-stat-value">
+                  {recyclingCount} Setoran
+                </strong>
+                <span className="notif-stat-sub">Terverifikasi mitra</span>
+              </div>
             </div>
-            <div className="notification-stat-divider" />
-            <div className="notification-stat-item">
-              <span className="notification-stat-label">Poin Terkumpul</span>
-              <strong className="notification-stat-val text-emerald-700">
-                +120 XP
-              </strong>
+
+            {/* 3. Poin Terkumpul (Amber) */}
+            <div className="notification-stat-card notif-stat-amber">
+              <div className="notif-stat-icon-wrapper">
+                <i className="fa-solid fa-coins" />
+              </div>
+              <div className="notif-stat-info">
+                <span className="notif-stat-label">Poin Terkumpul</span>
+                <strong className="notif-stat-value">+120 XP</strong>
+                <span className="notif-stat-sub">Dapat ditukar reward</span>
+              </div>
             </div>
-            <div className="notification-stat-divider" />
-            <div className="notification-stat-item">
-              <span className="notification-stat-label">Status Verifikasi</span>
-              <strong className="notification-stat-val text-teal-700">
-                100% Sukses
-              </strong>
+
+            {/* 4. Status Verifikasi (Teal) */}
+            <div className="notification-stat-card notif-stat-teal">
+              <div className="notif-stat-icon-wrapper">
+                <i className="fa-solid fa-circle-check" />
+              </div>
+              <div className="notif-stat-info">
+                <span className="notif-stat-label">Verifikasi</span>
+                <strong className="notif-stat-value">100% Sukses</strong>
+                <span className="notif-stat-sub">Akurasi AI & petugas</span>
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Main Content Area */}
-      <Card className="profile-card notification-main-card">
+      <Card className="notification-main-card">
         <CardHeader className="notification-card-header">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -268,39 +293,47 @@ export default function Notifications() {
               </CardDescription>
             </div>
 
-            {/* Filter Pills */}
+            {/* Leaf-Shaped Filter Buttons */}
             <div className="notification-filters">
               <button
                 type="button"
-                className={`notification-filter-pill ${activeFilter === "all" ? "active" : ""
-                  }`}
+                className={`notification-filter-btn ${
+                  activeFilter === "all" ? "active" : ""
+                }`}
                 onClick={() => setActiveFilter("all")}
               >
-                Semua ({notifications.length})
+                Semua
+                <span className="notif-filter-count">{notifications.length}</span>
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${activeFilter === "recycling" ? "active" : ""
-                  }`}
+                className={`notification-filter-btn ${
+                  activeFilter === "recycling" ? "active" : ""
+                }`}
                 onClick={() => setActiveFilter("recycling")}
               >
-                Daur Ulang ({recyclingCount})
+                Daur Ulang
+                <span className="notif-filter-count">{recyclingCount}</span>
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${activeFilter === "points" ? "active" : ""
-                  }`}
+                className={`notification-filter-btn ${
+                  activeFilter === "points" ? "active" : ""
+                }`}
                 onClick={() => setActiveFilter("points")}
               >
                 Poin & Hadiah
+                <span className="notif-filter-count">{pointsCount}</span>
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${activeFilter === "system" ? "active" : ""
-                  }`}
+                className={`notification-filter-btn ${
+                  activeFilter === "system" ? "active" : ""
+                }`}
                 onClick={() => setActiveFilter("system")}
               >
                 Info
+                <span className="notif-filter-count">{systemCount}</span>
               </button>
             </div>
           </div>
@@ -310,7 +343,7 @@ export default function Notifications() {
           {filteredNotifications.length === 0 ? (
             <div className="notification-empty-state">
               <div className="notification-empty-icon">
-                <Bell className="size-8 text-gray-400" />
+                <Bell className="size-8 text-emerald-600" />
               </div>
               <h4 className="font-bold text-gray-700 mt-3 text-base">
                 Tidak ada notifikasi pada kategori ini
@@ -319,27 +352,32 @@ export default function Notifications() {
                 Pindai sampah atau setorkan ke bank sampah terdekat untuk
                 mendapatkan pembaruan aktivitas daur ulang.
               </p>
-              <Button
-                size="sm"
+              <button
+                type="button"
                 onClick={() => navigate("/scanner")}
-                className="mt-4 bg-emerald-700 hover:bg-emerald-800 text-white"
+                className="notification-leaf-btn scan-now-btn mt-4"
               >
                 <ScanLine className="size-4 mr-2" />
                 Mulai Pindai Sekarang
-              </Button>
+              </button>
             </div>
           ) : (
             <div className="notification-timeline">
               {filteredNotifications.map((item) => {
                 const ItemIcon = item.icon
+                const themeClass = `notif-theme-${item.theme || "emerald"}`
                 return (
                   <div
                     key={item.id}
                     onClick={() => toggleReadStatus(item.id)}
-                    className={`notification-item-card ${!item.isRead ? "unread" : "read"
-                      }`}
+                    className={`notification-item-card ${themeClass} ${
+                      !item.isRead ? "unread" : "read"
+                    }`}
                     title="Klik untuk ubah status dibaca"
                   >
+                    {/* Decorative leaf accent strip */}
+                    <div className="notif-item-accent" />
+
                     {/* Unread indicator badge */}
                     {!item.isRead && (
                       <span
@@ -348,13 +386,9 @@ export default function Notifications() {
                       />
                     )}
 
-                    {/* Icon */}
+                    {/* Leaf-shaped Icon */}
                     <div
-                      className="notification-item-icon"
-                      style={{
-                        backgroundColor: item.bg,
-                        color: item.color,
-                      }}
+                      className={`notification-item-icon ${themeClass}`}
                     >
                       <ItemIcon className="size-5" />
                     </div>
@@ -366,7 +400,7 @@ export default function Notifications() {
                           <h4 className="notification-item-title">
                             {item.title}
                           </h4>
-                          <span className="notification-item-tag">
+                          <span className={`notification-item-tag ${themeClass}`}>
                             {item.category}
                           </span>
                         </div>
@@ -378,8 +412,9 @@ export default function Notifications() {
                             </span>
                           )}
                           <span
-                            className={`notification-status-pill ${item.status === "SELESAI" ? "done" : "info"
-                              }`}
+                            className={`notification-status-pill ${
+                              item.status === "SELESAI" ? "done" : "info"
+                            }`}
                           >
                             {item.status}
                           </span>

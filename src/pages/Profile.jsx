@@ -1,30 +1,5 @@
 import { useState, useEffect } from "react"
 import {
-  Award,
-  Calendar,
-  Check,
-  CheckCircle2,
-  Copy,
-  Edit3,
-  ExternalLink,
-  Flame,
-  Globe,
-  Leaf,
-  Lock,
-  Mail,
-  MapPin,
-  Package,
-  Phone,
-  Recycle,
-  ScanLine,
-  ShieldCheck,
-  Sparkles,
-  Trophy,
-  User,
-  X,
-} from "lucide-react"
-
-import {
   Card,
   CardContent,
   CardDescription,
@@ -40,7 +15,7 @@ const userBadges = [
     id: "top-recycler",
     name: "Peringkat #1 Komunitas",
     desc: "Memimpin perolehan Eco Points mingguan se-Bali.",
-    icon: Trophy,
+    iconClass: "fa-solid fa-trophy",
     color: "#eab308",
     bg: "#fef9c3",
     unlocked: true,
@@ -50,7 +25,7 @@ const userBadges = [
     id: "green-streak",
     name: "7-Day Green Streak",
     desc: "Konsisten memilah dan mendata sampah 7 hari berturut-turut.",
-    icon: Flame,
+    iconClass: "fa-solid fa-fire",
     color: "#ef4444",
     bg: "#fee2e2",
     unlocked: true,
@@ -60,7 +35,7 @@ const userBadges = [
     id: "ai-scanner",
     name: "AI Scanner Pro",
     desc: "Memindai lebih dari 20 objek sampah menggunakan AI Vision.",
-    icon: ScanLine,
+    iconClass: "fa-solid fa-barcode",
     color: "#0284c7",
     bg: "#e0f2fe",
     unlocked: true,
@@ -70,7 +45,7 @@ const userBadges = [
     id: "eco-map",
     name: "Eco Explorer",
     desc: "Menemukan dan menyetorkan sampah ke bank sampah mitra terdekat.",
-    icon: MapPin,
+    iconClass: "fa-solid fa-location-dot",
     color: "#16a34a",
     bg: "#dcfce7",
     unlocked: true,
@@ -80,7 +55,7 @@ const userBadges = [
     id: "carbon-saver",
     name: "Pelindung Karbon",
     desc: "Mengurangi potensi emisi karbon lebih dari 5 kg CO₂e.",
-    icon: Leaf,
+    iconClass: "fa-solid fa-leaf",
     color: "#059669",
     bg: "#d1fae5",
     unlocked: true,
@@ -90,7 +65,7 @@ const userBadges = [
     id: "zero-waste",
     name: "Kompos Master",
     desc: "Olah 10 kg sampah organik basah menjadi pupuk alami.",
-    icon: Sparkles,
+    iconClass: "fa-solid fa-seedling",
     color: "#6b7280",
     bg: "#f3f4f6",
     unlocked: false,
@@ -186,7 +161,7 @@ export default function Profile() {
     <div className="profile-page">
       {savedNotice && (
         <div className="profile-toast-alert">
-          <CheckCircle2 className="size-5 text-emerald-600" />
+          <i className="fa-solid fa-circle-check text-emerald-600 text-lg mr-2" />
           <span>Profil berhasil diperbarui dan disimpan!</span>
         </div>
       )}
@@ -194,11 +169,8 @@ export default function Profile() {
       {/* Main Profile Hero Card */}
       <Card className="profile-card profile-hero-card">
         <div className="profile-hero-banner">
-          <div className="profile-hero-pattern" />
-          <span className="profile-hero-badge">
-            <ShieldCheck className="size-4" />
-            Akun Terverifikasi
-          </span>
+          <div className="profile-hero-pattern" aria-hidden="true" />
+          <div className="profile-hero-decor-leaf" aria-hidden="true" />
         </div>
 
         <CardContent className="profile-hero-content">
@@ -224,7 +196,7 @@ export default function Profile() {
               </div>
 
               <p className="profile-email-text">
-                <Mail className="size-3.5 inline-block mr-1.5 opacity-70" />
+                <i className="fa-solid fa-envelope mr-1.5 opacity-70 text-xs" />
                 {displayEmail}
               </p>
 
@@ -232,11 +204,11 @@ export default function Profile() {
 
               <div className="profile-meta-tags">
                 <span className="profile-meta-tag">
-                  <MapPin className="size-3.5 text-emerald-600" />
+                  <i className="fa-solid fa-location-dot text-emerald-600 text-xs mr-1" />
                   {formData.location}
                 </span>
                 <span className="profile-meta-tag">
-                  <Calendar className="size-3.5 text-emerald-600" />
+                  <i className="fa-solid fa-calendar-days text-emerald-600 text-xs mr-1" />
                   Bergabung Jan 2026
                 </span>
                 <button
@@ -247,9 +219,9 @@ export default function Profile() {
                   aria-label="Salin ID Pengguna"
                 >
                   {copiedId ? (
-                    <Check className="size-3.5 text-emerald-600" />
+                    <i className="fa-solid fa-check text-emerald-600 text-xs mr-1" />
                   ) : (
-                    <Copy className="size-3.5 text-emerald-700" />
+                    <i className="fa-solid fa-copy text-emerald-700 text-xs mr-1" />
                   )}
                   <span>ID: {formatMemberId(memberId)}</span>
                   <span className="profile-id-chip-action">
@@ -261,11 +233,11 @@ export default function Profile() {
 
             <div className="profile-actions-column">
               <Button
-                variant="outline"
+                variant="ghost"
                 className="profile-action-btn edit-btn"
                 onClick={() => setIsEditing(true)}
               >
-                <Edit3 className="size-4 mr-2" />
+                <i className="fa-solid fa-pen-to-square mr-2 text-sm" />
                 Edit Profil
               </Button>
             </div>
@@ -275,7 +247,7 @@ export default function Profile() {
           <div className="profile-level-box">
             <div className="profile-level-header">
               <div className="profile-level-info">
-                <Award className="size-4 text-emerald-600" />
+                <i className="fa-solid fa-award text-emerald-600 text-base mr-2" />
                 <strong>Level 4 • Eco Hero</strong>
               </div>
               <span className="profile-level-points">
@@ -292,55 +264,55 @@ export default function Profile() {
         </CardContent>
       </Card>
 
-      {/* Quick Eco Metrics Stats */}
+      {/* Quick Eco Metrics Stats (Dashboard Themed & Leaf-Shaped) */}
       <div className="profile-stats-grid">
-        <Card className="profile-stat-card">
-          <div className="profile-stat-icon-wrapper bg-emerald-50 text-emerald-700">
-            <Package className="size-5" />
+        <Card className="profile-stat-card profile-stat-card-amber">
+          <div className="profile-stat-icon-wrapper">
+            <i className="fa-solid fa-box" />
           </div>
           <div className="profile-stat-data">
             <span className="profile-stat-label">Total Eco Points</span>
             <strong className="profile-stat-value">1.240 Poin</strong>
-            <small className="profile-stat-sub text-emerald-700">
+            <small className="profile-stat-sub">
               +120 poin minggu ini
             </small>
           </div>
         </Card>
 
-        <Card className="profile-stat-card">
-          <div className="profile-stat-icon-wrapper bg-teal-50 text-teal-700">
-            <Recycle className="size-5" />
+        <Card className="profile-stat-card profile-stat-card-emerald">
+          <div className="profile-stat-icon-wrapper">
+            <i className="fa-solid fa-recycle" />
           </div>
           <div className="profile-stat-data">
             <span className="profile-stat-label">Sampah Terpilah</span>
             <strong className="profile-stat-value">2,4 kg</strong>
-            <small className="profile-stat-sub text-muted">
+            <small className="profile-stat-sub">
               Plastik, kertas & kaleng
             </small>
           </div>
         </Card>
 
-        <Card className="profile-stat-card">
-          <div className="profile-stat-icon-wrapper bg-sky-50 text-sky-700">
-            <Leaf className="size-5" />
+        <Card className="profile-stat-card profile-stat-card-teal">
+          <div className="profile-stat-icon-wrapper">
+            <i className="fa-solid fa-leaf" />
           </div>
           <div className="profile-stat-data">
             <span className="profile-stat-label">Emisi CO₂ Dicegah</span>
             <strong className="profile-stat-value">~5,8 kg</strong>
-            <small className="profile-stat-sub text-sky-700">
+            <small className="profile-stat-sub">
               Setara 3 pohon diselamatkan
             </small>
           </div>
         </Card>
 
-        <Card className="profile-stat-card">
-          <div className="profile-stat-icon-wrapper bg-amber-50 text-amber-600">
-            <Flame className="size-5" />
+        <Card className="profile-stat-card profile-stat-card-rose">
+          <div className="profile-stat-icon-wrapper">
+            <i className="fa-solid fa-fire" />
           </div>
           <div className="profile-stat-data">
             <span className="profile-stat-label">Green Streak</span>
-            <strong className="profile-stat-value">7 Hari 🔥</strong>
-            <small className="profile-stat-sub text-amber-600">
+            <strong className="profile-stat-value">7 Hari</strong>
+            <small className="profile-stat-sub">
               Jangan sampai terputus!
             </small>
           </div>
@@ -365,18 +337,17 @@ export default function Profile() {
 
         <CardContent className="profile-badges-grid">
           {userBadges.map(
-            ({ id, name, desc, icon: Icon, color, bg, unlocked, date, progress }) => (
+            ({ id, name, desc, iconClass, color, bg, unlocked, date, progress }) => (
               <div
                 key={id}
-                className={`profile-badge-item ${
-                  unlocked ? "unlocked" : "locked"
-                }`}
+                className={`profile-badge-item ${unlocked ? "unlocked" : "locked"
+                  }`}
               >
                 <div
                   className="profile-badge-icon"
                   style={{ backgroundColor: bg, color }}
                 >
-                  <Icon className="size-5" />
+                  <i className={iconClass} />
                 </div>
                 <div className="profile-badge-text">
                   <div className="flex items-center justify-between gap-2">
@@ -415,7 +386,7 @@ export default function Profile() {
             <div className="profile-modal-header">
               <div className="flex items-center gap-3">
                 <div className="profile-modal-icon-badge">
-                  <Edit3 className="size-4.5 text-emerald-700" />
+                  <i className="fa-solid fa-pen-to-square text-base text-white" />
                 </div>
                 <div>
                   <h3 id="modal-title" className="profile-modal-title">
@@ -432,7 +403,7 @@ export default function Profile() {
                 onClick={() => setIsEditing(false)}
                 aria-label="Tutup modal"
               >
-                <X className="size-5" />
+                <i className="fa-solid fa-xmark text-lg" />
               </button>
             </div>
 
@@ -442,7 +413,7 @@ export default function Profile() {
                 <div className="profile-form-group">
                   <label htmlFor="form-name">Nama Lengkap</label>
                   <div className="profile-input-wrapper">
-                    <User className="profile-input-icon size-4" />
+                    <i className="fa-solid fa-user profile-input-icon text-sm" />
                     <Input
                       id="form-name"
                       value={formData.name}
@@ -460,11 +431,11 @@ export default function Profile() {
                   <div className="flex items-center justify-between">
                     <label htmlFor="form-email">Email Terdaftar</label>
                     <span className="profile-field-hint">
-                      <Lock className="size-3 inline mr-1" /> Terkunci
+                      <i className="fa-solid fa-lock text-[10px] mr-1" /> Terkunci
                     </span>
                   </div>
                   <div className="profile-input-wrapper">
-                    <Mail className="profile-input-icon size-4 text-gray-400" />
+                    <i className="fa-solid fa-envelope profile-input-icon text-sm text-gray-400" />
                     <Input
                       id="form-email"
                       value={displayEmail}
@@ -498,7 +469,7 @@ export default function Profile() {
                   <div className="profile-form-group">
                     <label htmlFor="form-location">Domisili / Lokasi</label>
                     <div className="profile-input-wrapper">
-                      <MapPin className="profile-input-icon size-4" />
+                      <i className="fa-solid fa-location-dot profile-input-icon text-sm" />
                       <Input
                         id="form-location"
                         value={formData.location}
@@ -514,7 +485,7 @@ export default function Profile() {
                   <div className="profile-form-group">
                     <label htmlFor="form-phone">Nomor Telepon / WhatsApp</label>
                     <div className="profile-input-wrapper">
-                      <Phone className="profile-input-icon size-4" />
+                      <i className="fa-solid fa-phone profile-input-icon text-sm" />
                       <Input
                         id="form-phone"
                         value={formData.phone}
@@ -533,7 +504,7 @@ export default function Profile() {
               <div className="profile-modal-actions">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="ghost"
                   className="profile-modal-btn cancel-btn"
                   onClick={() => setIsEditing(false)}
                 >
@@ -541,8 +512,9 @@ export default function Profile() {
                 </Button>
                 <Button
                   type="submit"
-                  className="profile-modal-btn save-btn bg-emerald-700 hover:bg-emerald-800 text-white"
+                  className="profile-modal-btn save-btn"
                 >
+                  <i className="fa-solid fa-check mr-1.5 text-sm" />
                   Simpan Perubahan
                 </Button>
               </div>
