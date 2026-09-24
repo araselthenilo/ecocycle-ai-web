@@ -188,10 +188,6 @@ export default function Notifications() {
         <CardContent className="notification-hero-content">
           <div className="notification-hero-flex">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3 border border-emerald-200">
-                <Sparkles className="size-3.5" />
-                Pusat Aktivitas & Riwayat
-              </div>
               <h2 className="notification-hero-title">
                 Notifikasi & Riwayat Aktivitas
               </h2>
@@ -276,36 +272,32 @@ export default function Notifications() {
             <div className="notification-filters">
               <button
                 type="button"
-                className={`notification-filter-pill ${
-                  activeFilter === "all" ? "active" : ""
-                }`}
+                className={`notification-filter-pill ${activeFilter === "all" ? "active" : ""
+                  }`}
                 onClick={() => setActiveFilter("all")}
               >
                 Semua ({notifications.length})
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${
-                  activeFilter === "recycling" ? "active" : ""
-                }`}
+                className={`notification-filter-pill ${activeFilter === "recycling" ? "active" : ""
+                  }`}
                 onClick={() => setActiveFilter("recycling")}
               >
                 Daur Ulang ({recyclingCount})
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${
-                  activeFilter === "points" ? "active" : ""
-                }`}
+                className={`notification-filter-pill ${activeFilter === "points" ? "active" : ""
+                  }`}
                 onClick={() => setActiveFilter("points")}
               >
                 Poin & Hadiah
               </button>
               <button
                 type="button"
-                className={`notification-filter-pill ${
-                  activeFilter === "system" ? "active" : ""
-                }`}
+                className={`notification-filter-pill ${activeFilter === "system" ? "active" : ""
+                  }`}
                 onClick={() => setActiveFilter("system")}
               >
                 Info
@@ -344,9 +336,8 @@ export default function Notifications() {
                   <div
                     key={item.id}
                     onClick={() => toggleReadStatus(item.id)}
-                    className={`notification-item-card ${
-                      !item.isRead ? "unread" : "read"
-                    }`}
+                    className={`notification-item-card ${!item.isRead ? "unread" : "read"
+                      }`}
                     title="Klik untuk ubah status dibaca"
                   >
                     {/* Unread indicator badge */}
@@ -387,9 +378,8 @@ export default function Notifications() {
                             </span>
                           )}
                           <span
-                            className={`notification-status-pill ${
-                              item.status === "SELESAI" ? "done" : "info"
-                            }`}
+                            className={`notification-status-pill ${item.status === "SELESAI" ? "done" : "info"
+                              }`}
                           >
                             {item.status}
                           </span>

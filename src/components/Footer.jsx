@@ -4,8 +4,20 @@ import { ScrollReveal } from '@/components/ui/scroll-reveal';
 const { navLinks } = content;
 
 export default function Footer() {
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
   return (
-    <footer id="hubungi" className="w-full bg-white-card footer-shadow scroll-mt-16 md:scroll-mt-24">
+    <footer className="w-full bg-white-card footer-shadow">
       <ScrollReveal delay={50} distance={20} duration={600}>
         <div className="w-full max-w-7xl mx-auto py-8 md:py-6 lg:py-10 px-6 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
 
@@ -29,7 +41,12 @@ export default function Footer() {
           {/* Footer Quick Links */}
           <nav className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm sm:text-base font-normal text-dark">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="hover-text-primary transition-colors">
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="hover-text-primary transition-colors cursor-pointer"
+              >
                 {link.label}
               </a>
             ))}

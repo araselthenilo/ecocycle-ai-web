@@ -397,7 +397,6 @@ function AIScanner() {
                 <div className="scanner-corner corner-top-right" />
                 <div className="scanner-corner corner-bottom-left" />
                 <div className="scanner-corner corner-bottom-right" />
-                <div className="scanner-viewfinder-crosshair" />
 
                 <div className="scanner-live-badge">
                   <span className="scanner-live-indicator" />
@@ -477,7 +476,6 @@ function AIScanner() {
                 <div className="scanner-corner corner-top-right" />
                 <div className="scanner-corner corner-bottom-left" />
                 <div className="scanner-corner corner-bottom-right" />
-                <div className="scanner-viewfinder-crosshair" />
               </div>
 
               <div className="scanner-dropzone-content">

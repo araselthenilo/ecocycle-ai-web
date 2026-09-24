@@ -54,7 +54,7 @@ export function AppSidebar({ activePage, onNavigate }) {
   }
 
   return (
-    <Sidebar collapsible="icon" className="ecocycle-sidebar border-r-0 pb-5">
+    <Sidebar collapsible="icon" className="ecocycle-sidebar border-r-0">
       <SidebarHeader className="bg-white border-b border-black/8 px-4 py-3.5 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-3.5 transition-all">
         <button
           type="button"
