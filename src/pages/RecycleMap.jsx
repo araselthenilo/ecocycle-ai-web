@@ -519,7 +519,7 @@ export default function RecycleMap() {
           {/* User Marker if geolocation is granted */}
           {userLocation && (
             <Marker position={userLocation} icon={userLocationPin}>
-              <Popup autoPan={true} autoPanPadding={[50, 50]}>
+              <Popup autoPan={true} autoPanPadding={[16, 16]}>
                 <div className="modern-map-popup">
                   <div className="modern-popup-top">
                     <span className="recycle-badge recycle-badge-point">
@@ -528,7 +528,7 @@ export default function RecycleMap() {
                   </div>
                   <strong className="modern-popup-title">Lokasi Saat Ini</strong>
                   <p className="modern-popup-desc">
-                    Menampilkan jarak terdekat ke titik daur ulang di sekitarmu.
+                    Menampilkan titik daur ulang di sekitarmu.
                   </p>
                 </div>
               </Popup>
@@ -552,7 +552,7 @@ export default function RecycleMap() {
                   click: () => handleMarkerClick(bank),
                 }}
               >
-                <Popup autoPan={true} autoPanPadding={[60, 60]}>
+                <Popup autoPan={true} autoPanPadding={[16, 16]}>
                   <div className="modern-map-popup">
                     <div className="modern-popup-top">
                       <span className={`recycle-badge ${badgeConfig.badgeClass}`}>
@@ -564,11 +564,11 @@ export default function RecycleMap() {
                       </div>
                     </div>
 
-                    <strong className="modern-popup-title">{bank.name}</strong>
+                    <strong className="modern-popup-title" title={bank.name}>{bank.name}</strong>
 
                     <p className="modern-popup-desc">{bank.description}</p>
 
-                    <div className="modern-popup-address">
+                    <div className="modern-popup-address" title={bank.address}>
                       <MapPin />
                       <span>{bank.address}</span>
                     </div>
@@ -579,11 +579,16 @@ export default function RecycleMap() {
                     </div>
 
                     <div className="modern-popup-waste">
-                      {bank.acceptedWaste.slice(0, 4).map((w) => (
+                      {bank.acceptedWaste.slice(0, 2).map((w) => (
                         <span key={w} className="modern-popup-waste-chip">
                           {w}
                         </span>
                       ))}
+                      {bank.acceptedWaste.length > 2 && (
+                        <span className="modern-popup-waste-chip modern-popup-waste-more">
+                          +{bank.acceptedWaste.length - 2}
+                        </span>
+                      )}
                     </div>
 
                     <div className="modern-popup-actions">
@@ -593,7 +598,7 @@ export default function RecycleMap() {
                         rel="noreferrer"
                         className="modern-popup-btn modern-popup-btn-nav"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-3 h-3" />
                         <span>Petunjuk Rute</span>
                       </a>
 
@@ -602,7 +607,7 @@ export default function RecycleMap() {
                           href={`tel:${bank.phone.replace(/[^0-9+]/g, "")}`}
                           className="modern-popup-btn modern-popup-btn-call"
                         >
-                          <Phone className="w-3.5 h-3.5" />
+                          <Phone className="w-3 h-3" />
                           <span>Hubungi</span>
                         </a>
                       )}
