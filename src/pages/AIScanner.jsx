@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import {
   Camera,
-  FileUp,
   Info,
   ListChecks,
   X,
@@ -328,14 +327,6 @@ function AIScanner() {
               <Camera />
               {isCameraActive ? "Jepret Foto" : "Ambil Foto"}
             </Button>
-
-            <Button
-              className="scanner-action-button"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <FileUp />
-              Unggah Gambar
-            </Button>
           </CardContent>
         </Card>
 
@@ -487,21 +478,6 @@ function AIScanner() {
                 <p className="scanner-dropzone-subtitle">
                   Klik untuk unggah gambar atau seret file sampah ke sini
                 </p>
-
-                <div
-                  className="scanner-dropzone-action-hint"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleCameraToggle()
-                  }}
-                  style={{ cursor: "pointer" }}
-                  role="button"
-                  tabIndex={0}
-                  title="Klik untuk membuka kamera"
-                >
-                  <Camera className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>atau gunakan tombol <strong>"Ambil Foto"</strong> di atas</span>
-                </div>
               </div>
             </div>
           )}
@@ -510,7 +486,7 @@ function AIScanner() {
 
       <section className="scanner-result-column">
         <Card className="scanner-result-card">
-          <CardHeader>
+          <CardHeader className="scanner-card-header">
             <CardTitle className="scanner-card-title">
               <Info />
               <span>Hasil Scanning</span>
@@ -518,7 +494,7 @@ function AIScanner() {
           </CardHeader>
 
           <CardContent className="scanner-result-content">
-            <div className="scanner-result-item">
+            <div className="scanner-result-item result-item-name">
               <strong>NAMA SAMPAH</strong>
               <span>
                 {isScanning
@@ -529,7 +505,7 @@ function AIScanner() {
               </span>
             </div>
 
-            <div className="scanner-result-item">
+            <div className="scanner-result-item result-item-material">
               <strong>MATERIAL</strong>
               <span>
                 {isScanning
@@ -540,7 +516,7 @@ function AIScanner() {
               </span>
             </div>
 
-            <div className="scanner-result-item">
+            <div className="scanner-result-item result-item-weight">
               <strong>ESTIMASI BERAT</strong>
               <span>
                 {isScanning
@@ -551,7 +527,7 @@ function AIScanner() {
               </span>
             </div>
 
-            <div className="scanner-result-item">
+            <div className="scanner-result-item result-item-recyclable">
               <strong>DAPAT DIDAUR ULANG</strong>
               <span className={hasScanned ? "scanner-recyclable" : "scanner-placeholder-value"}>
                 {isScanning
@@ -565,7 +541,7 @@ function AIScanner() {
         </Card>
 
         <Card className="scanner-handling-card">
-          <CardHeader>
+          <CardHeader className="scanner-card-header">
             <CardTitle className="scanner-card-title">
               <ListChecks />
               <span>Cara Mengelola</span>
