@@ -53,27 +53,22 @@ export default function PermissionModal({
             <div className="permission-icon-ping" />
           </div>
 
-          <div className="permission-tag">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>{isDenied ? "Izin Diperlukan" : "Izin Fitur EcoCycle"}</span>
-          </div>
-
           <h3 className="permission-modal-title">
             {isDenied
               ? isLocation
                 ? "Akses Lokasi Diblokir di Browser"
                 : "Akses Kamera Diblokir di Browser"
               : isLocation
-              ? "Izinkan Akses Lokasi Anda?"
-              : "Izinkan Akses Kamera Perangkat?"}
+                ? "Izinkan Akses Lokasi Anda?"
+                : "Izinkan Akses Kamera Perangkat?"}
           </h3>
 
           <p className="permission-modal-desc">
             {isDenied
               ? `Peramban Anda sebelumnya menolak izin ${isLocation ? "lokasi" : "kamera"}. Ikuti panduan singkat di bawah untuk mengaktifkannya kembali.`
               : isLocation
-              ? "EcoCycle AI memerlukan akses lokasi perangkat Anda untuk menemukan dan mengurutkan bank sampah serta drop point daur ulang terdekat di Pulau Bali."
-              : "EcoCycle AI menggunakan kamera perangkat Anda untuk memindai fisik sampah secara langsung dan mengenali jenisnya menggunakan kecerdasan buatan."}
+                ? "EcoCycle AI memerlukan akses lokasi perangkat Anda untuk menemukan dan mengurutkan bank sampah serta drop point daur ulang terdekat di Pulau Bali."
+                : "EcoCycle AI menggunakan kamera perangkat Anda untuk memindai fisik sampah secara langsung dan mengenali jenisnya menggunakan kecerdasan buatan."}
           </p>
         </div>
 

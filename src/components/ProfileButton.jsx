@@ -87,15 +87,15 @@ export default function ProfileButton({ className = "" }) {
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={`Menu profil ${userName}`}
-        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-2 rounded-tr-xl rounded-bl-xl border transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 hover:bg-eco-green-dark hover:border-eco-green-dark hover:text-white ${isOpen
-          ? "bg-eco-green/10 border-eco-green/30 shadow-sm text-eco-text"
+        className={`profile-unified-trigger flex items-center gap-2.5 h-11 px-2 rounded-tr-xl rounded-bl-xl shadow-md transition-all duration-200 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-eco-green/40 ${isOpen
+          ? "is-open"
           : isProfileActive
-            ? "bg-white border-eco-green/40 shadow-xs text-eco-text"
-            : "bg-white/95 border-eco-border shadow-2xs text-eco-text"
+            ? "bg-actual-white shadow-xs text-eco-text"
+            : "bg-actual-white border-eco-border shadow-2xs text-eco-text"
           }`}
       >
         {/* Avatar */}
-        <div className="relative shrink-0 flex items-center justify-center size-8 rounded-tr-lg rounded-bl-lg overflow-hidden bg-eco-green/15 border border-eco-green/25 group-hover:border-white/40">
+        <div className="relative shrink-0 flex items-center justify-center size-8 rounded-tr-lg rounded-bl-lg overflow-hidden bg-eco-green/15">
           {avatarSrc ? (
             <img
               src={avatarSrc}
@@ -104,7 +104,7 @@ export default function ProfileButton({ className = "" }) {
               className="size-full object-cover rounded-tr-lg rounded-bl-lg"
             />
           ) : (
-            <span className="text-[11px] font-bold text-eco-green group-hover:text-white transition-colors">
+            <span className={`text-[11px] font-bold transition-colors ${isOpen ? "text-white" : "text-eco-green group-hover:text-white"}`}>
               {getInitials(userName)}
             </span>
           )}
@@ -112,17 +112,17 @@ export default function ProfileButton({ className = "" }) {
 
         {/* Text Container: Dual-line Name + Role Badge */}
         <div className="flex flex-col text-left leading-tight min-w-0 pr-0.5">
-          <span className="font-semibold text-xs text-eco-text group-hover:text-white transition-colors max-w-[110px] sm:max-w-[140px] truncate">
+          <span className={`font-semibold text-xs transition-colors max-w-[110px] sm:max-w-[140px] truncate ${isOpen ? "text-white" : "text-eco-text group-hover:text-white"}`}>
             {userName}
           </span>
-          <span className="text-[9px] font-bold tracking-wider text-eco-green/85 group-hover:text-emerald-100 uppercase mt-0.5 transition-colors">
+          <span className={`text-[9px] font-bold tracking-wider uppercase mt-0.5 transition-colors ${isOpen ? "text-emerald-100" : "text-eco-green/85 group-hover:text-emerald-100"}`}>
             {userRole}
           </span>
         </div>
 
-        {/* Rotating Chevron from LandingPage */}
+        {/* Rotating Chevron */}
         <ChevronDown
-          className={`size-3.5 transition-all duration-200 shrink-0 ml-0.5 group-hover:text-white ${isOpen ? "rotate-180 text-eco-green" : "text-muted"
+          className={`size-3.5 transition-all duration-200 shrink-0 ml-0.5 group-hover:!text-white ${isOpen ? "rotate-180 text-white" : "text-slate-400"
             }`}
           aria-hidden="true"
         />
@@ -133,7 +133,7 @@ export default function ProfileButton({ className = "" }) {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 mt-2 w-72 origin-top-right rounded-tl-2xl rounded-br-2xl bg-white/95 backdrop-blur-md p-3 shadow-2xl border border-black/10 ring-1 ring-black/5 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 mt-2 w-72 origin-top-right rounded-tl-2xl rounded-br-2xl bg-actual-white backdrop-blur-md p-3 shadow-2xl border border-black/10 ring-1 ring-black/5 z-50 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Header Card: User Info */}
           <div className="flex items-center gap-3 p-2.5 rounded-tl-xl rounded-br-xl bg-gradient-to-br from-eco-green/8 to-primary-light/20 border border-eco-green/10">
