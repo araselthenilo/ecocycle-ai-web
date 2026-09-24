@@ -1048,6 +1048,10 @@ body {
   font-size: 12px;
 }
 
+.navbar-top-wrapper {
+  display: contents;
+}
+
 .navbar-top {
   display: contents;
 }
@@ -1694,11 +1698,46 @@ footer {
     padding: 14px 20px 0;
   }
 
-  .navbar-top {
-    display: flex;
+  .navbar-top-wrapper {
+    display: block;
     width: 100%;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .navbar-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 40;
+    background: transparent;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.25s ease,
+      background-color 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+    will-change: transform, opacity;
+  }
+
+  .navbar-top.is-scrolled {
+    background: rgba(248, 249, 250, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .navbar-top.is-hidden {
+    transform: translateY(-115%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .navbar-toggle {
@@ -1965,6 +2004,10 @@ footer {
     width: 100%;
     padding: 20px 20px !important;
   }
+
+  .navbar-top {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 420px) {
@@ -1972,6 +2015,10 @@ footer {
   .dashboard-header,
   .dashboard-content {
     padding: 16px 16px !important;
+  }
+
+  .navbar-top {
+    padding: 0 16px;
   }
 
   .stats-grid {
@@ -2663,11 +2710,11 @@ footer {
   }
 
   .scanner-upload-card {
-    border-radius: 16px 16px 0 0 !important;
+    border-radius: 0 16px 0 0 !important;
   }
 
   .scanner-preview {
-    border-radius: 0 0 16px 16px !important;
+    border-radius: 0 0 0 16px !important;
     min-height: 350px !important;
     padding: 24px 20px !important;
   }
@@ -2690,7 +2737,7 @@ footer {
     height: auto !important;
     min-height: fit-content !important;
     flex: none !important;
-    border-radius: 16px 0 16px 0 !important;
+    border-radius: 0 16px 0 16px !important;
   }
 
   .scanner-result-content {
