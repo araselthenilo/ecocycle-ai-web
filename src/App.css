@@ -2515,7 +2515,7 @@ footer {
 .recycle-filter-box {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 0 12px 0 12px;
   padding: 10px 14px;
   display: flex;
   flex-direction: column;
@@ -2556,7 +2556,7 @@ footer {
   display: block;
   box-sizing: border-box;
   padding: 0 32px 0 34px;
-  border-radius: 8px;
+  border-radius: 0 8px 0 8px;
   border: 1px solid #d1d5db;
   font-size: 0.8125rem;
   color: #1f2937;
@@ -2607,7 +2607,7 @@ footer {
   height: 36px;
   box-sizing: border-box;
   padding: 0 32px 0 12px;
-  border-radius: 8px;
+  border-radius: 0 8px 0 8px;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -3057,7 +3057,7 @@ footer {
   z-index: 1;
   background: #eef2f0;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 0 12px 0 12px;
   overflow: hidden;
   height: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
@@ -3087,7 +3087,7 @@ footer {
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 7px 11px;
-  border-radius: 8px;
+  border-radius: 0 8px 0 8px;
   font-size: 0.75rem;
   font-weight: 600;
   color: #1f2937;
@@ -3138,7 +3138,7 @@ footer {
   border: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   padding: 6px 12px;
-  border-radius: 9999px;
+  border-radius: 0 12px 0 12px;
   font-size: 0.75rem;
   font-weight: 600;
   color: #374151;
@@ -3161,7 +3161,7 @@ footer {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(226, 232, 240, 0.85);
-  border-radius: 9999px;
+  border-radius: 0 12px 0 12px;
   padding: 5px 8px 5px 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09);
   animation: legendFadeIn 0.2s ease-out;
@@ -3241,7 +3241,7 @@ footer {
   justify-content: center;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
+  border-radius: 0 6px 0 6px;
   border: none;
   background: rgba(243, 244, 246, 0.9);
   color: #6b7280;
@@ -3508,7 +3508,7 @@ footer {
 
 /* Dashboard padding optimization for Recycle Map page */
 .dashboard-content:has(.recycle-map-page) {
-  padding: 12px 32px 12px;
+  padding: 20px 60px 24px;
 }
 
 /* Media Query for Laptop screens (e.g. 1366x768 or 1080p with 150% scaling) */
@@ -3517,7 +3517,8 @@ footer {
     padding: 14px 32px 0;
   }
 
-  .dashboard-content {
+  .dashboard-content,
+  .dashboard-content:has(.recycle-map-page) {
     padding: 10px 32px 10px;
   }
 
@@ -3553,7 +3554,7 @@ footer {
   }
 
   .map-legend-card {
-    border-radius: 12px;
+    border-radius: 0 12px 0 12px;
     padding: 6px 8px 6px 10px;
     gap: 8px;
   }
