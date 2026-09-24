@@ -108,6 +108,7 @@ html {
   --color-eco-text: #303634;
   --color-eco-muted: #7a8580;
   --color-eco-border: #9da8a4;
+  --color-actual-white: #ffffff;
 }
 
 @layer base {
@@ -147,6 +148,7 @@ html {
   --eco-text: #303634;
   --eco-muted: #7a8580;
   --eco-border: #9da8a4;
+  --actual-white: #ffffff;
 
 
   --text: #6b6375;
