@@ -9,7 +9,7 @@ export default function CtaBanner() {
 
   return (
     <Section
-      id="hubungi"
+      id="gabung"
       variant="page"
       containerSize="3xl"
       containerClassName="p-0"

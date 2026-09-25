@@ -7,7 +7,7 @@ const { steps } = content;
 export default function Steps() {
   return (
     <Section
-      id="tentang"
+      id="cara-kerja"
       variant="page"
       containerClassName="flex flex-col gap-12 lg:gap-16 items-center"
     >

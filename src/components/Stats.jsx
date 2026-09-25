@@ -8,6 +8,7 @@ const { statistics } = content;
 export default function Stats() {
   return (
     <Section
+      id="dampak"
       variant="primary"
       containerClassName="flex flex-col gap-12 items-center text-center"
     >

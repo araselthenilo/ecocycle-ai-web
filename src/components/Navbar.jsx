@@ -105,6 +105,8 @@ export default function Navbar() {
           <img
             src="/ecocycle-logo.svg"
             alt="EcoCycle AI Logo"
+            width="40"
+            height="40"
             className="size-8 sm:size-10 group-hover:scale-105 transition-transform shrink-0 object-contain drop-shadow-sm"
           />
           <span className="font-display font-bold text-base sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">

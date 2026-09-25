@@ -23,16 +23,16 @@ export default function LandingPage() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
-        <main>
+        <main className="flex-1 w-full flex flex-col">
           <Hero />
           <Solutions />
           <Steps />
           <Stats />
           <CtaBanner />
         </main>
-        <Footer />
+        <Footer className="mt-auto" />
       </div>
     </div>
   );
