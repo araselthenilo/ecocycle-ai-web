@@ -103,7 +103,7 @@ export default function Navbar() {
           className="flex items-center gap-2 sm:gap-3 group shrink-0 cursor-pointer"
         >
           <img
-            src="/ecocyle-logo.svg"
+            src="/ecocycle-logo.svg"
             alt="EcoCycle AI Logo"
             className="size-8 sm:size-10 group-hover:scale-105 transition-transform shrink-0 object-contain drop-shadow-sm"
           />

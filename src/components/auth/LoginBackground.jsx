@@ -41,10 +41,11 @@ uniform vec4 u_c5;
 uniform vec4 u_c6;
 uniform vec4 u_c7;
 
-// Exact brand colors
-const vec3 COLOR_M = vec3(53.0 / 255.0, 145.0 / 255.0, 129.0 / 255.0);  // #359181 Medium Teal
-const vec3 COLOR_L = vec3(138.0 / 255.0, 208.0 / 255.0, 199.0 / 255.0); // #8AD0C7 Light Mint
-const vec3 COLOR_D = vec3(35.0 / 255.0, 131.0 / 255.0, 114.0 / 255.0);  // #238372 Dark Teal
+// Dynamic brand colors passed from JS uniforms matching the user's updated palette
+// Defaults: #148e4d (Primary Eco Green), #36ca79 (Accent Lime), #0e5c33 (Deep Forest Green)
+uniform vec3 u_color_m; // Primary Eco Green (#148e4d)
+uniform vec3 u_color_l; // Accent Lime Green (#36ca79)
+uniform vec3 u_color_d; // Deep Forest Green (#0e5c33)
 
 vec3 evalPoint(vec2 p) {
   int k = 0;
@@ -61,9 +62,9 @@ vec3 evalPoint(vec2 p) {
 
   // Mathematical parity formula matching the exact original design
   if (mod(float(k), 2.0) == 1.0) {
-    return COLOR_M;
+    return u_color_m;
   } else {
-    return prod > 0.0 ? COLOR_L : COLOR_D;
+    return prod > 0.0 ? u_color_l : u_color_d;
   }
 }
 
@@ -105,6 +106,38 @@ function createShader(gl, type, source) {
     return null;
   }
   return shader;
+}
+
+function parseCssColor(varName, fallback) {
+  if (typeof window === 'undefined') return fallback;
+  try {
+    const val = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    if (!val) return fallback;
+    if (val.startsWith('#')) {
+      let hex = val.slice(1);
+      if (hex.length === 3) {
+        hex = hex.split('').map((c) => c + c).join('');
+      }
+      if (hex.length === 6) {
+        return [
+          parseInt(hex.slice(0, 2), 16) / 255,
+          parseInt(hex.slice(2, 4), 16) / 255,
+          parseInt(hex.slice(4, 6), 16) / 255,
+        ];
+      }
+    }
+    const rgbMatch = val.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+    if (rgbMatch) {
+      return [
+        parseInt(rgbMatch[1], 10) / 255,
+        parseInt(rgbMatch[2], 10) / 255,
+        parseInt(rgbMatch[3], 10) / 255,
+      ];
+    }
+  } catch {
+    // fallback
+  }
+  return fallback;
 }
 
 export default function LoginBackground({ className = '' }) {
@@ -160,6 +193,9 @@ export default function LoginBackground({ className = '' }) {
 
     const uResolution = gl.getUniformLocation(program, 'u_resolution');
     const uTime = gl.getUniformLocation(program, 'u_time');
+    const uColorM = gl.getUniformLocation(program, 'u_color_m');
+    const uColorL = gl.getUniformLocation(program, 'u_color_l');
+    const uColorD = gl.getUniformLocation(program, 'u_color_d');
     const uCircles = [
       gl.getUniformLocation(program, 'u_c0'),
       gl.getUniformLocation(program, 'u_c1'),
@@ -174,7 +210,21 @@ export default function LoginBackground({ className = '' }) {
     let animationId;
     const startTime = performance.now();
 
+    // Default fallback colors matching the new palette:
+    // M: #148e4d (Primary Eco Green), L: #36ca79 (Accent Lime), D: #0e5c33 (Deep Forest Green)
+    let colorM = [20 / 255, 142 / 255, 77 / 255];
+    let colorL = [54 / 255, 202 / 255, 121 / 255];
+    let colorD = [14 / 255, 92 / 255, 51 / 255];
+
+    const updateColors = () => {
+      colorM = parseCssColor('--eco-green', [20 / 255, 142 / 255, 77 / 255]);
+      colorL = parseCssColor('--color-accent-lime', [54 / 255, 202 / 255, 121 / 255]);
+      colorD = parseCssColor('--eco-green-dark', [14 / 255, 92 / 255, 51 / 255]);
+    };
+    updateColors();
+
     const resize = () => {
+      updateColors();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const displayWidth = Math.round(canvas.clientWidth * dpr);
       const displayHeight = Math.round(canvas.clientHeight * dpr);
@@ -196,6 +246,9 @@ export default function LoginBackground({ className = '' }) {
       gl.useProgram(program);
       gl.uniform2f(uResolution, canvas.width, canvas.height);
       gl.uniform1f(uTime, t);
+      gl.uniform3f(uColorM, colorM[0], colorM[1], colorM[2]);
+      gl.uniform3f(uColorL, colorL[0], colorL[1], colorL[2]);
+      gl.uniform3f(uColorD, colorD[0], colorD[1], colorD[2]);
 
       // Dynamically move each circle like smooth floating lava lamp bubbles
       BASE_CIRCLES.forEach((bc, idx) => {

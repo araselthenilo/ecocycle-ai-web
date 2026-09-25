@@ -166,7 +166,7 @@ export default function LoginPage() {
         {/* Brand Badge on desktop */}
         <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2 rounded-bl-2xl rounded-tr-2xl shadow-sm border border-white/80 transition-all hover:scale-[1.02]">
           <img
-            src="/ecocyle-logo.svg"
+            src="/ecocycle-logo.svg"
             alt="EcoCycle AI Logo"
             className="size-7 xl:size-8 shrink-0 object-contain drop-shadow-xs"
           />
@@ -199,7 +199,7 @@ export default function LoginPage() {
           </Link>
           <div className="flex items-center gap-2">
             <img
-              src="/ecocyle-logo.svg"
+              src="/ecocycle-logo.svg"
               alt="EcoCycle AI Logo"
               className="size-6 shrink-0 object-contain"
             />

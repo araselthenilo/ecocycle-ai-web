@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Logo & Copyright */}
           <div className="flex items-center gap-3 sm:gap-4">
             <img
-              src="/ecocyle-logo.svg"
+              src="/ecocycle-logo.svg"
               alt="EcoCycle AI Logo"
               className="size-8 sm:size-9 shrink-0 object-contain drop-shadow-xs"
             />
