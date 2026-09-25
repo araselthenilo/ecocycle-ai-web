@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Navbar } from "@/components/layout/navbar"
-import { Footer } from "@/components/layout/footer"
+import Footer from "@/components/Footer"
 import Dashboard from "@/pages/Dashboard"
 import AIScanner from "@/pages/AIScanner"
 import RecycleMap from "@/pages/RecycleMap"

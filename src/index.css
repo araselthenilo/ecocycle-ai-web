@@ -131,6 +131,9 @@ html {
 }
 
 :root {
+  --font-heading: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
   --color-primary: #006b55;
   --color-primary-hover: #005644;
   --color-primary-light: #baeed9;

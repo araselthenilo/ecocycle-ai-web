@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogOut } from 'lucide-react';
+import { LogOut, LayoutDashboard } from 'lucide-react';
 import content from '../data/content.json';
 import { useAuth } from '../context/AuthContext';
 import ProfileButton from './ProfileButton';
@@ -85,9 +85,9 @@ export default function Navbar() {
         }`}
     >
       <div
-        className={`w-full max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled
-          ? 'py-3 md:py-4'
-          : 'py-3.5 md:py-4.5'
+        className={`w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between transition-all duration-300 ${isScrolled
+          ? 'py-2.5 sm:py-3 md:py-4'
+          : 'py-3 sm:py-3.5 md:py-4.5'
           }`}
       >
         {/* Brand Logo */}
@@ -100,14 +100,14 @@ export default function Navbar() {
               window.history.pushState(null, '', '/');
             }
           }}
-          className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 cursor-pointer"
+          className="flex items-center gap-2 sm:gap-3 group shrink-0 cursor-pointer"
         >
           <img
             src="/ecocyle-logo.svg"
             alt="EcoCycle AI Logo"
-            className="size-9 sm:size-10 group-hover:scale-105 transition-transform shrink-0 object-contain drop-shadow-sm"
+            className="size-8 sm:size-10 group-hover:scale-105 transition-transform shrink-0 object-contain drop-shadow-sm"
           />
-          <span className="font-heading font-bold text-lg sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
+          <span className="font-heading font-bold text-base sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
             EcoCycle AI
           </span>
         </Link>
@@ -144,11 +144,11 @@ export default function Navbar() {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-primary hover:bg-black/5 transition-colors focus:outline-none cursor-pointer flex items-center justify-center size-10"
+          className="md:hidden p-2 rounded-lg text-primary hover:bg-black/5 transition-colors focus:outline-none cursor-pointer flex items-center justify-center size-9 sm:size-10"
           aria-label="Buka menu navigasi"
         >
           <i
-            className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-xl`}
+            className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-lg sm:text-xl`}
             aria-hidden="true"
           ></i>
         </button>
@@ -156,17 +156,17 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white-card px-6 py-6 border-b border-black/10 shadow-lg flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="md:hidden bg-white-card px-5 py-4 border-b border-black/10 shadow-lg flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-4 duration-200">
           {isAuthenticated && (
-            <div className="flex items-center gap-3 p-3 bg-primary/10 rounded-2xl mb-2">
+            <div className="flex items-center gap-2.5 p-2.5 bg-primary/10 rounded-tr-xl rounded-bl-xl mb-1">
               <img
-                src={user.avatar}
-                alt={user.name}
-                className="size-10 rounded-full object-cover border border-primary/30"
+                src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user?.email || user?.name || 'User')}`}
+                alt={user?.name || 'User'}
+                className="size-8 sm:size-9 rounded-full object-cover border border-primary/30 shrink-0"
               />
               <div className="min-w-0 flex-1">
-                <p className="font-bold text-sm text-gray-900 truncate">{user.name}</p>
-                <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                <p className="font-bold text-xs sm:text-sm text-gray-900 truncate">{user?.name || 'Pengguna'}</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 truncate">{user?.email || ''}</p>
               </div>
             </div>
           )}
@@ -176,24 +176,36 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="font-medium text-lg text-dark hover-text-primary py-2 cursor-pointer transition-colors"
+              className="font-medium text-xs sm:text-sm text-dark hover-text-primary py-1.5 cursor-pointer transition-colors"
             >
               {link.label}
             </a>
           ))}
 
           {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="w-full py-3 text-base font-semibold text-red-600 bg-red-50 rounded-xl flex items-center justify-center gap-2 mt-2"
-            >
-              <LogOut className="size-4" />
-              Keluar
-            </button>
+            <div className="flex flex-col gap-2 pt-2 border-t border-black/10">
+              <Button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate('/dashboard');
+                }}
+                className="w-full py-2 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <LayoutDashboard className="size-3.5 sm:size-4" />
+                <span>Buka Dashboard</span>
+              </Button>
+              <button
+                onClick={handleLogout}
+                className="w-full py-2 text-xs sm:text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+              >
+                <LogOut className="size-3.5 sm:size-4" />
+                <span>Keluar</span>
+              </button>
+            </div>
           ) : (
             <Button
               onClick={handleDaftarClick}
-              className="w-full py-3 text-lg mt-2 cursor-pointer"
+              className="w-full py-2 text-xs sm:text-sm font-semibold mt-1 cursor-pointer"
             >
               Daftar
             </Button>
