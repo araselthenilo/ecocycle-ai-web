@@ -134,7 +134,7 @@ export function Navbar({ activePage }) {
       </div>
 
       <div className="navbar-greeting">
-        <h1>{pageTitle}</h1>
+        <h1 className="font-display">{pageTitle}</h1>
         <p>{greeting.description}</p>
       </div>
     </header>

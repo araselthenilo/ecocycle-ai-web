@@ -16,7 +16,7 @@ const { features } = content;
 export default function Solutions() {
   return (
     <Section
-      id="layanan"
+      id="fitur"
       variant="section"
       className="md:scroll-mt-16"
       containerClassName="flex flex-col gap-10 md:gap-12 items-center"
@@ -25,7 +25,7 @@ export default function Solutions() {
       {/* Section Heading */}
       <ScrollReveal delay={50} distance={24} duration={700}>
         <div className="flex flex-col gap-3 sm:gap-4 items-center text-center max-w-2xl">
-          <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark tracking-tight">
             <span className="text-primary">Solusi Cerdas</span> untuk Bumi yang Lebih <span className="text-primary">Hijau</span>
           </h2>
           <p className="text-sm sm:text-base leading-6 text-body">
@@ -62,10 +62,14 @@ export default function Solutions() {
                 </p>
               </div>
 
-              <div className="feature-image-container relative z-10 h-36 sm:h-40 lg:h-44 w-full mt-2 shrink-0">
+              <div className="feature-image-container relative z-10 h-36 sm:h-40 lg:h-44 w-full mt-2 shrink-0 overflow-hidden rounded-xl">
                 <img
                   src={featureImages[feature.imageKey || feature.id]}
                   alt={feature.imageAlt}
+                  width="384"
+                  height="176"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500"
                 />
               </div>

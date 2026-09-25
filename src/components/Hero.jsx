@@ -23,7 +23,7 @@ export default function Hero() {
 
         {/* Heading */}
         <ScrollReveal delay={100} distance={24} duration={700}>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-dark">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-dark tracking-tight">
             Kelola <span className="text-primary">Sampah</span> Lebih <span className="text-primary">Cerdas</span> dengan <span className="text-primary">AI</span>
           </h1>
         </ScrollReveal>
@@ -47,7 +47,7 @@ export default function Hero() {
             </Button>
 
             <Button
-              href="#layanan"
+              href="#fitur"
               variant="outline"
               className="flex-1 w-full px-6 sm:px-8 py-3.5 text-base sm:text-lg font-semibold leading-6 bg-actual-white"
             >
@@ -67,6 +67,9 @@ export default function Hero() {
                 <img
                   src={userAvatar1}
                   alt="Avatar Pengguna 1"
+                  width="40"
+                  height="40"
+                  loading="eager"
                   className="size-full object-cover"
                 />
               </div>
@@ -74,6 +77,9 @@ export default function Hero() {
                 <img
                   src={userAvatar2}
                   alt="Avatar Pengguna 2"
+                  width="40"
+                  height="40"
+                  loading="eager"
                   className="size-full object-cover"
                 />
               </div>
@@ -81,6 +87,9 @@ export default function Hero() {
                 <img
                   src={userAvatar3}
                   alt="Avatar Pengguna 3"
+                  width="40"
+                  height="40"
+                  loading="eager"
                   className="size-full object-cover"
                 />
               </div>
@@ -105,6 +114,10 @@ export default function Hero() {
           <img
             src={heroArm}
             alt="Robot AI pemilah sampah di pusat daur ulang"
+            width="576"
+            height="384"
+            loading="eager"
+            decoding="async"
             className="w-full h-full object-cover"
           />
         </div>

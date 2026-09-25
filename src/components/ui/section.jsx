@@ -92,7 +92,7 @@ function SectionTitle({ className, as: Component = "h2", ...props }) {
     <Component
       data-slot="section-title"
       className={cn(
-        "text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-dark",
+        "font-display text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark tracking-tight",
         className
       )}
       {...props}

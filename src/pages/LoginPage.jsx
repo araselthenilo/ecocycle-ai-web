@@ -166,11 +166,11 @@ export default function LoginPage() {
         {/* Brand Badge on desktop */}
         <div className="absolute top-6 left-6 xl:top-8 xl:left-8 flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2 rounded-bl-2xl rounded-tr-2xl shadow-sm border border-white/80 transition-all hover:scale-[1.02]">
           <img
-            src="/ecocyle-logo.svg"
+            src="/ecocycle-logo.svg"
             alt="EcoCycle AI Logo"
             className="size-7 xl:size-8 shrink-0 object-contain drop-shadow-xs"
           />
-          <span className="font-heading font-bold text-sm xl:text-base text-primary tracking-tight">
+          <span className="font-display font-bold text-sm xl:text-base text-primary tracking-tight">
             EcoCycle AI
           </span>
         </div>
@@ -199,11 +199,11 @@ export default function LoginPage() {
           </Link>
           <div className="flex items-center gap-2">
             <img
-              src="/ecocyle-logo.svg"
+              src="/ecocycle-logo.svg"
               alt="EcoCycle AI Logo"
               className="size-6 shrink-0 object-contain"
             />
-            <span className="font-heading font-bold text-primary text-sm">EcoCycle AI</span>
+            <span className="font-display font-bold text-primary text-sm">EcoCycle AI</span>
           </div>
         </div>
 
@@ -212,7 +212,7 @@ export default function LoginPage() {
 
           {/* Heading (Frame 4 in Figma) */}
           <div className="flex flex-col gap-0.5 sm:gap-1 mb-3 xl:mb-5 text-left shrink-0">
-            <h1 className="font-heading text-xl sm:text-2xl xl:text-[28px] font-extrabold text-primary leading-tight tracking-tight">
+            <h1 className="font-display text-xl sm:text-2xl xl:text-[28px] font-extrabold text-primary leading-tight tracking-tight">
               {isRegisterMode ? 'Buat Akun Baru' : 'Selamat Datang'}
             </h1>
             <p className="text-xs sm:text-sm xl:text-base text-dark font-normal leading-relaxed">

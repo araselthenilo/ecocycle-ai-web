@@ -1,16 +1,16 @@
 {
   "navLinks": [
     {
-      "label": "Tentang Kami",
-      "href": "#tentang"
+      "label": "Fitur",
+      "href": "#fitur"
     },
     {
-      "label": "Layanan",
-      "href": "#layanan"
+      "label": "Cara Kerja",
+      "href": "#cara-kerja"
     },
     {
-      "label": "Hubungi Kami",
-      "href": "#hubungi"
+      "label": "Dampak",
+      "href": "#dampak"
     }
   ],
   "features": [
