@@ -34,7 +34,7 @@ export default function CtaBanner() {
 
             {/* Main Title */}
             <ScrollReveal delay={300} distance={20} duration={650}>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-snug sm:leading-tight text-dark max-w-xl">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold leading-snug sm:leading-tight text-dark max-w-xl tracking-tight">
                 Siap Menjadi <span className="text-primary">Pahlawan</span> Lingkungan?
               </h2>
             </ScrollReveal>

@@ -23,7 +23,7 @@ export default function Hero() {
 
         {/* Heading */}
         <ScrollReveal delay={100} distance={24} duration={700}>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-dark">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-dark tracking-tight">
             Kelola <span className="text-primary">Sampah</span> Lebih <span className="text-primary">Cerdas</span> dengan <span className="text-primary">AI</span>
           </h1>
         </ScrollReveal>

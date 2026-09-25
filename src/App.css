@@ -402,27 +402,61 @@
   padding: 2.5px;
   overflow: hidden;
   border-radius: 0 28px 0 28px;
-  box-shadow: 0 25px 50px -12px rgba(56, 162, 29, 0.20),
-    0 16px 32px -8px rgba(0, 0, 0, 0.14),
-    0 0 40px 2px rgba(56, 162, 29, 0.08),
-    0 0 0 1px rgba(56, 162, 29, 0.10);
+  background: rgba(20, 142, 77, 0.12);
+  box-shadow:
+    0 25px 50px -12px rgba(20, 142, 77, 0.22),
+    0 16px 32px -8px rgba(0, 0, 0, 0.10),
+    0 0 40px 2px rgba(20, 142, 77, 0.10),
+    0 0 0 1px rgba(20, 142, 77, 0.14);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta-banner-wrapper:hover {
-  box-shadow: 0 35px 70px -14px rgba(56, 162, 29, 0.25),
-    0 20px 38px -8px rgba(0, 0, 0, 0.16),
-    0 0 60px 6px rgba(56, 162, 29, 0.15),
-    0 0 0 1px rgba(56, 162, 29, 0.17);
   transform: translateY(-5px);
+  box-shadow:
+    0 35px 70px -14px rgba(20, 142, 77, 0.32),
+    0 20px 38px -8px rgba(0, 0, 0, 0.14),
+    0 0 60px 6px rgba(54, 202, 121, 0.25),
+    0 0 0 1px rgba(20, 142, 77, 0.25);
 }
 
 .cta-border-beam {
-  display: none;
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(20, 142, 77, 0.25) 300deg,
+    #148e4d 325deg,
+    #36ca79 345deg,
+    #9bf0be 356deg,
+    #ffffff 360deg
+  );
+  animation: cta-beam-spin 4s linear infinite;
+  pointer-events: none;
 }
 
 .cta-border-beam-glow {
-  display: none;
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(20, 142, 77, 0.35) 315deg,
+    rgba(54, 202, 121, 0.75) 345deg,
+    #ffffff 360deg
+  );
+  filter: blur(8px);
+  animation: cta-beam-spin 4s linear infinite;
+  pointer-events: none;
 }
 
 .card-cta {
@@ -434,7 +468,20 @@
 }
 
 .cta-ambient-glow {
-  display: none;
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(
+    circle,
+    rgba(20, 142, 77, 0.12) 0%,
+    rgba(54, 202, 121, 0.05) 45%,
+    transparent 70%
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .step-circle {
@@ -754,7 +801,7 @@ body {
 }
 
 .ecocycle-sidebar .sidebar-brand span {
-  font-family: var(--font-heading, "Manrope", sans-serif);
+  font-family: var(--font-display, var(--font-geologica, "Geologica", sans-serif));
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -935,7 +982,7 @@ body {
 
 .dashboard-header h1 {
   margin: 0 0 4px;
-  font-family: var(--font-heading, "Manrope", sans-serif);
+  font-family: var(--font-display, var(--font-geologica, "Geologica", sans-serif));
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -1078,7 +1125,7 @@ body {
 
 .navbar-greeting h1 {
   margin: 0 0 4px;
-  font-family: var(--font-heading, "Manrope", sans-serif);
+  font-family: var(--font-display, var(--font-geologica, "Geologica", sans-serif));
   font-size: 22px;
   font-weight: 800;
   line-height: 1.25;

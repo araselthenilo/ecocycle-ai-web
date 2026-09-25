@@ -190,7 +190,7 @@ export default function Notifications() {
         <CardContent className="notification-hero-content">
           <div className="notification-hero-flex">
             <div>
-              <h2 className="notification-hero-title">
+              <h2 className="notification-hero-title font-display">
                 Notifikasi & Riwayat Aktivitas
               </h2>
               <p className="notification-hero-desc">

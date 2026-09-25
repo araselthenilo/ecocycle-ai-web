@@ -13,7 +13,7 @@ export default function Steps() {
     >
       {/* Section Heading */}
       <ScrollReveal delay={50} distance={24} duration={700}>
-        <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark text-center">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark text-center tracking-tight">
           <span className="text-primary">3</span> Langkah <span className="text-primary">Mudah</span> untuk Memulai
         </h2>
       </ScrollReveal>

@@ -14,7 +14,7 @@ export default function Footer() {
               className="size-8 sm:size-9 shrink-0 object-contain drop-shadow-xs"
             />
             <div className="flex flex-col items-start justify-center">
-              <span className="font-heading text-sm sm:text-base font-bold leading-tight text-dark">
+              <span className="font-display text-sm sm:text-base font-bold leading-tight text-dark">
                 EcoCycle AI
               </span>
               <span className="text-[8px] sm:text-[10px] font-medium leading-normal text-muted">

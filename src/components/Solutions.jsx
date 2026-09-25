@@ -25,7 +25,7 @@ export default function Solutions() {
       {/* Section Heading */}
       <ScrollReveal delay={50} distance={24} duration={700}>
         <div className="flex flex-col gap-3 sm:gap-4 items-center text-center max-w-2xl">
-          <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-dark tracking-tight">
             <span className="text-primary">Solusi Cerdas</span> untuk Bumi yang Lebih <span className="text-primary">Hijau</span>
           </h2>
           <p className="text-sm sm:text-base leading-6 text-body">

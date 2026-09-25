@@ -191,7 +191,7 @@ export default function Profile() {
 
             <div className="profile-identity">
               <div className="profile-title-row">
-                <h2 className="profile-user-name">{displayName}</h2>
+                <h2 className="profile-user-name font-display">{displayName}</h2>
                 <span className="profile-role-pill">{displayRole}</span>
               </div>
 

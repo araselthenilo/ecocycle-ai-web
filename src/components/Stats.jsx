@@ -14,7 +14,7 @@ export default function Stats() {
 
         {/* Section Heading */}
         <ScrollReveal delay={50} distance={24} duration={700}>
-          <h2 className="text-2xl sm:text-3xl font-bold leading-tight sm:leading-10 text-white-app">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold leading-tight sm:leading-10 text-white-app tracking-tight">
             Dampak Komunitas Kami
           </h2>
         </ScrollReveal>
@@ -29,7 +29,7 @@ export default function Stats() {
                 duration={750}
               >
                 <div className="flex flex-col gap-4 items-center text-center w-56">
-                  <div className="font-heading font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
+                  <div className="font-display font-bold text-4xl lg:text-5xl leading-tight tracking-tight text-white-app">
                     {stat.value}
                   </div>
                   <div className="text-base leading-6 text-white-app">

@@ -107,7 +107,7 @@ export default function Navbar() {
             alt="EcoCycle AI Logo"
             className="size-8 sm:size-10 group-hover:scale-105 transition-transform shrink-0 object-contain drop-shadow-sm"
           />
-          <span className="font-heading font-bold text-base sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
+          <span className="font-display font-bold text-base sm:text-xl text-primary tracking-tight select-none whitespace-nowrap">
             EcoCycle AI
           </span>
         </Link>

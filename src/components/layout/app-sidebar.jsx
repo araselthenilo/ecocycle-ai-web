@@ -68,7 +68,7 @@ export function AppSidebar({ activePage, onNavigate }) {
               alt="EcoCycle AI Logo"
               className="size-8.5 shrink-0 object-contain drop-shadow-xs"
             />
-            <span className="font-heading font-bold text-base sm:text-lg text-primary tracking-tight select-none group-data-[collapsible=icon]:hidden">
+            <span className="font-display font-bold text-base sm:text-lg text-primary tracking-tight select-none group-data-[collapsible=icon]:hidden">
               EcoCycle AI
             </span>
           </div>

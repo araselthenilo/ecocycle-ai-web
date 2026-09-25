@@ -16,7 +16,6 @@ import RecycleMap from "@/pages/RecycleMap"
 import Leaderboard from "@/pages/Leaderboard"
 import Profile from "@/pages/Profile"
 import Notifications from "@/pages/Notifications"
-import "./App.css"
 
 // Fallback client ID if .env is not yet populated
 const GOOGLE_CLIENT_ID =
