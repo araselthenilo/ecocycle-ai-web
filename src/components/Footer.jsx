@@ -23,6 +23,22 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Background Vector Attribution */}
+          <div className="text-right text-[8px] sm:text-[10px] text-muted">
+            <p>
+              {/* Background vector source requirement for INVENTION 2026: https://www.vecteezy.com/vector-art/115568-free-batik-background-vectors */}
+              Batik Background vector by{' '}
+              <a
+                href="https://www.vecteezy.com/vector-art/115568-free-batik-background-vectors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-dark hover:text-primary hover:underline transition-colors"
+              >
+                Vecteezy
+              </a>
+            </p>
+          </div>
+
         </div>
       </ScrollReveal>
     </footer>
