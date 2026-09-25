@@ -23,14 +23,14 @@ export default function Hero() {
 
         {/* Heading */}
         <ScrollReveal delay={100} distance={24} duration={700}>
-          <h1 className="text-3xl sm:text-2xl lg:text-5xl font-extrabold leading-tight text-dark">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-dark">
             Kelola <span className="text-primary">Sampah</span> Lebih <span className="text-primary">Cerdas</span> dengan <span className="text-primary">AI</span>
           </h1>
         </ScrollReveal>
 
         {/* Subtitle */}
         <ScrollReveal delay={250} distance={24} duration={700}>
-          <p className="text-justify sm:text-lg leading-relaxed text-dark">
+          <p className="text-left sm:text-lg leading-relaxed text-dark">
             Ubah kebiasaan membuang sampah menjadi kontribusi nyata untuk bumi. Identifikasi, kelola, dan dapatkan poin dengan teknologi AI terkini.
           </p>
         </ScrollReveal>

@@ -99,8 +99,8 @@ export function Navbar({ activePage }) {
   const pageTitle =
     activePage === "dashboard" ? (
       <>
-        <span className="highlight">Selamat Datang, </span>
-        {userName}
+        <span className="font-semibold text-eco-green/90">Selamat Datang, </span>
+        <span className="font-extrabold text-eco-green">{userName}</span>
       </>
     ) : (
       greeting.title
